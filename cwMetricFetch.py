@@ -5,7 +5,7 @@ import threading
 import prometheus_client as pc
 import sys
 import time
-import io
+import math
 import re
 import pickle
 
@@ -27,7 +27,6 @@ class monitor(threading.Thread) :
         global_lock.acquire()
         count=0
         global_lock.release()
-
 
 class get_stat_thread(threading.Thread) :
 
@@ -71,7 +70,7 @@ class get_stat_thread(threading.Thread) :
                 EndTime=datetime.utcnow(),
                 Period=1800,
                 Statistics=[
-                    'Average','Maximum','Minimum'
+                    'Average','Maximum','Minimum','Sum'
                 ],
             )
         except :
@@ -98,10 +97,28 @@ class get_stat_thread(threading.Thread) :
             existing_gauges[self.key].labels(**dimension_dict).set(self.response['Datapoints'][0]['Maximum'])
             dimension_dict['stat'] = 'Minimum'
             existing_gauges[self.key].labels(**dimension_dict).set(self.response['Datapoints'][0]['Minimum'])
+            dimension_dict['stat'] = 'Sum'
+            existing_gauges[self.key].labels(**dimension_dict).set(self.response['Datapoints'][0]['Sum'])
+        elif len(self.response['Datapoints'])==0 :
+            dimension_dict['stat'] = 'Average'
+
+            existing_gauges[self.key].labels(**dimension_dict).set(float('nan'))
+            """except :
+                print(dimension_dict)
+                print(existing_gauges[self.key]._labelnames)
+                print(self.key)"""
+            dimension_dict['stat'] = 'Maximum'
+            existing_gauges[self.key].labels(**dimension_dict).set(float('nan'))
+            dimension_dict['stat'] = 'Minimum'
+            existing_gauges[self.key].labels(**dimension_dict).set(float('nan'))
+            dimension_dict['stat'] = 'Sum'
+            existing_gauges[self.key].labels(**dimension_dict).set(float('nan'))
         if len(self.response_p90['Datapoints'])==1 :
             dimension_dict['stat'] = 'p90'
-            #print(self.response_p90)
             existing_gauges[self.key].labels(**dimension_dict).set(self.response_p90['Datapoints'][0]['ExtendedStatistics']['p90'])
+        elif len(self.response_p90['Datapoints'])==0 :
+            dimension_dict['stat'] = 'p90'
+            existing_gauges[self.key].labels(**dimension_dict).set(float('nan'))
 
     #This function can be used to log or just print the  data on std output.
     def print_data(self) :
@@ -148,10 +165,15 @@ stop = timeit.default_timer()
 print(stop-start)"""
 
 file_Name = "data_consolidated"
-# open the file for reading
+# open the file for writing
 fileObject = open(file_Name,'rb')
 start = timeit.default_timer()
 print("Started collecting metric details : ")
+"""with open("data.yaml", 'r') as stream:
+    try:
+        pages = yaml.load(stream)
+    except yaml.YAMLError as exc:
+        print(exc)"""
 pages = pickle.load(fileObject)
 stop = timeit.default_timer()
 print("Finished collecting metric details : ")
@@ -173,6 +195,7 @@ experimental = {}
 critical=0
 red=0
 repetitive={}
+api_calls = 0
 
 for i in range(8) :
     repetitive[i]=0
@@ -204,6 +227,7 @@ while(True) :
             per_thread_info.append(pages[page_number])
             per_thread_info.append(repr(key_dict))
             threads.append(per_thread_info)
+            api_calls=api_calls+2
             thread.start()
 
         for thread_info in threads :
@@ -211,16 +235,18 @@ while(True) :
             metric_number = thread_info[1]
             page = thread_info[2]
             key = thread_info[3]
-            thread_handler.join(5)
+            thread_handler.join(1)
             #to determine the pattern in missed metric - if repetitive
             if thread_handler.isAlive() :
                 missed_metrics.append(page['Metrics'][metric_number])
                 missed_metrics_retrieval.append(thread_info)
                 if (repr(page['Metrics'][metric_number])) not in experimental :
-                    experimental[repr(page['Metrics'][metric_number])] = 1
+                    experimental[repr(page['Metrics'][metric_number])]={}
+                    experimental[repr(page['Metrics'][metric_number])]["issue"] = 1
+                    experimental[repr(page['Metrics'][metric_number])]["solved"] = 0
                 else :
-                    experimental[repr(page['Metrics'][metric_number])] = experimental[repr(page['Metrics'][metric_number])] + 1
-                value=experimental[repr(page['Metrics'][metric_number])]
+                    experimental[repr(page['Metrics'][metric_number])]["issue"] = experimental[repr(page['Metrics'][metric_number])]["issue"] + 1
+                value=experimental[repr(page['Metrics'][metric_number])]["issue"]
                 if(value not in repetitive) :
                     repetitive[value]=1
                 else :
@@ -229,20 +255,21 @@ while(True) :
         #Logic for retrival of missed metrics.
     while(len(missed_metrics_retrieval)>0) :
         retry_counter=retry_counter+1
-        print(retry_counter)
-        print(len(missed_metrics_retrieval))
-        per_thread_info=[]
+        print("Retry attempt number - ",retry_counter)
+        print("Number of metrics to retry - ",len(missed_metrics_retrieval))
         threads=[]
         for missed_metric_info in missed_metrics_retrieval :
+            per_thread_info=[]
             metric_number = missed_metric_info[1]
             page = missed_metric_info[2]
             key = missed_metric_info[3]
             thread = get_stat_thread(metric_number,page,key)
             per_thread_info.append(thread)
             per_thread_info.append(metric_number)
-            per_thread_info.append(pages[page_number])
-            per_thread_info.append(repr(key_dict))
+            per_thread_info.append(page)
+            per_thread_info.append(key)
             threads.append(per_thread_info)
+            api_calls=api_calls+2
             thread.start()
         missed_metrics=[]
         missed_metrics_retrieval = []
@@ -251,13 +278,13 @@ while(True) :
             metric_number = thread_info[1]
             page = thread_info[2]
             key = thread_info[3]
-            thread_handler.join(10)
+            thread_handler.join(4)
             if thread_handler.isAlive() :
                 missed_metrics.append(page['Metrics'][metric_number])
                 missed_metrics_retrieval.append(thread_info)
                 continue
-
-
+            else :
+                experimental[repr(page['Metrics'][metric_number])]["solved"] = experimental[repr(page['Metrics'][metric_number])]["solved"] + 1
             #else :
                 #thread_datapoints = thread_handler.store_datapoints()
                 #data.append(thread_datapoints)
@@ -265,7 +292,7 @@ while(True) :
 
     stop = timeit.default_timer()
     print("Total time  : ",stop-start_t_per_iter)
-    print("Total metrics : ",len(data))
+    print("Total api calls : ",api_calls)
     print("Total missed metrics : ",len(missed_metrics))
     print("Total gauge prob metrics : ",len(metric_gauge_prob))
     print("Total missed metrics(2) : ",repetitive[1])
@@ -275,6 +302,12 @@ while(True) :
     print("Total missed metrics(5) : ",repetitive[5])
     print("Total missed metrics(6) : ",repetitive[6])
     print("Total missed metrics(7) : ",repetitive[7])
+    """ky = experimental.keys()
+    for metric_miss_key in ky :
+        print(metric_miss_key,":")
+        print("No. of misses :",experimental[metric_miss_key]["issue"])
+        print("No. of times solved",experimental[metric_miss_key]["solved"],"\n")"""
+
     time.sleep(1800-(stop-start_t_per_iter))
 
 
