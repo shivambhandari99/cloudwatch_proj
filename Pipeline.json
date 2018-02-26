@@ -1,0 +1,3089 @@
+{
+  "annotations": {
+    "list": [
+      {
+        "builtIn": 1,
+        "datasource": "prometheus_cloudwatch190118",
+        "enable": true,
+        "hide": true,
+        "iconColor": "rgba(0, 211, 255, 1)",
+        "limit": 100,
+        "name": "Annotations & Alerts",
+        "showIn": 0,
+        "type": "dashboard"
+      }
+    ]
+  },
+  "editable": true,
+  "gnetId": null,
+  "graphTooltip": 2,
+  "hideControls": true,
+  "id": 16,
+  "links": [
+    {
+      "icon": "external link",
+      "includeVars": true,
+      "keepTime": true,
+      "tags": [
+        "AWS"
+      ],
+      "targetBlank": true,
+      "type": "dashboards"
+    }
+  ],
+  "refresh": false,
+  "rows": [
+    {
+      "collapse": false,
+      "height": 188,
+      "panels": [
+        {
+          "datasource": "influx_ec2",
+          "decimals": 0,
+          "defaultColor": "rgb(117, 117, 117)",
+          "format": "none",
+          "height": "200px",
+          "id": 17,
+          "linkIndex": "0",
+          "linkVars": [
+            {
+              "index": "0",
+              "name": "QueueName"
+            }
+          ],
+          "links": [
+            {
+              "dashUri": "db/new-queue-metrics",
+              "dashboard": "New Queue Metrics",
+              "includeVars": false,
+              "keepTime": false,
+              "params": "var-QueueName=$QueueName",
+              "targetBlank": true,
+              "title": "New Queue Metrics",
+              "type": "dashboard"
+            }
+          ],
+          "mathColorValue": "data[x-8]",
+          "mathDisplayValue": "data[x-8]",
+          "mathScratchPad": "data = size(data)[1] == 0 ? [NaN] : data\nx = size(data)[1]",
+          "radius": "70px",
+          "span": 1,
+          "targets": [
+            {
+              "alias": "GbUploadEvent-prod-na",
+              "dsType": "influxdb",
+              "expr": "NumberOfMessagesReceived{QueueName=\"GbUploadEvent-prod-na\",stat=\"Sum\"}",
+              "format": "time_series",
+              "groupBy": [
+                {
+                  "params": [
+                    "$__interval"
+                  ],
+                  "type": "time"
+                },
+                {
+                  "params": [
+                    "null"
+                  ],
+                  "type": "fill"
+                }
+              ],
+              "intervalFactor": 1,
+              "legendFormat": "{{QueueName}}",
+              "orderByTime": "ASC",
+              "policy": "default",
+              "query": "SELECT sum(\"value\") AS \"mean_value\" FROM \"telegraf\".\"autogen\".\"NumberOfMessagesDeleted\" WHERE $timeFilter AND \"QueueName\"='GbUploadEvent-prod-na' AND \"stat\"='Sum' GROUP BY time(30m) FILL(null)",
+              "rawQuery": true,
+              "refId": "A",
+              "resultFormat": "time_series",
+              "select": [
+                [
+                  {
+                    "params": [
+                      "value"
+                    ],
+                    "type": "field"
+                  },
+                  {
+                    "params": [],
+                    "type": "mean"
+                  }
+                ]
+              ],
+              "tags": []
+            },
+            {
+              "alias": "GBUserDataIngestion-prod-na",
+              "dsType": "influxdb",
+              "expr": "NumberOfMessagesReceived{QueueName=\"GBUserDataIngestion-prod-na\",stat=\"Sum\"}",
+              "format": "time_series",
+              "groupBy": [
+                {
+                  "params": [
+                    "$__interval"
+                  ],
+                  "type": "time"
+                },
+                {
+                  "params": [
+                    "null"
+                  ],
+                  "type": "fill"
+                }
+              ],
+              "intervalFactor": 1,
+              "legendFormat": "{{QueueName}}",
+              "orderByTime": "ASC",
+              "policy": "default",
+              "query": "SELECT sum(\"value\") AS \"mean_value\" FROM \"telegraf\".\"autogen\".\"NumberOfMessagesDeleted\" WHERE $timeFilter AND \"stat\"='Sum' AND \"QueueName\"='GBUserDataIngestion-prod-na' GROUP BY time(30m) FILL(null)",
+              "rawQuery": true,
+              "refId": "B",
+              "resultFormat": "time_series",
+              "select": [
+                [
+                  {
+                    "params": [
+                      "value"
+                    ],
+                    "type": "field"
+                  },
+                  {
+                    "params": [],
+                    "type": "mean"
+                  }
+                ]
+              ],
+              "tags": []
+            },
+            {
+              "alias": "GBIngestionCompletionEvent-prod-na",
+              "dsType": "influxdb",
+              "expr": "NumberOfMessagesReceived{QueueName=\"GBIngestionCompletionEvent-prod-na\",stat=\"Sum\"}",
+              "format": "time_series",
+              "groupBy": [
+                {
+                  "params": [
+                    "$__interval"
+                  ],
+                  "type": "time"
+                },
+                {
+                  "params": [
+                    "null"
+                  ],
+                  "type": "fill"
+                }
+              ],
+              "intervalFactor": 1,
+              "legendFormat": "{{QueueName}}",
+              "orderByTime": "ASC",
+              "policy": "default",
+              "query": "SELECT sum(\"value\") AS \"mean_value\" FROM \"telegraf\".\"autogen\".\"NumberOfMessagesDeleted\" WHERE $timeFilter AND \"QueueName\"='GBIngestionCompletionEvent-prod-na' AND \"stat\"='Sum' GROUP BY time(30m) FILL(null)",
+              "rawQuery": true,
+              "refId": "C",
+              "resultFormat": "time_series",
+              "select": [
+                [
+                  {
+                    "params": [
+                      "value"
+                    ],
+                    "type": "field"
+                  },
+                  {
+                    "params": [],
+                    "type": "mean"
+                  }
+                ]
+              ],
+              "tags": []
+            },
+            {
+              "alias": "GbTempDataReadyEvent-prod-na",
+              "dsType": "influxdb",
+              "expr": "NumberOfMessagesReceived{QueueName=\"GbTempDataReadyEvent-prod-na\",stat=\"Sum\"}",
+              "format": "time_series",
+              "groupBy": [
+                {
+                  "params": [
+                    "$__interval"
+                  ],
+                  "type": "time"
+                },
+                {
+                  "params": [
+                    "null"
+                  ],
+                  "type": "fill"
+                }
+              ],
+              "intervalFactor": 1,
+              "legendFormat": "{{QueueName}}",
+              "orderByTime": "ASC",
+              "policy": "default",
+              "query": "SELECT sum(\"value\") AS \"mean_value\" FROM \"telegraf\".\"autogen\".\"NumberOfMessagesDeleted\" WHERE $timeFilter AND \"QueueName\"='GbTempDataReadyEvent-prod-na' AND \"stat\"='Sum' GROUP BY time(30m) FILL(null)",
+              "rawQuery": true,
+              "refId": "D",
+              "resultFormat": "time_series",
+              "select": [
+                [
+                  {
+                    "params": [
+                      "value"
+                    ],
+                    "type": "field"
+                  },
+                  {
+                    "params": [],
+                    "type": "mean"
+                  }
+                ]
+              ],
+              "tags": []
+            },
+            {
+              "alias": "AggregationReadyUsers-prod-na",
+              "dsType": "influxdb",
+              "expr": "NumberOfMessagesReceived{QueueName=\"AggregationReadyUsers-prod-na\",stat=\"Sum\"}",
+              "format": "time_series",
+              "groupBy": [
+                {
+                  "params": [
+                    "$__interval"
+                  ],
+                  "type": "time"
+                },
+                {
+                  "params": [
+                    "null"
+                  ],
+                  "type": "fill"
+                }
+              ],
+              "intervalFactor": 1,
+              "legendFormat": "{{QueueName}}",
+              "orderByTime": "ASC",
+              "policy": "default",
+              "query": "SELECT sum(\"value\") AS \"mean_value\" FROM \"telegraf\".\"autogen\".\"NumberOfMessagesDeleted\" WHERE $timeFilter AND \"QueueName\"='AggregationReadyUsers-prod-na' AND \"stat\"='Sum' GROUP BY time(30m) FILL(null)",
+              "rawQuery": true,
+              "refId": "E",
+              "resultFormat": "time_series",
+              "select": [
+                [
+                  {
+                    "params": [
+                      "value"
+                    ],
+                    "type": "field"
+                  },
+                  {
+                    "params": [],
+                    "type": "mean"
+                  }
+                ]
+              ],
+              "tags": []
+            },
+            {
+              "alias": "hybridDisaggReady-prod-na",
+              "dsType": "influxdb",
+              "expr": "NumberOfMessagesReceived{QueueName=\"hybridDisaggReady-prod-na\",stat=\"Sum\"}",
+              "format": "time_series",
+              "groupBy": [
+                {
+                  "params": [
+                    "$__interval"
+                  ],
+                  "type": "time"
+                },
+                {
+                  "params": [
+                    "null"
+                  ],
+                  "type": "fill"
+                }
+              ],
+              "intervalFactor": 1,
+              "legendFormat": "{{QueueName}}",
+              "orderByTime": "ASC",
+              "policy": "default",
+              "query": "SELECT sum(\"value\") AS \"mean_value\" FROM \"telegraf\".\"autogen\".\"NumberOfMessagesDeleted\" WHERE $timeFilter AND \"QueueName\"='hybridDisaggReady-prod-na' AND \"stat\"='Sum' GROUP BY time(30m) FILL(null)",
+              "rawQuery": true,
+              "refId": "F",
+              "resultFormat": "time_series",
+              "select": [
+                [
+                  {
+                    "params": [
+                      "value"
+                    ],
+                    "type": "field"
+                  },
+                  {
+                    "params": [],
+                    "type": "mean"
+                  }
+                ]
+              ],
+              "tags": []
+            }
+          ],
+          "thresholds": [
+            {
+              "color": "#bf1b00",
+              "value": "0"
+            },
+            {
+              "color": "#c15c17",
+              "value": "100"
+            },
+            {
+              "color": "#508642",
+              "value": "1000"
+            }
+          ],
+          "title": "Queue Status -240m",
+          "type": "btplc-status-dot-panel"
+        },
+        {
+          "datasource": "influx_ec2",
+          "decimals": 0,
+          "defaultColor": "rgb(117, 117, 117)",
+          "format": "none",
+          "height": "200px",
+          "id": 18,
+          "linkIndex": "0",
+          "linkVars": [
+            {
+              "index": "0",
+              "name": "QueueName"
+            },
+            {
+              "index": "0",
+              "name": "myvar"
+            }
+          ],
+          "links": [
+            {
+              "dashUri": "db/new-queue-metrics",
+              "dashboard": "New Queue Metrics",
+              "includeVars": false,
+              "keepTime": false,
+              "params": "var-QueueName=$QueueName",
+              "targetBlank": true,
+              "title": "New Queue Metrics",
+              "type": "dashboard"
+            }
+          ],
+          "mathColorValue": "data[x-7]",
+          "mathDisplayValue": "data[x-7]",
+          "mathScratchPad": "data = size(data)[1] == 0 ? [NaN] : data\nx = size(data)[1]",
+          "radius": "70px",
+          "span": 1,
+          "targets": [
+            {
+              "alias": "GbUploadEvent-prod-na",
+              "dsType": "influxdb",
+              "expr": "NumberOfMessagesReceived{QueueName=\"GbUploadEvent-prod-na\",stat=\"Sum\"}",
+              "format": "time_series",
+              "groupBy": [
+                {
+                  "params": [
+                    "$__interval"
+                  ],
+                  "type": "time"
+                },
+                {
+                  "params": [
+                    "null"
+                  ],
+                  "type": "fill"
+                }
+              ],
+              "intervalFactor": 1,
+              "legendFormat": "{{QueueName}}",
+              "orderByTime": "ASC",
+              "policy": "default",
+              "query": "SELECT sum(\"value\") AS \"mean_value\" FROM \"telegraf\".\"autogen\".\"NumberOfMessagesDeleted\" WHERE $timeFilter AND \"QueueName\"='GbUploadEvent-prod-na' AND \"stat\"='Sum' GROUP BY time(30m) FILL(null)",
+              "rawQuery": true,
+              "refId": "A",
+              "resultFormat": "time_series",
+              "select": [
+                [
+                  {
+                    "params": [
+                      "value"
+                    ],
+                    "type": "field"
+                  },
+                  {
+                    "params": [],
+                    "type": "mean"
+                  }
+                ]
+              ],
+              "tags": []
+            },
+            {
+              "alias": "GBUserDataIngestion-prod-na",
+              "dsType": "influxdb",
+              "expr": "NumberOfMessagesReceived{QueueName=\"GBUserDataIngestion-prod-na\",stat=\"Sum\"}",
+              "format": "time_series",
+              "groupBy": [
+                {
+                  "params": [
+                    "$__interval"
+                  ],
+                  "type": "time"
+                },
+                {
+                  "params": [
+                    "null"
+                  ],
+                  "type": "fill"
+                }
+              ],
+              "intervalFactor": 1,
+              "legendFormat": "{{QueueName}}",
+              "orderByTime": "ASC",
+              "policy": "default",
+              "query": "SELECT sum(\"value\") AS \"mean_value\" FROM \"telegraf\".\"autogen\".\"NumberOfMessagesDeleted\" WHERE $timeFilter AND \"stat\"='Sum' AND \"QueueName\"='GBUserDataIngestion-prod-na' GROUP BY time(30m) FILL(null)",
+              "rawQuery": true,
+              "refId": "B",
+              "resultFormat": "time_series",
+              "select": [
+                [
+                  {
+                    "params": [
+                      "value"
+                    ],
+                    "type": "field"
+                  },
+                  {
+                    "params": [],
+                    "type": "mean"
+                  }
+                ]
+              ],
+              "tags": []
+            },
+            {
+              "alias": "GBIngestionCompletionEvent-prod-na",
+              "dsType": "influxdb",
+              "expr": "NumberOfMessagesReceived{QueueName=\"GBIngestionCompletionEvent-prod-na\",stat=\"Sum\"}",
+              "format": "time_series",
+              "groupBy": [
+                {
+                  "params": [
+                    "$__interval"
+                  ],
+                  "type": "time"
+                },
+                {
+                  "params": [
+                    "null"
+                  ],
+                  "type": "fill"
+                }
+              ],
+              "intervalFactor": 1,
+              "legendFormat": "{{QueueName}}",
+              "orderByTime": "ASC",
+              "policy": "default",
+              "query": "SELECT sum(\"value\") AS \"mean_value\" FROM \"telegraf\".\"autogen\".\"NumberOfMessagesDeleted\" WHERE $timeFilter AND \"QueueName\"='GBIngestionCompletionEvent-prod-na' AND \"stat\"='Sum' GROUP BY time(30m) FILL(null)",
+              "rawQuery": true,
+              "refId": "C",
+              "resultFormat": "time_series",
+              "select": [
+                [
+                  {
+                    "params": [
+                      "value"
+                    ],
+                    "type": "field"
+                  },
+                  {
+                    "params": [],
+                    "type": "mean"
+                  }
+                ]
+              ],
+              "tags": []
+            },
+            {
+              "alias": "GbTempDataReadyEvent-prod-na",
+              "dsType": "influxdb",
+              "expr": "NumberOfMessagesReceived{QueueName=\"GbTempDataReadyEvent-prod-na\",stat=\"Sum\"}",
+              "format": "time_series",
+              "groupBy": [
+                {
+                  "params": [
+                    "$__interval"
+                  ],
+                  "type": "time"
+                },
+                {
+                  "params": [
+                    "null"
+                  ],
+                  "type": "fill"
+                }
+              ],
+              "intervalFactor": 1,
+              "legendFormat": "{{QueueName}}",
+              "orderByTime": "ASC",
+              "policy": "default",
+              "query": "SELECT sum(\"value\") AS \"mean_value\" FROM \"telegraf\".\"autogen\".\"NumberOfMessagesDeleted\" WHERE $timeFilter AND \"QueueName\"='GbTempDataReadyEvent-prod-na' AND \"stat\"='Sum' GROUP BY time(30m) FILL(null)",
+              "rawQuery": true,
+              "refId": "D",
+              "resultFormat": "time_series",
+              "select": [
+                [
+                  {
+                    "params": [
+                      "value"
+                    ],
+                    "type": "field"
+                  },
+                  {
+                    "params": [],
+                    "type": "mean"
+                  }
+                ]
+              ],
+              "tags": []
+            },
+            {
+              "alias": "AggregationReadyUsers-prod-na",
+              "dsType": "influxdb",
+              "expr": "NumberOfMessagesReceived{QueueName=\"AggregationReadyUsers-prod-na\",stat=\"Sum\"}",
+              "format": "time_series",
+              "groupBy": [
+                {
+                  "params": [
+                    "$__interval"
+                  ],
+                  "type": "time"
+                },
+                {
+                  "params": [
+                    "null"
+                  ],
+                  "type": "fill"
+                }
+              ],
+              "intervalFactor": 1,
+              "legendFormat": "{{QueueName}}",
+              "orderByTime": "ASC",
+              "policy": "default",
+              "query": "SELECT sum(\"value\") AS \"mean_value\" FROM \"telegraf\".\"autogen\".\"NumberOfMessagesDeleted\" WHERE $timeFilter AND \"QueueName\"='AggregationReadyUsers-prod-na' AND \"stat\"='Sum' GROUP BY time(30m) FILL(null)",
+              "rawQuery": true,
+              "refId": "E",
+              "resultFormat": "time_series",
+              "select": [
+                [
+                  {
+                    "params": [
+                      "value"
+                    ],
+                    "type": "field"
+                  },
+                  {
+                    "params": [],
+                    "type": "mean"
+                  }
+                ]
+              ],
+              "tags": []
+            },
+            {
+              "alias": "hybridDisaggReady-prod-na",
+              "dsType": "influxdb",
+              "expr": "NumberOfMessagesReceived{QueueName=\"hybridDisaggReady-prod-na\",stat=\"Sum\"}",
+              "format": "time_series",
+              "groupBy": [
+                {
+                  "params": [
+                    "$__interval"
+                  ],
+                  "type": "time"
+                },
+                {
+                  "params": [
+                    "null"
+                  ],
+                  "type": "fill"
+                }
+              ],
+              "intervalFactor": 1,
+              "legendFormat": "{{QueueName}}",
+              "orderByTime": "ASC",
+              "policy": "default",
+              "query": "SELECT sum(\"value\") AS \"mean_value\" FROM \"telegraf\".\"autogen\".\"NumberOfMessagesDeleted\" WHERE $timeFilter AND \"QueueName\"='hybridDisaggReady-prod-na' AND \"stat\"='Sum' GROUP BY time(30m) FILL(null)",
+              "rawQuery": true,
+              "refId": "F",
+              "resultFormat": "time_series",
+              "select": [
+                [
+                  {
+                    "params": [
+                      "value"
+                    ],
+                    "type": "field"
+                  },
+                  {
+                    "params": [],
+                    "type": "mean"
+                  }
+                ]
+              ],
+              "tags": []
+            }
+          ],
+          "thresholds": [
+            {
+              "color": "#bf1b00",
+              "value": "0"
+            },
+            {
+              "color": "#c15c17",
+              "value": "100"
+            },
+            {
+              "color": "#508642",
+              "value": "1000"
+            }
+          ],
+          "title": "Queue Status -210m",
+          "type": "btplc-status-dot-panel"
+        },
+        {
+          "datasource": "influx_ec2",
+          "decimals": 0,
+          "defaultColor": "rgb(117, 117, 117)",
+          "format": "none",
+          "height": "200px",
+          "id": 19,
+          "linkIndex": "0",
+          "linkVars": [
+            {
+              "index": "0",
+              "name": "QueueName"
+            },
+            {
+              "index": "0",
+              "name": "myvar"
+            }
+          ],
+          "links": [
+            {
+              "dashUri": "db/new-queue-metrics",
+              "dashboard": "New Queue Metrics",
+              "includeVars": false,
+              "keepTime": false,
+              "params": "var-QueueName=$QueueName",
+              "targetBlank": true,
+              "title": "New Queue Metrics",
+              "type": "dashboard"
+            }
+          ],
+          "mathColorValue": "data[x-6]",
+          "mathDisplayValue": "data[x-6]",
+          "mathScratchPad": "data = size(data)[1] == 0 ? [NaN] : data\nx = size(data)[1]",
+          "radius": "70px",
+          "span": 1,
+          "targets": [
+            {
+              "alias": "GbUploadEvent-prod-na",
+              "dsType": "influxdb",
+              "expr": "NumberOfMessagesReceived{QueueName=\"GbUploadEvent-prod-na\",stat=\"Sum\"}",
+              "format": "time_series",
+              "groupBy": [
+                {
+                  "params": [
+                    "$__interval"
+                  ],
+                  "type": "time"
+                },
+                {
+                  "params": [
+                    "null"
+                  ],
+                  "type": "fill"
+                }
+              ],
+              "intervalFactor": 1,
+              "legendFormat": "{{QueueName}}",
+              "orderByTime": "ASC",
+              "policy": "default",
+              "query": "SELECT sum(\"value\") AS \"mean_value\" FROM \"telegraf\".\"autogen\".\"NumberOfMessagesDeleted\" WHERE $timeFilter AND \"QueueName\"='GbUploadEvent-prod-na' AND \"stat\"='Sum' GROUP BY time(30m) FILL(null)",
+              "rawQuery": true,
+              "refId": "A",
+              "resultFormat": "time_series",
+              "select": [
+                [
+                  {
+                    "params": [
+                      "value"
+                    ],
+                    "type": "field"
+                  },
+                  {
+                    "params": [],
+                    "type": "mean"
+                  }
+                ]
+              ],
+              "tags": []
+            },
+            {
+              "alias": "GBUserDataIngestion-prod-na",
+              "dsType": "influxdb",
+              "expr": "NumberOfMessagesReceived{QueueName=\"GBUserDataIngestion-prod-na\",stat=\"Sum\"}",
+              "format": "time_series",
+              "groupBy": [
+                {
+                  "params": [
+                    "$__interval"
+                  ],
+                  "type": "time"
+                },
+                {
+                  "params": [
+                    "null"
+                  ],
+                  "type": "fill"
+                }
+              ],
+              "intervalFactor": 1,
+              "legendFormat": "{{QueueName}}",
+              "orderByTime": "ASC",
+              "policy": "default",
+              "query": "SELECT sum(\"value\") AS \"mean_value\" FROM \"telegraf\".\"autogen\".\"NumberOfMessagesDeleted\" WHERE $timeFilter AND \"stat\"='Sum' AND \"QueueName\"='GBUserDataIngestion-prod-na' GROUP BY time(30m) FILL(null)",
+              "rawQuery": true,
+              "refId": "B",
+              "resultFormat": "time_series",
+              "select": [
+                [
+                  {
+                    "params": [
+                      "value"
+                    ],
+                    "type": "field"
+                  },
+                  {
+                    "params": [],
+                    "type": "mean"
+                  }
+                ]
+              ],
+              "tags": []
+            },
+            {
+              "alias": "GBIngestionCompletionEvent-prod-na",
+              "dsType": "influxdb",
+              "expr": "NumberOfMessagesReceived{QueueName=\"GBIngestionCompletionEvent-prod-na\",stat=\"Sum\"}",
+              "format": "time_series",
+              "groupBy": [
+                {
+                  "params": [
+                    "$__interval"
+                  ],
+                  "type": "time"
+                },
+                {
+                  "params": [
+                    "null"
+                  ],
+                  "type": "fill"
+                }
+              ],
+              "intervalFactor": 1,
+              "legendFormat": "{{QueueName}}",
+              "orderByTime": "ASC",
+              "policy": "default",
+              "query": "SELECT sum(\"value\") AS \"mean_value\" FROM \"telegraf\".\"autogen\".\"NumberOfMessagesDeleted\" WHERE $timeFilter AND \"QueueName\"='GBIngestionCompletionEvent-prod-na' AND \"stat\"='Sum' GROUP BY time(30m) FILL(null)",
+              "rawQuery": true,
+              "refId": "C",
+              "resultFormat": "time_series",
+              "select": [
+                [
+                  {
+                    "params": [
+                      "value"
+                    ],
+                    "type": "field"
+                  },
+                  {
+                    "params": [],
+                    "type": "mean"
+                  }
+                ]
+              ],
+              "tags": []
+            },
+            {
+              "alias": "GbTempDataReadyEvent-prod-na",
+              "dsType": "influxdb",
+              "expr": "NumberOfMessagesReceived{QueueName=\"GbTempDataReadyEvent-prod-na\",stat=\"Sum\"}",
+              "format": "time_series",
+              "groupBy": [
+                {
+                  "params": [
+                    "$__interval"
+                  ],
+                  "type": "time"
+                },
+                {
+                  "params": [
+                    "null"
+                  ],
+                  "type": "fill"
+                }
+              ],
+              "intervalFactor": 1,
+              "legendFormat": "{{QueueName}}",
+              "orderByTime": "ASC",
+              "policy": "default",
+              "query": "SELECT sum(\"value\") AS \"mean_value\" FROM \"telegraf\".\"autogen\".\"NumberOfMessagesDeleted\" WHERE $timeFilter AND \"QueueName\"='GbTempDataReadyEvent-prod-na' AND \"stat\"='Sum' GROUP BY time(30m) FILL(null)",
+              "rawQuery": true,
+              "refId": "D",
+              "resultFormat": "time_series",
+              "select": [
+                [
+                  {
+                    "params": [
+                      "value"
+                    ],
+                    "type": "field"
+                  },
+                  {
+                    "params": [],
+                    "type": "mean"
+                  }
+                ]
+              ],
+              "tags": []
+            },
+            {
+              "alias": "AggregationReadyUsers-prod-na",
+              "dsType": "influxdb",
+              "expr": "NumberOfMessagesReceived{QueueName=\"AggregationReadyUsers-prod-na\",stat=\"Sum\"}",
+              "format": "time_series",
+              "groupBy": [
+                {
+                  "params": [
+                    "$__interval"
+                  ],
+                  "type": "time"
+                },
+                {
+                  "params": [
+                    "null"
+                  ],
+                  "type": "fill"
+                }
+              ],
+              "intervalFactor": 1,
+              "legendFormat": "{{QueueName}}",
+              "orderByTime": "ASC",
+              "policy": "default",
+              "query": "SELECT sum(\"value\") AS \"mean_value\" FROM \"telegraf\".\"autogen\".\"NumberOfMessagesDeleted\" WHERE $timeFilter AND \"QueueName\"='AggregationReadyUsers-prod-na' AND \"stat\"='Sum' GROUP BY time(30m) FILL(null)",
+              "rawQuery": true,
+              "refId": "E",
+              "resultFormat": "time_series",
+              "select": [
+                [
+                  {
+                    "params": [
+                      "value"
+                    ],
+                    "type": "field"
+                  },
+                  {
+                    "params": [],
+                    "type": "mean"
+                  }
+                ]
+              ],
+              "tags": []
+            },
+            {
+              "alias": "hybridDisaggReady-prod-na",
+              "dsType": "influxdb",
+              "expr": "NumberOfMessagesReceived{QueueName=\"hybridDisaggReady-prod-na\",stat=\"Sum\"}",
+              "format": "time_series",
+              "groupBy": [
+                {
+                  "params": [
+                    "$__interval"
+                  ],
+                  "type": "time"
+                },
+                {
+                  "params": [
+                    "null"
+                  ],
+                  "type": "fill"
+                }
+              ],
+              "intervalFactor": 1,
+              "legendFormat": "{{QueueName}}",
+              "orderByTime": "ASC",
+              "policy": "default",
+              "query": "SELECT sum(\"value\") AS \"mean_value\" FROM \"telegraf\".\"autogen\".\"NumberOfMessagesDeleted\" WHERE $timeFilter AND \"QueueName\"='hybridDisaggReady-prod-na' AND \"stat\"='Sum' GROUP BY time(30m) FILL(null)",
+              "rawQuery": true,
+              "refId": "F",
+              "resultFormat": "time_series",
+              "select": [
+                [
+                  {
+                    "params": [
+                      "value"
+                    ],
+                    "type": "field"
+                  },
+                  {
+                    "params": [],
+                    "type": "mean"
+                  }
+                ]
+              ],
+              "tags": []
+            }
+          ],
+          "thresholds": [
+            {
+              "color": "#bf1b00",
+              "value": "0"
+            },
+            {
+              "color": "#c15c17",
+              "value": "100"
+            },
+            {
+              "color": "#508642",
+              "value": "1000"
+            }
+          ],
+          "title": "Queue Status -180m",
+          "type": "btplc-status-dot-panel"
+        },
+        {
+          "datasource": "influx_ec2",
+          "decimals": 0,
+          "defaultColor": "rgb(117, 117, 117)",
+          "format": "none",
+          "height": "200px",
+          "id": 20,
+          "linkIndex": "0",
+          "linkVars": [
+            {
+              "index": "0",
+              "name": "QueueName"
+            },
+            {
+              "index": "0",
+              "name": "myvar"
+            }
+          ],
+          "links": [
+            {
+              "dashUri": "db/new-queue-metrics",
+              "dashboard": "New Queue Metrics",
+              "includeVars": false,
+              "keepTime": false,
+              "params": "var-QueueName=$QueueName",
+              "targetBlank": true,
+              "title": "New Queue Metrics",
+              "type": "dashboard"
+            }
+          ],
+          "mathColorValue": "data[x-5]",
+          "mathDisplayValue": "data[x-5]",
+          "mathScratchPad": "data = size(data)[1] == 0 ? [NaN] : data\nx = size(data)[1]",
+          "radius": "70px",
+          "span": 1,
+          "targets": [
+            {
+              "alias": "GbUploadEvent-prod-na",
+              "dsType": "influxdb",
+              "expr": "NumberOfMessagesReceived{QueueName=\"GbUploadEvent-prod-na\",stat=\"Sum\"}",
+              "format": "time_series",
+              "groupBy": [
+                {
+                  "params": [
+                    "$__interval"
+                  ],
+                  "type": "time"
+                },
+                {
+                  "params": [
+                    "null"
+                  ],
+                  "type": "fill"
+                }
+              ],
+              "intervalFactor": 1,
+              "legendFormat": "{{QueueName}}",
+              "orderByTime": "ASC",
+              "policy": "default",
+              "query": "SELECT sum(\"value\") AS \"mean_value\" FROM \"telegraf\".\"autogen\".\"NumberOfMessagesDeleted\" WHERE $timeFilter AND \"QueueName\"='GbUploadEvent-prod-na' AND \"stat\"='Sum' GROUP BY time(30m) FILL(null)",
+              "rawQuery": true,
+              "refId": "A",
+              "resultFormat": "time_series",
+              "select": [
+                [
+                  {
+                    "params": [
+                      "value"
+                    ],
+                    "type": "field"
+                  },
+                  {
+                    "params": [],
+                    "type": "mean"
+                  }
+                ]
+              ],
+              "tags": []
+            },
+            {
+              "alias": "GBUserDataIngestion-prod-na",
+              "dsType": "influxdb",
+              "expr": "NumberOfMessagesReceived{QueueName=\"GBUserDataIngestion-prod-na\",stat=\"Sum\"}",
+              "format": "time_series",
+              "groupBy": [
+                {
+                  "params": [
+                    "$__interval"
+                  ],
+                  "type": "time"
+                },
+                {
+                  "params": [
+                    "null"
+                  ],
+                  "type": "fill"
+                }
+              ],
+              "intervalFactor": 1,
+              "legendFormat": "{{QueueName}}",
+              "orderByTime": "ASC",
+              "policy": "default",
+              "query": "SELECT sum(\"value\") AS \"mean_value\" FROM \"telegraf\".\"autogen\".\"NumberOfMessagesDeleted\" WHERE $timeFilter AND \"stat\"='Sum' AND \"QueueName\"='GBUserDataIngestion-prod-na' GROUP BY time(30m) FILL(null)",
+              "rawQuery": true,
+              "refId": "B",
+              "resultFormat": "time_series",
+              "select": [
+                [
+                  {
+                    "params": [
+                      "value"
+                    ],
+                    "type": "field"
+                  },
+                  {
+                    "params": [],
+                    "type": "mean"
+                  }
+                ]
+              ],
+              "tags": []
+            },
+            {
+              "alias": "GBIngestionCompletionEvent-prod-na",
+              "dsType": "influxdb",
+              "expr": "NumberOfMessagesReceived{QueueName=\"GBIngestionCompletionEvent-prod-na\",stat=\"Sum\"}",
+              "format": "time_series",
+              "groupBy": [
+                {
+                  "params": [
+                    "$__interval"
+                  ],
+                  "type": "time"
+                },
+                {
+                  "params": [
+                    "null"
+                  ],
+                  "type": "fill"
+                }
+              ],
+              "intervalFactor": 1,
+              "legendFormat": "{{QueueName}}",
+              "orderByTime": "ASC",
+              "policy": "default",
+              "query": "SELECT sum(\"value\") AS \"mean_value\" FROM \"telegraf\".\"autogen\".\"NumberOfMessagesDeleted\" WHERE $timeFilter AND \"QueueName\"='GBIngestionCompletionEvent-prod-na' AND \"stat\"='Sum' GROUP BY time(30m) FILL(null)",
+              "rawQuery": true,
+              "refId": "C",
+              "resultFormat": "time_series",
+              "select": [
+                [
+                  {
+                    "params": [
+                      "value"
+                    ],
+                    "type": "field"
+                  },
+                  {
+                    "params": [],
+                    "type": "mean"
+                  }
+                ]
+              ],
+              "tags": []
+            },
+            {
+              "alias": "GbTempDataReadyEvent-prod-na",
+              "dsType": "influxdb",
+              "expr": "NumberOfMessagesReceived{QueueName=\"GbTempDataReadyEvent-prod-na\",stat=\"Sum\"}",
+              "format": "time_series",
+              "groupBy": [
+                {
+                  "params": [
+                    "$__interval"
+                  ],
+                  "type": "time"
+                },
+                {
+                  "params": [
+                    "null"
+                  ],
+                  "type": "fill"
+                }
+              ],
+              "intervalFactor": 1,
+              "legendFormat": "{{QueueName}}",
+              "orderByTime": "ASC",
+              "policy": "default",
+              "query": "SELECT sum(\"value\") AS \"mean_value\" FROM \"telegraf\".\"autogen\".\"NumberOfMessagesDeleted\" WHERE $timeFilter AND \"QueueName\"='GbTempDataReadyEvent-prod-na' AND \"stat\"='Sum' GROUP BY time(30m) FILL(null)",
+              "rawQuery": true,
+              "refId": "D",
+              "resultFormat": "time_series",
+              "select": [
+                [
+                  {
+                    "params": [
+                      "value"
+                    ],
+                    "type": "field"
+                  },
+                  {
+                    "params": [],
+                    "type": "mean"
+                  }
+                ]
+              ],
+              "tags": []
+            },
+            {
+              "alias": "AggregationReadyUsers-prod-na",
+              "dsType": "influxdb",
+              "expr": "NumberOfMessagesReceived{QueueName=\"AggregationReadyUsers-prod-na\",stat=\"Sum\"}",
+              "format": "time_series",
+              "groupBy": [
+                {
+                  "params": [
+                    "$__interval"
+                  ],
+                  "type": "time"
+                },
+                {
+                  "params": [
+                    "null"
+                  ],
+                  "type": "fill"
+                }
+              ],
+              "intervalFactor": 1,
+              "legendFormat": "{{QueueName}}",
+              "orderByTime": "ASC",
+              "policy": "default",
+              "query": "SELECT sum(\"value\") AS \"mean_value\" FROM \"telegraf\".\"autogen\".\"NumberOfMessagesDeleted\" WHERE $timeFilter AND \"QueueName\"='AggregationReadyUsers-prod-na' AND \"stat\"='Sum' GROUP BY time(30m) FILL(null)",
+              "rawQuery": true,
+              "refId": "E",
+              "resultFormat": "time_series",
+              "select": [
+                [
+                  {
+                    "params": [
+                      "value"
+                    ],
+                    "type": "field"
+                  },
+                  {
+                    "params": [],
+                    "type": "mean"
+                  }
+                ]
+              ],
+              "tags": []
+            },
+            {
+              "alias": "hybridDisaggReady-prod-na",
+              "dsType": "influxdb",
+              "expr": "NumberOfMessagesReceived{QueueName=\"hybridDisaggReady-prod-na\",stat=\"Sum\"}",
+              "format": "time_series",
+              "groupBy": [
+                {
+                  "params": [
+                    "$__interval"
+                  ],
+                  "type": "time"
+                },
+                {
+                  "params": [
+                    "null"
+                  ],
+                  "type": "fill"
+                }
+              ],
+              "intervalFactor": 1,
+              "legendFormat": "{{QueueName}}",
+              "orderByTime": "ASC",
+              "policy": "default",
+              "query": "SELECT sum(\"value\") AS \"mean_value\" FROM \"telegraf\".\"autogen\".\"NumberOfMessagesDeleted\" WHERE $timeFilter AND \"QueueName\"='hybridDisaggReady-prod-na' AND \"stat\"='Sum' GROUP BY time(30m) FILL(null)",
+              "rawQuery": true,
+              "refId": "F",
+              "resultFormat": "time_series",
+              "select": [
+                [
+                  {
+                    "params": [
+                      "value"
+                    ],
+                    "type": "field"
+                  },
+                  {
+                    "params": [],
+                    "type": "mean"
+                  }
+                ]
+              ],
+              "tags": []
+            }
+          ],
+          "thresholds": [
+            {
+              "color": "#bf1b00",
+              "value": "0"
+            },
+            {
+              "color": "#c15c17",
+              "value": "100"
+            },
+            {
+              "color": "#508642",
+              "value": "1000"
+            }
+          ],
+          "title": "Queue Status -150m",
+          "type": "btplc-status-dot-panel"
+        },
+        {
+          "datasource": "influx_ec2",
+          "decimals": 0,
+          "defaultColor": "rgb(117, 117, 117)",
+          "format": "none",
+          "height": "200px",
+          "id": 21,
+          "linkIndex": "0",
+          "linkVars": [
+            {
+              "index": "0",
+              "name": "QueueName"
+            },
+            {
+              "index": "0",
+              "name": "myvar"
+            }
+          ],
+          "links": [
+            {
+              "dashUri": "db/new-queue-metrics",
+              "dashboard": "New Queue Metrics",
+              "includeVars": false,
+              "keepTime": false,
+              "params": "var-QueueName=$QueueName",
+              "targetBlank": true,
+              "title": "New Queue Metrics",
+              "type": "dashboard"
+            }
+          ],
+          "mathColorValue": "data[x-4]",
+          "mathDisplayValue": "data[x-4]",
+          "mathScratchPad": "data = size(data)[1] == 0 ? [NaN] : data\nx = size(data)[1]",
+          "radius": "70px",
+          "span": 1,
+          "targets": [
+            {
+              "alias": "GbUploadEvent-prod-na",
+              "dsType": "influxdb",
+              "expr": "NumberOfMessagesReceived{QueueName=\"GbUploadEvent-prod-na\",stat=\"Sum\"}",
+              "format": "time_series",
+              "groupBy": [
+                {
+                  "params": [
+                    "$__interval"
+                  ],
+                  "type": "time"
+                },
+                {
+                  "params": [
+                    "null"
+                  ],
+                  "type": "fill"
+                }
+              ],
+              "intervalFactor": 1,
+              "legendFormat": "{{QueueName}}",
+              "orderByTime": "ASC",
+              "policy": "default",
+              "query": "SELECT sum(\"value\") AS \"mean_value\" FROM \"telegraf\".\"autogen\".\"NumberOfMessagesDeleted\" WHERE $timeFilter AND \"QueueName\"='GbUploadEvent-prod-na' AND \"stat\"='Sum' GROUP BY time(30m) FILL(null)",
+              "rawQuery": true,
+              "refId": "A",
+              "resultFormat": "time_series",
+              "select": [
+                [
+                  {
+                    "params": [
+                      "value"
+                    ],
+                    "type": "field"
+                  },
+                  {
+                    "params": [],
+                    "type": "mean"
+                  }
+                ]
+              ],
+              "tags": []
+            },
+            {
+              "alias": "GBUserDataIngestion-prod-na",
+              "dsType": "influxdb",
+              "expr": "NumberOfMessagesReceived{QueueName=\"GBUserDataIngestion-prod-na\",stat=\"Sum\"}",
+              "format": "time_series",
+              "groupBy": [
+                {
+                  "params": [
+                    "$__interval"
+                  ],
+                  "type": "time"
+                },
+                {
+                  "params": [
+                    "null"
+                  ],
+                  "type": "fill"
+                }
+              ],
+              "intervalFactor": 1,
+              "legendFormat": "{{QueueName}}",
+              "orderByTime": "ASC",
+              "policy": "default",
+              "query": "SELECT sum(\"value\") AS \"mean_value\" FROM \"telegraf\".\"autogen\".\"NumberOfMessagesDeleted\" WHERE $timeFilter AND \"stat\"='Sum' AND \"QueueName\"='GBUserDataIngestion-prod-na' GROUP BY time(30m) FILL(null)",
+              "rawQuery": true,
+              "refId": "B",
+              "resultFormat": "time_series",
+              "select": [
+                [
+                  {
+                    "params": [
+                      "value"
+                    ],
+                    "type": "field"
+                  },
+                  {
+                    "params": [],
+                    "type": "mean"
+                  }
+                ]
+              ],
+              "tags": []
+            },
+            {
+              "alias": "GBIngestionCompletionEvent-prod-na",
+              "dsType": "influxdb",
+              "expr": "NumberOfMessagesReceived{QueueName=\"GBIngestionCompletionEvent-prod-na\",stat=\"Sum\"}",
+              "format": "time_series",
+              "groupBy": [
+                {
+                  "params": [
+                    "$__interval"
+                  ],
+                  "type": "time"
+                },
+                {
+                  "params": [
+                    "null"
+                  ],
+                  "type": "fill"
+                }
+              ],
+              "intervalFactor": 1,
+              "legendFormat": "{{QueueName}}",
+              "orderByTime": "ASC",
+              "policy": "default",
+              "query": "SELECT sum(\"value\") AS \"mean_value\" FROM \"telegraf\".\"autogen\".\"NumberOfMessagesDeleted\" WHERE $timeFilter AND \"QueueName\"='GBIngestionCompletionEvent-prod-na' AND \"stat\"='Sum' GROUP BY time(30m) FILL(null)",
+              "rawQuery": true,
+              "refId": "C",
+              "resultFormat": "time_series",
+              "select": [
+                [
+                  {
+                    "params": [
+                      "value"
+                    ],
+                    "type": "field"
+                  },
+                  {
+                    "params": [],
+                    "type": "mean"
+                  }
+                ]
+              ],
+              "tags": []
+            },
+            {
+              "alias": "GbTempDataReadyEvent-prod-na",
+              "dsType": "influxdb",
+              "expr": "NumberOfMessagesReceived{QueueName=\"GbTempDataReadyEvent-prod-na\",stat=\"Sum\"}",
+              "format": "time_series",
+              "groupBy": [
+                {
+                  "params": [
+                    "$__interval"
+                  ],
+                  "type": "time"
+                },
+                {
+                  "params": [
+                    "null"
+                  ],
+                  "type": "fill"
+                }
+              ],
+              "intervalFactor": 1,
+              "legendFormat": "{{QueueName}}",
+              "orderByTime": "ASC",
+              "policy": "default",
+              "query": "SELECT sum(\"value\") AS \"mean_value\" FROM \"telegraf\".\"autogen\".\"NumberOfMessagesDeleted\" WHERE $timeFilter AND \"QueueName\"='GbTempDataReadyEvent-prod-na' AND \"stat\"='Sum' GROUP BY time(30m) FILL(null)",
+              "rawQuery": true,
+              "refId": "D",
+              "resultFormat": "time_series",
+              "select": [
+                [
+                  {
+                    "params": [
+                      "value"
+                    ],
+                    "type": "field"
+                  },
+                  {
+                    "params": [],
+                    "type": "mean"
+                  }
+                ]
+              ],
+              "tags": []
+            },
+            {
+              "alias": "AggregationReadyUsers-prod-na",
+              "dsType": "influxdb",
+              "expr": "NumberOfMessagesReceived{QueueName=\"AggregationReadyUsers-prod-na\",stat=\"Sum\"}",
+              "format": "time_series",
+              "groupBy": [
+                {
+                  "params": [
+                    "$__interval"
+                  ],
+                  "type": "time"
+                },
+                {
+                  "params": [
+                    "null"
+                  ],
+                  "type": "fill"
+                }
+              ],
+              "intervalFactor": 1,
+              "legendFormat": "{{QueueName}}",
+              "orderByTime": "ASC",
+              "policy": "default",
+              "query": "SELECT sum(\"value\") AS \"mean_value\" FROM \"telegraf\".\"autogen\".\"NumberOfMessagesDeleted\" WHERE $timeFilter AND \"QueueName\"='AggregationReadyUsers-prod-na' AND \"stat\"='Sum' GROUP BY time(30m) FILL(null)",
+              "rawQuery": true,
+              "refId": "E",
+              "resultFormat": "time_series",
+              "select": [
+                [
+                  {
+                    "params": [
+                      "value"
+                    ],
+                    "type": "field"
+                  },
+                  {
+                    "params": [],
+                    "type": "mean"
+                  }
+                ]
+              ],
+              "tags": []
+            },
+            {
+              "alias": "hybridDisaggReady-prod-na",
+              "dsType": "influxdb",
+              "expr": "NumberOfMessagesReceived{QueueName=\"hybridDisaggReady-prod-na\",stat=\"Sum\"}",
+              "format": "time_series",
+              "groupBy": [
+                {
+                  "params": [
+                    "$__interval"
+                  ],
+                  "type": "time"
+                },
+                {
+                  "params": [
+                    "null"
+                  ],
+                  "type": "fill"
+                }
+              ],
+              "intervalFactor": 1,
+              "legendFormat": "{{QueueName}}",
+              "orderByTime": "ASC",
+              "policy": "default",
+              "query": "SELECT sum(\"value\") AS \"mean_value\" FROM \"telegraf\".\"autogen\".\"NumberOfMessagesDeleted\" WHERE $timeFilter AND \"QueueName\"='hybridDisaggReady-prod-na' AND \"stat\"='Sum' GROUP BY time(30m) FILL(null)",
+              "rawQuery": true,
+              "refId": "F",
+              "resultFormat": "time_series",
+              "select": [
+                [
+                  {
+                    "params": [
+                      "value"
+                    ],
+                    "type": "field"
+                  },
+                  {
+                    "params": [],
+                    "type": "mean"
+                  }
+                ]
+              ],
+              "tags": []
+            }
+          ],
+          "thresholds": [
+            {
+              "color": "#bf1b00",
+              "value": "0"
+            },
+            {
+              "color": "#c15c17",
+              "value": "100"
+            },
+            {
+              "color": "#508642",
+              "value": "1000"
+            }
+          ],
+          "title": "Queue Status -120m",
+          "type": "btplc-status-dot-panel"
+        },
+        {
+          "datasource": "influx_ec2",
+          "decimals": 0,
+          "defaultColor": "rgb(117, 117, 117)",
+          "format": "none",
+          "height": "200px",
+          "id": 22,
+          "linkIndex": "0",
+          "linkVars": [
+            {
+              "index": "0",
+              "name": "QueueName"
+            },
+            {
+              "index": "0",
+              "name": "myvar"
+            }
+          ],
+          "links": [
+            {
+              "dashUri": "db/new-queue-metrics",
+              "dashboard": "New Queue Metrics",
+              "includeVars": false,
+              "keepTime": false,
+              "params": "var-QueueName=$QueueName",
+              "targetBlank": true,
+              "title": "New Queue Metrics",
+              "type": "dashboard"
+            }
+          ],
+          "mathColorValue": "data[x-3]",
+          "mathDisplayValue": "data[x-3]",
+          "mathScratchPad": "data = size(data)[1] == 0 ? [NaN] : data\nx = size(data)[1]",
+          "radius": "70px",
+          "span": 1,
+          "targets": [
+            {
+              "alias": "GbUploadEvent-prod-na",
+              "dsType": "influxdb",
+              "expr": "NumberOfMessagesReceived{QueueName=\"GbUploadEvent-prod-na\",stat=\"Sum\"}",
+              "format": "time_series",
+              "groupBy": [
+                {
+                  "params": [
+                    "$__interval"
+                  ],
+                  "type": "time"
+                },
+                {
+                  "params": [
+                    "null"
+                  ],
+                  "type": "fill"
+                }
+              ],
+              "intervalFactor": 1,
+              "legendFormat": "{{QueueName}}",
+              "orderByTime": "ASC",
+              "policy": "default",
+              "query": "SELECT sum(\"value\") AS \"mean_value\" FROM \"telegraf\".\"autogen\".\"NumberOfMessagesDeleted\" WHERE $timeFilter AND \"QueueName\"='GbUploadEvent-prod-na' AND \"stat\"='Sum' GROUP BY time(30m) FILL(null)",
+              "rawQuery": true,
+              "refId": "A",
+              "resultFormat": "time_series",
+              "select": [
+                [
+                  {
+                    "params": [
+                      "value"
+                    ],
+                    "type": "field"
+                  },
+                  {
+                    "params": [],
+                    "type": "mean"
+                  }
+                ]
+              ],
+              "tags": []
+            },
+            {
+              "alias": "GBUserDataIngestion-prod-na",
+              "dsType": "influxdb",
+              "expr": "NumberOfMessagesReceived{QueueName=\"GBUserDataIngestion-prod-na\",stat=\"Sum\"}",
+              "format": "time_series",
+              "groupBy": [
+                {
+                  "params": [
+                    "$__interval"
+                  ],
+                  "type": "time"
+                },
+                {
+                  "params": [
+                    "null"
+                  ],
+                  "type": "fill"
+                }
+              ],
+              "intervalFactor": 1,
+              "legendFormat": "{{QueueName}}",
+              "orderByTime": "ASC",
+              "policy": "default",
+              "query": "SELECT sum(\"value\") AS \"mean_value\" FROM \"telegraf\".\"autogen\".\"NumberOfMessagesDeleted\" WHERE $timeFilter AND \"stat\"='Sum' AND \"QueueName\"='GBUserDataIngestion-prod-na' GROUP BY time(30m) FILL(null)",
+              "rawQuery": true,
+              "refId": "B",
+              "resultFormat": "time_series",
+              "select": [
+                [
+                  {
+                    "params": [
+                      "value"
+                    ],
+                    "type": "field"
+                  },
+                  {
+                    "params": [],
+                    "type": "mean"
+                  }
+                ]
+              ],
+              "tags": []
+            },
+            {
+              "alias": "GBIngestionCompletionEvent-prod-na",
+              "dsType": "influxdb",
+              "expr": "NumberOfMessagesReceived{QueueName=\"GBIngestionCompletionEvent-prod-na\",stat=\"Sum\"}",
+              "format": "time_series",
+              "groupBy": [
+                {
+                  "params": [
+                    "$__interval"
+                  ],
+                  "type": "time"
+                },
+                {
+                  "params": [
+                    "null"
+                  ],
+                  "type": "fill"
+                }
+              ],
+              "intervalFactor": 1,
+              "legendFormat": "{{QueueName}}",
+              "orderByTime": "ASC",
+              "policy": "default",
+              "query": "SELECT sum(\"value\") AS \"mean_value\" FROM \"telegraf\".\"autogen\".\"NumberOfMessagesDeleted\" WHERE $timeFilter AND \"QueueName\"='GBIngestionCompletionEvent-prod-na' AND \"stat\"='Sum' GROUP BY time(30m) FILL(null)",
+              "rawQuery": true,
+              "refId": "C",
+              "resultFormat": "time_series",
+              "select": [
+                [
+                  {
+                    "params": [
+                      "value"
+                    ],
+                    "type": "field"
+                  },
+                  {
+                    "params": [],
+                    "type": "mean"
+                  }
+                ]
+              ],
+              "tags": []
+            },
+            {
+              "alias": "GbTempDataReadyEvent-prod-na",
+              "dsType": "influxdb",
+              "expr": "NumberOfMessagesReceived{QueueName=\"GbTempDataReadyEvent-prod-na\",stat=\"Sum\"}",
+              "format": "time_series",
+              "groupBy": [
+                {
+                  "params": [
+                    "$__interval"
+                  ],
+                  "type": "time"
+                },
+                {
+                  "params": [
+                    "null"
+                  ],
+                  "type": "fill"
+                }
+              ],
+              "intervalFactor": 1,
+              "legendFormat": "{{QueueName}}",
+              "orderByTime": "ASC",
+              "policy": "default",
+              "query": "SELECT sum(\"value\") AS \"mean_value\" FROM \"telegraf\".\"autogen\".\"NumberOfMessagesDeleted\" WHERE $timeFilter AND \"QueueName\"='GbTempDataReadyEvent-prod-na' AND \"stat\"='Sum' GROUP BY time(30m) FILL(null)",
+              "rawQuery": true,
+              "refId": "D",
+              "resultFormat": "time_series",
+              "select": [
+                [
+                  {
+                    "params": [
+                      "value"
+                    ],
+                    "type": "field"
+                  },
+                  {
+                    "params": [],
+                    "type": "mean"
+                  }
+                ]
+              ],
+              "tags": []
+            },
+            {
+              "alias": "AggregationReadyUsers-prod-na",
+              "dsType": "influxdb",
+              "expr": "NumberOfMessagesReceived{QueueName=\"AggregationReadyUsers-prod-na\",stat=\"Sum\"}",
+              "format": "time_series",
+              "groupBy": [
+                {
+                  "params": [
+                    "$__interval"
+                  ],
+                  "type": "time"
+                },
+                {
+                  "params": [
+                    "null"
+                  ],
+                  "type": "fill"
+                }
+              ],
+              "intervalFactor": 1,
+              "legendFormat": "{{QueueName}}",
+              "orderByTime": "ASC",
+              "policy": "default",
+              "query": "SELECT sum(\"value\") AS \"mean_value\" FROM \"telegraf\".\"autogen\".\"NumberOfMessagesDeleted\" WHERE $timeFilter AND \"QueueName\"='AggregationReadyUsers-prod-na' AND \"stat\"='Sum' GROUP BY time(30m) FILL(null)",
+              "rawQuery": true,
+              "refId": "E",
+              "resultFormat": "time_series",
+              "select": [
+                [
+                  {
+                    "params": [
+                      "value"
+                    ],
+                    "type": "field"
+                  },
+                  {
+                    "params": [],
+                    "type": "mean"
+                  }
+                ]
+              ],
+              "tags": []
+            },
+            {
+              "alias": "hybridDisaggReady-prod-na",
+              "dsType": "influxdb",
+              "expr": "NumberOfMessagesReceived{QueueName=\"hybridDisaggReady-prod-na\",stat=\"Sum\"}",
+              "format": "time_series",
+              "groupBy": [
+                {
+                  "params": [
+                    "$__interval"
+                  ],
+                  "type": "time"
+                },
+                {
+                  "params": [
+                    "null"
+                  ],
+                  "type": "fill"
+                }
+              ],
+              "intervalFactor": 1,
+              "legendFormat": "{{QueueName}}",
+              "orderByTime": "ASC",
+              "policy": "default",
+              "query": "SELECT sum(\"value\") AS \"mean_value\" FROM \"telegraf\".\"autogen\".\"NumberOfMessagesDeleted\" WHERE $timeFilter AND \"QueueName\"='hybridDisaggReady-prod-na' AND \"stat\"='Sum' GROUP BY time(30m) FILL(null)",
+              "rawQuery": true,
+              "refId": "F",
+              "resultFormat": "time_series",
+              "select": [
+                [
+                  {
+                    "params": [
+                      "value"
+                    ],
+                    "type": "field"
+                  },
+                  {
+                    "params": [],
+                    "type": "mean"
+                  }
+                ]
+              ],
+              "tags": []
+            }
+          ],
+          "thresholds": [
+            {
+              "color": "#bf1b00",
+              "value": "0"
+            },
+            {
+              "color": "#c15c17",
+              "value": "100"
+            },
+            {
+              "color": "#508642",
+              "value": "1000"
+            }
+          ],
+          "title": "Queue Status -90m",
+          "type": "btplc-status-dot-panel"
+        },
+        {
+          "datasource": "influx_ec2",
+          "decimals": 0,
+          "defaultColor": "rgb(117, 117, 117)",
+          "format": "none",
+          "height": "200px",
+          "id": 23,
+          "linkIndex": "0",
+          "linkVars": [
+            {
+              "index": "0",
+              "name": "QueueName"
+            },
+            {
+              "index": "0",
+              "name": "myvar"
+            }
+          ],
+          "links": [
+            {
+              "dashUri": "db/new-queue-metrics",
+              "dashboard": "New Queue Metrics",
+              "includeVars": false,
+              "keepTime": false,
+              "params": "var-QueueName=$QueueName",
+              "targetBlank": true,
+              "title": "New Queue Metrics",
+              "type": "dashboard"
+            }
+          ],
+          "mathColorValue": "data[x-2]",
+          "mathDisplayValue": "data[x-2]",
+          "mathScratchPad": "data = size(data)[1] == 0 ? [NaN] : data\nx = size(data)[1]",
+          "radius": "70px",
+          "span": 1,
+          "targets": [
+            {
+              "alias": "GbUploadEvent-prod-na",
+              "dsType": "influxdb",
+              "expr": "NumberOfMessagesReceived{QueueName=\"GbUploadEvent-prod-na\",stat=\"Sum\"}",
+              "format": "time_series",
+              "groupBy": [
+                {
+                  "params": [
+                    "$__interval"
+                  ],
+                  "type": "time"
+                },
+                {
+                  "params": [
+                    "null"
+                  ],
+                  "type": "fill"
+                }
+              ],
+              "intervalFactor": 1,
+              "legendFormat": "{{QueueName}}",
+              "orderByTime": "ASC",
+              "policy": "default",
+              "query": "SELECT sum(\"value\") AS \"mean_value\" FROM \"telegraf\".\"autogen\".\"NumberOfMessagesDeleted\" WHERE $timeFilter AND \"QueueName\"='GbUploadEvent-prod-na' AND \"stat\"='Sum' GROUP BY time(30m) FILL(null)",
+              "rawQuery": true,
+              "refId": "A",
+              "resultFormat": "time_series",
+              "select": [
+                [
+                  {
+                    "params": [
+                      "value"
+                    ],
+                    "type": "field"
+                  },
+                  {
+                    "params": [],
+                    "type": "mean"
+                  }
+                ]
+              ],
+              "tags": []
+            },
+            {
+              "alias": "GBUserDataIngestion-prod-na",
+              "dsType": "influxdb",
+              "expr": "NumberOfMessagesReceived{QueueName=\"GBUserDataIngestion-prod-na\",stat=\"Sum\"}",
+              "format": "time_series",
+              "groupBy": [
+                {
+                  "params": [
+                    "$__interval"
+                  ],
+                  "type": "time"
+                },
+                {
+                  "params": [
+                    "null"
+                  ],
+                  "type": "fill"
+                }
+              ],
+              "intervalFactor": 1,
+              "legendFormat": "{{QueueName}}",
+              "orderByTime": "ASC",
+              "policy": "default",
+              "query": "SELECT sum(\"value\") AS \"mean_value\" FROM \"telegraf\".\"autogen\".\"NumberOfMessagesDeleted\" WHERE $timeFilter AND \"stat\"='Sum' AND \"QueueName\"='GBUserDataIngestion-prod-na' GROUP BY time(30m) FILL(null)",
+              "rawQuery": true,
+              "refId": "B",
+              "resultFormat": "time_series",
+              "select": [
+                [
+                  {
+                    "params": [
+                      "value"
+                    ],
+                    "type": "field"
+                  },
+                  {
+                    "params": [],
+                    "type": "mean"
+                  }
+                ]
+              ],
+              "tags": []
+            },
+            {
+              "alias": "GBIngestionCompletionEvent-prod-na",
+              "dsType": "influxdb",
+              "expr": "NumberOfMessagesReceived{QueueName=\"GBIngestionCompletionEvent-prod-na\",stat=\"Sum\"}",
+              "format": "time_series",
+              "groupBy": [
+                {
+                  "params": [
+                    "$__interval"
+                  ],
+                  "type": "time"
+                },
+                {
+                  "params": [
+                    "null"
+                  ],
+                  "type": "fill"
+                }
+              ],
+              "intervalFactor": 1,
+              "legendFormat": "{{QueueName}}",
+              "orderByTime": "ASC",
+              "policy": "default",
+              "query": "SELECT sum(\"value\") AS \"mean_value\" FROM \"telegraf\".\"autogen\".\"NumberOfMessagesDeleted\" WHERE $timeFilter AND \"QueueName\"='GBIngestionCompletionEvent-prod-na' AND \"stat\"='Sum' GROUP BY time(30m) FILL(null)",
+              "rawQuery": true,
+              "refId": "C",
+              "resultFormat": "time_series",
+              "select": [
+                [
+                  {
+                    "params": [
+                      "value"
+                    ],
+                    "type": "field"
+                  },
+                  {
+                    "params": [],
+                    "type": "mean"
+                  }
+                ]
+              ],
+              "tags": []
+            },
+            {
+              "alias": "GbTempDataReadyEvent-prod-na",
+              "dsType": "influxdb",
+              "expr": "NumberOfMessagesReceived{QueueName=\"GbTempDataReadyEvent-prod-na\",stat=\"Sum\"}",
+              "format": "time_series",
+              "groupBy": [
+                {
+                  "params": [
+                    "$__interval"
+                  ],
+                  "type": "time"
+                },
+                {
+                  "params": [
+                    "null"
+                  ],
+                  "type": "fill"
+                }
+              ],
+              "intervalFactor": 1,
+              "legendFormat": "{{QueueName}}",
+              "orderByTime": "ASC",
+              "policy": "default",
+              "query": "SELECT sum(\"value\") AS \"mean_value\" FROM \"telegraf\".\"autogen\".\"NumberOfMessagesDeleted\" WHERE $timeFilter AND \"QueueName\"='GbTempDataReadyEvent-prod-na' AND \"stat\"='Sum' GROUP BY time(30m) FILL(null)",
+              "rawQuery": true,
+              "refId": "D",
+              "resultFormat": "time_series",
+              "select": [
+                [
+                  {
+                    "params": [
+                      "value"
+                    ],
+                    "type": "field"
+                  },
+                  {
+                    "params": [],
+                    "type": "mean"
+                  }
+                ]
+              ],
+              "tags": []
+            },
+            {
+              "alias": "AggregationReadyUsers-prod-na",
+              "dsType": "influxdb",
+              "expr": "NumberOfMessagesReceived{QueueName=\"AggregationReadyUsers-prod-na\",stat=\"Sum\"}",
+              "format": "time_series",
+              "groupBy": [
+                {
+                  "params": [
+                    "$__interval"
+                  ],
+                  "type": "time"
+                },
+                {
+                  "params": [
+                    "null"
+                  ],
+                  "type": "fill"
+                }
+              ],
+              "intervalFactor": 1,
+              "legendFormat": "{{QueueName}}",
+              "orderByTime": "ASC",
+              "policy": "default",
+              "query": "SELECT sum(\"value\") AS \"mean_value\" FROM \"telegraf\".\"autogen\".\"NumberOfMessagesDeleted\" WHERE $timeFilter AND \"QueueName\"='AggregationReadyUsers-prod-na' AND \"stat\"='Sum' GROUP BY time(30m) FILL(null)",
+              "rawQuery": true,
+              "refId": "E",
+              "resultFormat": "time_series",
+              "select": [
+                [
+                  {
+                    "params": [
+                      "value"
+                    ],
+                    "type": "field"
+                  },
+                  {
+                    "params": [],
+                    "type": "mean"
+                  }
+                ]
+              ],
+              "tags": []
+            },
+            {
+              "alias": "hybridDisaggReady-prod-na",
+              "dsType": "influxdb",
+              "expr": "NumberOfMessagesReceived{QueueName=\"hybridDisaggReady-prod-na\",stat=\"Sum\"}",
+              "format": "time_series",
+              "groupBy": [
+                {
+                  "params": [
+                    "$__interval"
+                  ],
+                  "type": "time"
+                },
+                {
+                  "params": [
+                    "null"
+                  ],
+                  "type": "fill"
+                }
+              ],
+              "intervalFactor": 1,
+              "legendFormat": "{{QueueName}}",
+              "orderByTime": "ASC",
+              "policy": "default",
+              "query": "SELECT sum(\"value\") AS \"mean_value\" FROM \"telegraf\".\"autogen\".\"NumberOfMessagesDeleted\" WHERE $timeFilter AND \"QueueName\"='hybridDisaggReady-prod-na' AND \"stat\"='Sum' GROUP BY time(30m) FILL(null)",
+              "rawQuery": true,
+              "refId": "F",
+              "resultFormat": "time_series",
+              "select": [
+                [
+                  {
+                    "params": [
+                      "value"
+                    ],
+                    "type": "field"
+                  },
+                  {
+                    "params": [],
+                    "type": "mean"
+                  }
+                ]
+              ],
+              "tags": []
+            }
+          ],
+          "thresholds": [
+            {
+              "color": "#bf1b00",
+              "value": "0"
+            },
+            {
+              "color": "#c15c17",
+              "value": "100"
+            },
+            {
+              "color": "#508642",
+              "value": "1000"
+            }
+          ],
+          "title": "Queue Status -60m",
+          "type": "btplc-status-dot-panel"
+        },
+        {
+          "datasource": "influx_ec2",
+          "decimals": 0,
+          "defaultColor": "rgb(117, 117, 117)",
+          "format": "none",
+          "height": "200px",
+          "id": 24,
+          "linkIndex": "0",
+          "linkVars": [
+            {
+              "index": "0",
+              "name": "QueueName"
+            },
+            {
+              "index": "0",
+              "name": "myvar"
+            }
+          ],
+          "links": [
+            {
+              "dashUri": "db/new-queue-metrics",
+              "dashboard": "New Queue Metrics",
+              "includeVars": false,
+              "keepTime": false,
+              "params": "var-QueueName=$QueueName",
+              "targetBlank": true,
+              "title": "New Queue Metrics",
+              "type": "dashboard"
+            }
+          ],
+          "mathColorValue": "data[x-1]",
+          "mathDisplayValue": "data[x-1]",
+          "mathScratchPad": "data = size(data)[1] == 0 ? [NaN] : data\nx = size(data)[1]",
+          "radius": "70px",
+          "span": 1,
+          "targets": [
+            {
+              "alias": "GbUploadEvent-prod-na",
+              "dsType": "influxdb",
+              "expr": "NumberOfMessagesReceived{QueueName=\"GbUploadEvent-prod-na\",stat=\"Sum\"}",
+              "format": "time_series",
+              "groupBy": [
+                {
+                  "params": [
+                    "$__interval"
+                  ],
+                  "type": "time"
+                },
+                {
+                  "params": [
+                    "null"
+                  ],
+                  "type": "fill"
+                }
+              ],
+              "intervalFactor": 1,
+              "legendFormat": "{{QueueName}}",
+              "orderByTime": "ASC",
+              "policy": "default",
+              "query": "SELECT sum(\"value\") AS \"mean_value\" FROM \"telegraf\".\"autogen\".\"NumberOfMessagesDeleted\" WHERE $timeFilter AND \"QueueName\"='GbUploadEvent-prod-na' AND \"stat\"='Sum' GROUP BY time(30m) FILL(null)",
+              "rawQuery": true,
+              "refId": "A",
+              "resultFormat": "time_series",
+              "select": [
+                [
+                  {
+                    "params": [
+                      "value"
+                    ],
+                    "type": "field"
+                  },
+                  {
+                    "params": [],
+                    "type": "mean"
+                  }
+                ]
+              ],
+              "tags": []
+            },
+            {
+              "alias": "GBUserDataIngestion-prod-na",
+              "dsType": "influxdb",
+              "expr": "NumberOfMessagesReceived{QueueName=\"GBUserDataIngestion-prod-na\",stat=\"Sum\"}",
+              "format": "time_series",
+              "groupBy": [
+                {
+                  "params": [
+                    "$__interval"
+                  ],
+                  "type": "time"
+                },
+                {
+                  "params": [
+                    "null"
+                  ],
+                  "type": "fill"
+                }
+              ],
+              "intervalFactor": 1,
+              "legendFormat": "{{QueueName}}",
+              "orderByTime": "ASC",
+              "policy": "default",
+              "query": "SELECT sum(\"value\") AS \"mean_value\" FROM \"telegraf\".\"autogen\".\"NumberOfMessagesDeleted\" WHERE $timeFilter AND \"stat\"='Sum' AND \"QueueName\"='GBUserDataIngestion-prod-na' GROUP BY time(30m) FILL(null)",
+              "rawQuery": true,
+              "refId": "B",
+              "resultFormat": "time_series",
+              "select": [
+                [
+                  {
+                    "params": [
+                      "value"
+                    ],
+                    "type": "field"
+                  },
+                  {
+                    "params": [],
+                    "type": "mean"
+                  }
+                ]
+              ],
+              "tags": []
+            },
+            {
+              "alias": "GBIngestionCompletionEvent-prod-na",
+              "dsType": "influxdb",
+              "expr": "NumberOfMessagesReceived{QueueName=\"GBIngestionCompletionEvent-prod-na\",stat=\"Sum\"}",
+              "format": "time_series",
+              "groupBy": [
+                {
+                  "params": [
+                    "$__interval"
+                  ],
+                  "type": "time"
+                },
+                {
+                  "params": [
+                    "null"
+                  ],
+                  "type": "fill"
+                }
+              ],
+              "intervalFactor": 1,
+              "legendFormat": "{{QueueName}}",
+              "orderByTime": "ASC",
+              "policy": "default",
+              "query": "SELECT sum(\"value\") AS \"mean_value\" FROM \"telegraf\".\"autogen\".\"NumberOfMessagesDeleted\" WHERE $timeFilter AND \"QueueName\"='GBIngestionCompletionEvent-prod-na' AND \"stat\"='Sum' GROUP BY time(30m) FILL(null)",
+              "rawQuery": true,
+              "refId": "C",
+              "resultFormat": "time_series",
+              "select": [
+                [
+                  {
+                    "params": [
+                      "value"
+                    ],
+                    "type": "field"
+                  },
+                  {
+                    "params": [],
+                    "type": "mean"
+                  }
+                ]
+              ],
+              "tags": []
+            },
+            {
+              "alias": "GbTempDataReadyEvent-prod-na",
+              "dsType": "influxdb",
+              "expr": "NumberOfMessagesReceived{QueueName=\"GbTempDataReadyEvent-prod-na\",stat=\"Sum\"}",
+              "format": "time_series",
+              "groupBy": [
+                {
+                  "params": [
+                    "$__interval"
+                  ],
+                  "type": "time"
+                },
+                {
+                  "params": [
+                    "null"
+                  ],
+                  "type": "fill"
+                }
+              ],
+              "intervalFactor": 1,
+              "legendFormat": "{{QueueName}}",
+              "orderByTime": "ASC",
+              "policy": "default",
+              "query": "SELECT sum(\"value\") AS \"mean_value\" FROM \"telegraf\".\"autogen\".\"NumberOfMessagesDeleted\" WHERE $timeFilter AND \"QueueName\"='GbTempDataReadyEvent-prod-na' AND \"stat\"='Sum' GROUP BY time(30m) FILL(null)",
+              "rawQuery": true,
+              "refId": "D",
+              "resultFormat": "time_series",
+              "select": [
+                [
+                  {
+                    "params": [
+                      "value"
+                    ],
+                    "type": "field"
+                  },
+                  {
+                    "params": [],
+                    "type": "mean"
+                  }
+                ]
+              ],
+              "tags": []
+            },
+            {
+              "alias": "AggregationReadyUsers-prod-na",
+              "dsType": "influxdb",
+              "expr": "NumberOfMessagesReceived{QueueName=\"AggregationReadyUsers-prod-na\",stat=\"Sum\"}",
+              "format": "time_series",
+              "groupBy": [
+                {
+                  "params": [
+                    "$__interval"
+                  ],
+                  "type": "time"
+                },
+                {
+                  "params": [
+                    "null"
+                  ],
+                  "type": "fill"
+                }
+              ],
+              "intervalFactor": 1,
+              "legendFormat": "{{QueueName}}",
+              "orderByTime": "ASC",
+              "policy": "default",
+              "query": "SELECT sum(\"value\") AS \"mean_value\" FROM \"telegraf\".\"autogen\".\"NumberOfMessagesDeleted\" WHERE $timeFilter AND \"QueueName\"='AggregationReadyUsers-prod-na' AND \"stat\"='Sum' GROUP BY time(30m) FILL(null)",
+              "rawQuery": true,
+              "refId": "E",
+              "resultFormat": "time_series",
+              "select": [
+                [
+                  {
+                    "params": [
+                      "value"
+                    ],
+                    "type": "field"
+                  },
+                  {
+                    "params": [],
+                    "type": "mean"
+                  }
+                ]
+              ],
+              "tags": []
+            },
+            {
+              "alias": "hybridDisaggReady-prod-na",
+              "dsType": "influxdb",
+              "expr": "NumberOfMessagesReceived{QueueName=\"hybridDisaggReady-prod-na\",stat=\"Sum\"}",
+              "format": "time_series",
+              "groupBy": [
+                {
+                  "params": [
+                    "$__interval"
+                  ],
+                  "type": "time"
+                },
+                {
+                  "params": [
+                    "null"
+                  ],
+                  "type": "fill"
+                }
+              ],
+              "intervalFactor": 1,
+              "legendFormat": "{{QueueName}}",
+              "orderByTime": "ASC",
+              "policy": "default",
+              "query": "SELECT sum(\"value\") AS \"mean_value\" FROM \"telegraf\".\"autogen\".\"NumberOfMessagesDeleted\" WHERE $timeFilter AND \"QueueName\"='hybridDisaggReady-prod-na' AND \"stat\"='Sum' GROUP BY time(30m) FILL(null)",
+              "rawQuery": true,
+              "refId": "F",
+              "resultFormat": "time_series",
+              "select": [
+                [
+                  {
+                    "params": [
+                      "value"
+                    ],
+                    "type": "field"
+                  },
+                  {
+                    "params": [],
+                    "type": "mean"
+                  }
+                ]
+              ],
+              "tags": []
+            }
+          ],
+          "thresholds": [
+            {
+              "color": "#bf1b00",
+              "value": "0"
+            },
+            {
+              "color": "#c15c17",
+              "value": "100"
+            },
+            {
+              "color": "#508642",
+              "value": "1000"
+            }
+          ],
+          "title": "Queue Status -30m",
+          "type": "btplc-status-dot-panel"
+        },
+        {
+          "datasource": "influx_ec2",
+          "decimals": 0,
+          "defaultColor": "rgb(117, 117, 117)",
+          "format": "none",
+          "height": "200px",
+          "id": 25,
+          "linkIndex": "0",
+          "linkVars": [
+            {
+              "index": "0",
+              "name": "QueueName"
+            },
+            {
+              "index": "0",
+              "name": "myvar"
+            }
+          ],
+          "links": [
+            {
+              "dashUri": "db/new-queue-metrics",
+              "dashboard": "New Queue Metrics",
+              "includeVars": false,
+              "keepTime": false,
+              "params": "var-QueueName=$QueueName",
+              "targetBlank": true,
+              "title": "New Queue Metrics",
+              "type": "dashboard"
+            }
+          ],
+          "mathColorValue": "data[x]",
+          "mathDisplayValue": "data[x]",
+          "mathScratchPad": "data = size(data)[1] == 0 ? [NaN] : data\nx = size(data)[1]",
+          "radius": "70px",
+          "span": 1,
+          "targets": [
+            {
+              "alias": "GbUploadEvent-prod-na",
+              "dsType": "influxdb",
+              "expr": "NumberOfMessagesReceived{QueueName=\"GbUploadEvent-prod-na\",stat=\"Sum\"}",
+              "format": "time_series",
+              "groupBy": [
+                {
+                  "params": [
+                    "$__interval"
+                  ],
+                  "type": "time"
+                },
+                {
+                  "params": [
+                    "null"
+                  ],
+                  "type": "fill"
+                }
+              ],
+              "intervalFactor": 1,
+              "legendFormat": "{{QueueName}}",
+              "orderByTime": "ASC",
+              "policy": "default",
+              "query": "SELECT sum(\"value\") AS \"mean_value\" FROM \"telegraf\".\"autogen\".\"NumberOfMessagesDeleted\" WHERE $timeFilter AND \"QueueName\"='GbUploadEvent-prod-na' AND \"stat\"='Sum' GROUP BY time(30m) FILL(null)",
+              "rawQuery": true,
+              "refId": "A",
+              "resultFormat": "time_series",
+              "select": [
+                [
+                  {
+                    "params": [
+                      "value"
+                    ],
+                    "type": "field"
+                  },
+                  {
+                    "params": [],
+                    "type": "mean"
+                  }
+                ]
+              ],
+              "tags": []
+            },
+            {
+              "alias": "GBUserDataIngestion-prod-na",
+              "dsType": "influxdb",
+              "expr": "NumberOfMessagesReceived{QueueName=\"GBUserDataIngestion-prod-na\",stat=\"Sum\"}",
+              "format": "time_series",
+              "groupBy": [
+                {
+                  "params": [
+                    "$__interval"
+                  ],
+                  "type": "time"
+                },
+                {
+                  "params": [
+                    "null"
+                  ],
+                  "type": "fill"
+                }
+              ],
+              "intervalFactor": 1,
+              "legendFormat": "{{QueueName}}",
+              "orderByTime": "ASC",
+              "policy": "default",
+              "query": "SELECT sum(\"value\") AS \"mean_value\" FROM \"telegraf\".\"autogen\".\"NumberOfMessagesDeleted\" WHERE $timeFilter AND \"stat\"='Sum' AND \"QueueName\"='GBUserDataIngestion-prod-na' GROUP BY time(30m) FILL(null)",
+              "rawQuery": true,
+              "refId": "B",
+              "resultFormat": "time_series",
+              "select": [
+                [
+                  {
+                    "params": [
+                      "value"
+                    ],
+                    "type": "field"
+                  },
+                  {
+                    "params": [],
+                    "type": "mean"
+                  }
+                ]
+              ],
+              "tags": []
+            },
+            {
+              "alias": "GBIngestionCompletionEvent-prod-na",
+              "dsType": "influxdb",
+              "expr": "NumberOfMessagesReceived{QueueName=\"GBIngestionCompletionEvent-prod-na\",stat=\"Sum\"}",
+              "format": "time_series",
+              "groupBy": [
+                {
+                  "params": [
+                    "$__interval"
+                  ],
+                  "type": "time"
+                },
+                {
+                  "params": [
+                    "null"
+                  ],
+                  "type": "fill"
+                }
+              ],
+              "intervalFactor": 1,
+              "legendFormat": "{{QueueName}}",
+              "orderByTime": "ASC",
+              "policy": "default",
+              "query": "SELECT sum(\"value\") AS \"mean_value\" FROM \"telegraf\".\"autogen\".\"NumberOfMessagesDeleted\" WHERE $timeFilter AND \"QueueName\"='GBIngestionCompletionEvent-prod-na' AND \"stat\"='Sum' GROUP BY time(30m) FILL(null)",
+              "rawQuery": true,
+              "refId": "C",
+              "resultFormat": "time_series",
+              "select": [
+                [
+                  {
+                    "params": [
+                      "value"
+                    ],
+                    "type": "field"
+                  },
+                  {
+                    "params": [],
+                    "type": "mean"
+                  }
+                ]
+              ],
+              "tags": []
+            },
+            {
+              "alias": "GbTempDataReadyEvent-prod-na",
+              "dsType": "influxdb",
+              "expr": "NumberOfMessagesReceived{QueueName=\"GbTempDataReadyEvent-prod-na\",stat=\"Sum\"}",
+              "format": "time_series",
+              "groupBy": [
+                {
+                  "params": [
+                    "$__interval"
+                  ],
+                  "type": "time"
+                },
+                {
+                  "params": [
+                    "null"
+                  ],
+                  "type": "fill"
+                }
+              ],
+              "intervalFactor": 1,
+              "legendFormat": "{{QueueName}}",
+              "orderByTime": "ASC",
+              "policy": "default",
+              "query": "SELECT sum(\"value\") AS \"mean_value\" FROM \"telegraf\".\"autogen\".\"NumberOfMessagesDeleted\" WHERE $timeFilter AND \"QueueName\"='GbTempDataReadyEvent-prod-na' AND \"stat\"='Sum' GROUP BY time(30m) FILL(null)",
+              "rawQuery": true,
+              "refId": "D",
+              "resultFormat": "time_series",
+              "select": [
+                [
+                  {
+                    "params": [
+                      "value"
+                    ],
+                    "type": "field"
+                  },
+                  {
+                    "params": [],
+                    "type": "mean"
+                  }
+                ]
+              ],
+              "tags": []
+            },
+            {
+              "alias": "AggregationReadyUsers-prod-na",
+              "dsType": "influxdb",
+              "expr": "NumberOfMessagesReceived{QueueName=\"AggregationReadyUsers-prod-na\",stat=\"Sum\"}",
+              "format": "time_series",
+              "groupBy": [
+                {
+                  "params": [
+                    "$__interval"
+                  ],
+                  "type": "time"
+                },
+                {
+                  "params": [
+                    "null"
+                  ],
+                  "type": "fill"
+                }
+              ],
+              "intervalFactor": 1,
+              "legendFormat": "{{QueueName}}",
+              "orderByTime": "ASC",
+              "policy": "default",
+              "query": "SELECT sum(\"value\") AS \"mean_value\" FROM \"telegraf\".\"autogen\".\"NumberOfMessagesDeleted\" WHERE $timeFilter AND \"QueueName\"='AggregationReadyUsers-prod-na' AND \"stat\"='Sum' GROUP BY time(30m) FILL(null)",
+              "rawQuery": true,
+              "refId": "E",
+              "resultFormat": "time_series",
+              "select": [
+                [
+                  {
+                    "params": [
+                      "value"
+                    ],
+                    "type": "field"
+                  },
+                  {
+                    "params": [],
+                    "type": "mean"
+                  }
+                ]
+              ],
+              "tags": []
+            },
+            {
+              "alias": "hybridDisaggReady-prod-na",
+              "dsType": "influxdb",
+              "expr": "NumberOfMessagesReceived{QueueName=\"hybridDisaggReady-prod-na\",stat=\"Sum\"}",
+              "format": "time_series",
+              "groupBy": [
+                {
+                  "params": [
+                    "$__interval"
+                  ],
+                  "type": "time"
+                },
+                {
+                  "params": [
+                    "null"
+                  ],
+                  "type": "fill"
+                }
+              ],
+              "intervalFactor": 1,
+              "legendFormat": "{{QueueName}}",
+              "orderByTime": "ASC",
+              "policy": "default",
+              "query": "SELECT sum(\"value\") AS \"mean_value\" FROM \"telegraf\".\"autogen\".\"NumberOfMessagesDeleted\" WHERE $timeFilter AND \"QueueName\"='hybridDisaggReady-prod-na' AND \"stat\"='Sum' GROUP BY time(30m) FILL(null)",
+              "rawQuery": true,
+              "refId": "F",
+              "resultFormat": "time_series",
+              "select": [
+                [
+                  {
+                    "params": [
+                      "value"
+                    ],
+                    "type": "field"
+                  },
+                  {
+                    "params": [],
+                    "type": "mean"
+                  }
+                ]
+              ],
+              "tags": []
+            }
+          ],
+          "thresholds": [
+            {
+              "color": "#bf1b00",
+              "value": "0"
+            },
+            {
+              "color": "#c15c17",
+              "value": "100"
+            },
+            {
+              "color": "#508642",
+              "value": "1000"
+            }
+          ],
+          "title": "Current Queue Status",
+          "type": "btplc-status-dot-panel"
+        }
+      ],
+      "repeat": null,
+      "repeatIteration": null,
+      "repeatRowId": null,
+      "showTitle": false,
+      "title": "Dashboard Row",
+      "titleSize": "h6"
+    }
+  ],
+  "schemaVersion": 14,
+  "style": "dark",
+  "tags": [
+    "AWS"
+  ],
+  "templating": {
+    "list": [
+      {
+        "allValue": null,
+        "current": {
+          "selected": false,
+          "text": "10008",
+          "value": "10008"
+        },
+        "datasource": "prom_tushar",
+        "hide": 0,
+        "includeAll": false,
+        "label": null,
+        "multi": false,
+        "name": "PilotId",
+        "options": [
+          {
+            "selected": false,
+            "text": "0",
+            "value": "0"
+          },
+          {
+            "selected": false,
+            "text": "10001",
+            "value": "10001"
+          },
+          {
+            "selected": false,
+            "text": "10002",
+            "value": "10002"
+          },
+          {
+            "selected": false,
+            "text": "10003",
+            "value": "10003"
+          },
+          {
+            "selected": false,
+            "text": "10006",
+            "value": "10006"
+          },
+          {
+            "selected": false,
+            "text": "10007",
+            "value": "10007"
+          },
+          {
+            "selected": true,
+            "text": "10008",
+            "value": "10008"
+          },
+          {
+            "selected": false,
+            "text": "10009",
+            "value": "10009"
+          },
+          {
+            "selected": false,
+            "text": "10010",
+            "value": "10010"
+          },
+          {
+            "selected": false,
+            "text": "10011",
+            "value": "10011"
+          },
+          {
+            "selected": false,
+            "text": "10012",
+            "value": "10012"
+          },
+          {
+            "selected": false,
+            "text": "10013",
+            "value": "10013"
+          },
+          {
+            "selected": false,
+            "text": "10019",
+            "value": "10019"
+          },
+          {
+            "selected": false,
+            "text": "52",
+            "value": "52"
+          }
+        ],
+        "query": "label_values(PilotId)",
+        "refresh": 0,
+        "regex": "",
+        "sort": 0,
+        "tagValuesQuery": "",
+        "tags": [],
+        "tagsQuery": "",
+        "type": "query",
+        "useTags": false
+      },
+      {
+        "allValue": null,
+        "current": {
+          "text": "Average",
+          "value": "Average"
+        },
+        "datasource": "prometheus_cloudwatch190118",
+        "hide": 0,
+        "includeAll": false,
+        "label": null,
+        "multi": false,
+        "name": "stat",
+        "options": [],
+        "query": "label_values(stat)",
+        "refresh": 1,
+        "regex": "",
+        "sort": 0,
+        "tagValuesQuery": "",
+        "tags": [],
+        "tagsQuery": "",
+        "type": "query",
+        "useTags": false
+      },
+      {
+        "allValue": null,
+        "current": {
+          "selected": true,
+          "text": "240",
+          "value": "240"
+        },
+        "hide": 0,
+        "includeAll": false,
+        "label": null,
+        "multi": false,
+        "name": "time",
+        "options": [
+          {
+            "selected": false,
+            "text": "30",
+            "value": "30"
+          },
+          {
+            "selected": false,
+            "text": "60",
+            "value": "60"
+          },
+          {
+            "selected": false,
+            "text": "90",
+            "value": "90"
+          },
+          {
+            "selected": false,
+            "text": "120",
+            "value": "120"
+          },
+          {
+            "selected": false,
+            "text": "150",
+            "value": "150"
+          },
+          {
+            "selected": false,
+            "text": "180",
+            "value": "180"
+          },
+          {
+            "selected": false,
+            "text": "210",
+            "value": "210"
+          },
+          {
+            "selected": true,
+            "text": "240",
+            "value": "240"
+          },
+          {
+            "selected": false,
+            "text": "270",
+            "value": "270"
+          },
+          {
+            "selected": false,
+            "text": "300",
+            "value": "300"
+          },
+          {
+            "selected": false,
+            "text": "330",
+            "value": "330"
+          },
+          {
+            "selected": false,
+            "text": "360",
+            "value": "360"
+          }
+        ],
+        "query": "30,60,90,120,150,180,210,240,270,300,330,360",
+        "type": "custom"
+      }
+    ]
+  },
+  "time": {
+    "from": "now-30d",
+    "to": "now"
+  },
+  "timepicker": {
+    "refresh_intervals": [
+      "5s",
+      "10s",
+      "30s",
+      "1m",
+      "5m",
+      "15m",
+      "30m",
+      "1h",
+      "2h",
+      "1d"
+    ],
+    "time_options": [
+      "5m",
+      "15m",
+      "1h",
+      "6h",
+      "12h",
+      "24h",
+      "2d",
+      "7d",
+      "30d"
+    ]
+  },
+  "timezone": "",
+  "title": "NewPipeline",
+  "version": 7
+}

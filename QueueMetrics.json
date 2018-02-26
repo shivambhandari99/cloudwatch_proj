@@ -1,0 +1,584 @@
+{
+  "annotations": {
+    "list": [
+      {
+        "builtIn": 1,
+        "datasource": "-- Grafana --",
+        "enable": true,
+        "hide": true,
+        "iconColor": "rgba(0, 211, 255, 1)",
+        "name": "Annotations & Alerts",
+        "type": "dashboard"
+      }
+    ]
+  },
+  "editable": true,
+  "gnetId": null,
+  "graphTooltip": 0,
+  "hideControls": true,
+  "id": 17,
+  "links": [
+    {
+      "icon": "external link",
+      "includeVars": true,
+      "keepTime": true,
+      "tags": [
+        "AWS"
+      ],
+      "targetBlank": true,
+      "type": "dashboards"
+    }
+  ],
+  "refresh": false,
+  "rows": [
+    {
+      "collapse": false,
+      "height": "250px",
+      "panels": [
+        {
+          "aliasColors": {},
+          "bars": false,
+          "dashLength": 10,
+          "dashes": false,
+          "datasource": "influx_ec2",
+          "fill": 1,
+          "id": 1,
+          "legend": {
+            "avg": false,
+            "current": false,
+            "max": false,
+            "min": false,
+            "show": true,
+            "total": false,
+            "values": false
+          },
+          "lines": true,
+          "linewidth": 5,
+          "links": [],
+          "nullPointMode": "null",
+          "percentage": false,
+          "pointradius": 5,
+          "points": false,
+          "renderer": "flot",
+          "repeat": null,
+          "seriesOverrides": [],
+          "spaceLength": 10,
+          "span": 12,
+          "stack": false,
+          "steppedLine": false,
+          "targets": [
+            {
+              "alias": "Maximum",
+              "dsType": "influxdb",
+              "expr": "SELECT sum(\"value\") AS \"mean_value\" FROM \"telegraf\".\"autogen\".\"NumberOfMessagesDeleted\" WHERE $timeFilter AND \"QueueName\"='GbUploadEvent-prod-na' AND \"stat\"='Sum' GROUP BY time(30m) FILL(null)",
+              "format": "time_series",
+              "groupBy": [
+                {
+                  "params": [
+                    "$__interval"
+                  ],
+                  "type": "time"
+                },
+                {
+                  "params": [
+                    "null"
+                  ],
+                  "type": "fill"
+                }
+              ],
+              "hide": false,
+              "intervalFactor": 1,
+              "legendFormat": "{{p90}}",
+              "orderByTime": "ASC",
+              "policy": "default",
+              "query": "SELECT max(\"value\") AS \"mean_value\" FROM \"telegraf\".\"autogen\".\"ApproximateNumberOfMessagesVisible\" WHERE $timeFilter AND \"QueueName\"='$QueueName' AND \"stat\"='Maximum' GROUP BY time(5m) FILL(null)",
+              "rawQuery": true,
+              "refId": "A",
+              "resultFormat": "time_series",
+              "select": [
+                [
+                  {
+                    "params": [
+                      "value"
+                    ],
+                    "type": "field"
+                  },
+                  {
+                    "params": [],
+                    "type": "mean"
+                  }
+                ]
+              ],
+              "tags": []
+            },
+            {
+              "alias": "Minimum",
+              "dsType": "influxdb",
+              "groupBy": [
+                {
+                  "params": [
+                    "$__interval"
+                  ],
+                  "type": "time"
+                },
+                {
+                  "params": [
+                    "null"
+                  ],
+                  "type": "fill"
+                }
+              ],
+              "orderByTime": "ASC",
+              "policy": "default",
+              "query": "SELECT min(\"value\") AS \"mean_value\" FROM \"telegraf\".\"autogen\".\"ApproximateNumberOfMessagesVisible\" WHERE $timeFilter AND \"QueueName\"='$QueueName' AND \"stat\"='Maximum' GROUP BY time(30m) FILL(null)",
+              "rawQuery": true,
+              "refId": "B",
+              "resultFormat": "time_series",
+              "select": [
+                [
+                  {
+                    "params": [
+                      "value"
+                    ],
+                    "type": "field"
+                  },
+                  {
+                    "params": [],
+                    "type": "mean"
+                  }
+                ]
+              ],
+              "tags": []
+            }
+          ],
+          "thresholds": [],
+          "timeFrom": null,
+          "timeShift": null,
+          "title": "Number of Messages Visible",
+          "tooltip": {
+            "shared": true,
+            "sort": 0,
+            "value_type": "individual"
+          },
+          "type": "graph",
+          "xaxis": {
+            "buckets": null,
+            "mode": "time",
+            "name": null,
+            "show": true,
+            "values": []
+          },
+          "yaxes": [
+            {
+              "format": "short",
+              "label": null,
+              "logBase": 1,
+              "max": null,
+              "min": null,
+              "show": true
+            },
+            {
+              "format": "short",
+              "label": null,
+              "logBase": 1,
+              "max": null,
+              "min": null,
+              "show": true
+            }
+          ]
+        }
+      ],
+      "repeat": null,
+      "repeatIteration": null,
+      "repeatRowId": null,
+      "showTitle": false,
+      "title": "Dashboard Row",
+      "titleSize": "h6"
+    },
+    {
+      "collapse": false,
+      "height": 250,
+      "panels": [
+        {
+          "aliasColors": {},
+          "bars": false,
+          "dashLength": 10,
+          "dashes": false,
+          "datasource": "influx_ec2",
+          "fill": 1,
+          "id": 2,
+          "legend": {
+            "avg": false,
+            "current": false,
+            "max": false,
+            "min": false,
+            "show": true,
+            "total": false,
+            "values": false
+          },
+          "lines": true,
+          "linewidth": 5,
+          "links": [],
+          "nullPointMode": "null",
+          "percentage": false,
+          "pointradius": 5,
+          "points": false,
+          "renderer": "flot",
+          "seriesOverrides": [],
+          "spaceLength": 10,
+          "span": 12,
+          "stack": false,
+          "steppedLine": false,
+          "targets": [
+            {
+              "alias": "Sum",
+              "dsType": "influxdb",
+              "expr": "NumberOfMessagesDeleted{QueueName=\"$QueueName\", stat=\"Sum\"}",
+              "format": "time_series",
+              "groupBy": [
+                {
+                  "params": [
+                    "$__interval"
+                  ],
+                  "type": "time"
+                },
+                {
+                  "params": [
+                    "null"
+                  ],
+                  "type": "fill"
+                }
+              ],
+              "interval": "30m",
+              "intervalFactor": 1,
+              "legendFormat": "{{Sum}}",
+              "orderByTime": "ASC",
+              "policy": "default",
+              "query": "SELECT sum(\"value\") AS \"mean_value\" FROM \"telegraf\".\"autogen\".\"NumberOfMessagesDeleted\" WHERE $timeFilter AND \"QueueName\"='$QueueName' AND \"stat\"='Sum' GROUP BY time(5m) FILL(null)",
+              "rawQuery": true,
+              "refId": "A",
+              "resultFormat": "time_series",
+              "select": [
+                [
+                  {
+                    "params": [
+                      "value"
+                    ],
+                    "type": "field"
+                  },
+                  {
+                    "params": [],
+                    "type": "mean"
+                  }
+                ]
+              ],
+              "tags": []
+            }
+          ],
+          "thresholds": [],
+          "timeFrom": null,
+          "timeShift": null,
+          "title": "Number of Messages Deleted",
+          "tooltip": {
+            "shared": true,
+            "sort": 0,
+            "value_type": "individual"
+          },
+          "type": "graph",
+          "xaxis": {
+            "buckets": null,
+            "mode": "time",
+            "name": null,
+            "show": true,
+            "values": []
+          },
+          "yaxes": [
+            {
+              "format": "short",
+              "label": null,
+              "logBase": 1,
+              "max": null,
+              "min": null,
+              "show": true
+            },
+            {
+              "format": "short",
+              "label": null,
+              "logBase": 1,
+              "max": null,
+              "min": null,
+              "show": true
+            }
+          ]
+        }
+      ],
+      "repeat": null,
+      "repeatIteration": null,
+      "repeatRowId": null,
+      "showTitle": false,
+      "title": "Dashboard Row",
+      "titleSize": "h6"
+    },
+    {
+      "collapse": false,
+      "height": 250,
+      "panels": [
+        {
+          "aliasColors": {},
+          "bars": false,
+          "dashLength": 10,
+          "dashes": false,
+          "datasource": "influx_ec2",
+          "fill": 1,
+          "id": 3,
+          "legend": {
+            "avg": false,
+            "current": false,
+            "max": false,
+            "min": false,
+            "show": true,
+            "total": false,
+            "values": false
+          },
+          "lines": true,
+          "linewidth": 5,
+          "links": [],
+          "nullPointMode": "null",
+          "percentage": false,
+          "pointradius": 5,
+          "points": false,
+          "renderer": "flot",
+          "seriesOverrides": [],
+          "spaceLength": 10,
+          "span": 12,
+          "stack": false,
+          "steppedLine": false,
+          "targets": [
+            {
+              "alias": "Sum",
+              "dsType": "influxdb",
+              "expr": "SELECT max(\"value\") AS \"mean_value\" FROM \"telegraf\".\"autogen\".\"ApproximateNumberOfMessagesVisible\" WHERE $timeFilter AND \"QueueName\"='GbUploadEvent-prod-na' AND \"stat\"='Maximum' GROUP BY time(5m) FILL(null)",
+              "format": "time_series",
+              "groupBy": [
+                {
+                  "params": [
+                    "$__interval"
+                  ],
+                  "type": "time"
+                },
+                {
+                  "params": [
+                    "null"
+                  ],
+                  "type": "fill"
+                }
+              ],
+              "interval": "1s",
+              "intervalFactor": 1,
+              "legendFormat": "{{Sum}}",
+              "orderByTime": "ASC",
+              "policy": "default",
+              "query": "SELECT sum(\"value\") AS \"mean_value\" FROM \"telegraf\".\"autogen\".\"NumberOfMessagesReceived\" WHERE $timeFilter AND \"QueueName\"='$QueueName' AND \"stat\"='Sum' GROUP BY time(5m) FILL(null)",
+              "rawQuery": true,
+              "refId": "A",
+              "resultFormat": "time_series",
+              "select": [
+                [
+                  {
+                    "params": [
+                      "value"
+                    ],
+                    "type": "field"
+                  },
+                  {
+                    "params": [],
+                    "type": "mean"
+                  }
+                ]
+              ],
+              "tags": []
+            }
+          ],
+          "thresholds": [],
+          "timeFrom": null,
+          "timeShift": null,
+          "title": "Number of Messages Received",
+          "tooltip": {
+            "shared": true,
+            "sort": 0,
+            "value_type": "individual"
+          },
+          "type": "graph",
+          "xaxis": {
+            "buckets": null,
+            "mode": "time",
+            "name": null,
+            "show": true,
+            "values": []
+          },
+          "yaxes": [
+            {
+              "format": "short",
+              "label": null,
+              "logBase": 1,
+              "max": null,
+              "min": null,
+              "show": true
+            },
+            {
+              "format": "short",
+              "label": null,
+              "logBase": 1,
+              "max": null,
+              "min": null,
+              "show": true
+            }
+          ]
+        }
+      ],
+      "repeat": null,
+      "repeatIteration": null,
+      "repeatRowId": null,
+      "showTitle": false,
+      "title": "Dashboard Row",
+      "titleSize": "h6"
+    }
+  ],
+  "schemaVersion": 14,
+  "style": "dark",
+  "tags": [
+    "AWS"
+  ],
+  "templating": {
+    "list": [
+      {
+        "allValue": null,
+        "current": {
+          "selected": false,
+          "tags": [],
+          "text": "GbUploadEvent-prod-na",
+          "value": "GbUploadEvent-prod-na"
+        },
+        "datasource": "influx_tushar_160218",
+        "hide": 0,
+        "includeAll": false,
+        "label": null,
+        "multi": false,
+        "name": "QueueName",
+        "options": [
+          {
+            "selected": false,
+            "text": "AggregationReadyUsers-prod-na",
+            "value": "AggregationReadyUsers-prod-na"
+          },
+          {
+            "selected": false,
+            "text": "AggregationRetryUsers-prod-na",
+            "value": "AggregationRetryUsers-prod-na"
+          },
+          {
+            "selected": false,
+            "text": "BillProjectionReadyPush-prod-na",
+            "value": "BillProjectionReadyPush-prod-na"
+          },
+          {
+            "selected": false,
+            "text": "GBIngestionCompletionEvent-prod-na",
+            "value": "GBIngestionCompletionEvent-prod-na"
+          },
+          {
+            "selected": false,
+            "text": "GBUserDataIngestion-prod-na",
+            "value": "GBUserDataIngestion-prod-na"
+          },
+          {
+            "selected": false,
+            "text": "GbDisaggReadyEvent-prod-na",
+            "value": "GbDisaggReadyEvent-prod-na"
+          },
+          {
+            "selected": false,
+            "text": "GbTempDataReadyEvent-prod-na",
+            "value": "GbTempDataReadyEvent-prod-na"
+          },
+          {
+            "selected": true,
+            "text": "GbUploadEvent-prod-na",
+            "value": "GbUploadEvent-prod-na"
+          },
+          {
+            "selected": false,
+            "text": "LHGbcConsumptionEvent-prod-na",
+            "value": "LHGbcConsumptionEvent-prod-na"
+          },
+          {
+            "selected": false,
+            "text": "LHGbcConsumptionEventAll-prod-na",
+            "value": "LHGbcConsumptionEventAll-prod-na"
+          },
+          {
+            "selected": false,
+            "text": "SomeoneIsHomeDisaggEvent-prod-na",
+            "value": "SomeoneIsHomeDisaggEvent-prod-na"
+          },
+          {
+            "selected": false,
+            "text": "hoS3Invoice-prod-na",
+            "value": "hoS3Invoice-prod-na"
+          },
+          {
+            "selected": false,
+            "text": "hybridDisaggReady-prod-na",
+            "value": "hybridDisaggReady-prod-na"
+          },
+          {
+            "selected": false,
+            "text": "hybridDisaggReady-prod-na-adhoc",
+            "value": "hybridDisaggReady-prod-na-adhoc"
+          }
+        ],
+        "query": "SHOW TAG VALUES WITH KEY = \"QueueName\"",
+        "refresh": 0,
+        "regex": "",
+        "sort": 0,
+        "tagValuesQuery": "",
+        "tags": [],
+        "tagsQuery": "",
+        "type": "query",
+        "useTags": false
+      }
+    ]
+  },
+  "time": {
+    "from": "now-30d",
+    "to": "now"
+  },
+  "timepicker": {
+    "refresh_intervals": [
+      "5s",
+      "10s",
+      "30s",
+      "1m",
+      "5m",
+      "15m",
+      "30m",
+      "1h",
+      "2h",
+      "1d"
+    ],
+    "time_options": [
+      "5m",
+      "15m",
+      "1h",
+      "6h",
+      "12h",
+      "24h",
+      "2d",
+      "7d",
+      "30d"
+    ]
+  },
+  "timezone": "",
+  "title": "New Queue Metrics",
+  "version": 4
+}

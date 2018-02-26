@@ -1,0 +1,4107 @@
+{
+  "annotations": {
+    "list": [
+      {
+        "builtIn": 1,
+        "datasource": "-- Grafana --",
+        "enable": true,
+        "hide": true,
+        "iconColor": "rgba(0, 211, 255, 1)",
+        "name": "Annotations & Alerts",
+        "type": "dashboard"
+      }
+    ]
+  },
+  "editable": true,
+  "gnetId": null,
+  "graphTooltip": 0,
+  "hideControls": false,
+  "id": 15,
+  "links": [
+    {
+      "asDropdown": false,
+      "icon": "external link",
+      "includeVars": true,
+      "keepTime": true,
+      "tags": [
+        "AWS"
+      ],
+      "targetBlank": true,
+      "title": "Dashboards",
+      "type": "dashboards"
+    }
+  ],
+  "refresh": false,
+  "rows": [
+    {
+      "collapse": false,
+      "height": 250,
+      "panels": [
+        {
+          "colors": [
+            "rgba(245, 54, 54, 0.9)",
+            "rgba(237, 129, 40, 0.89)",
+            "rgba(50, 172, 45, 0.97)"
+          ],
+          "composites": [],
+          "content": "graph LR\nA[S3 Upload Received] --> B[S3 Upload Success]\nclick A \"http://34.228.68.108:3000/dashboard/db/newmetrictemp?panelId=4&fullscreen&orgId=1&var-PilotId=$PilotId\"\nclick B \"http://34.228.68.108:3000/dashboard/db/newmetrictemp?panelId=4&fullscreen&orgId=1&var-PilotId=$PilotId\"\nA --> C[S3 Upload Exception]\nclick C \"http://34.228.68.108:3000/dashboard/db/newmetrictemp?panelId=4&fullscreen&orgId=1&var-PilotId=$PilotId\"\nC --> P((Percent))\nB --> Q((Percent))",
+          "datasource": "influx_ec2",
+          "decimals": 2,
+          "format": "none",
+          "graphId": "diagram_13",
+          "id": 13,
+          "init": {
+            "arrowMarkerAbsolute": true,
+            "cloneCssStyles": false,
+            "flowchart": {
+              "htmlLabels": true,
+              "useMaxWidth": true
+            },
+            "gantt": {
+              "barGap": 4,
+              "barHeight": 20,
+              "fontFamily": "\"Open-Sans\", \"sans-serif\"",
+              "fontSize": 11,
+              "gridLineStartPadding": 35,
+              "leftPadding": 75,
+              "numberSectionStyles": 3,
+              "titleTopMargin": 25,
+              "topPadding": 50
+            },
+            "logLevel": 3,
+            "sequenceDiagram": {
+              "actorMargin": 50,
+              "bottomMarginAdj": 1,
+              "boxMargin": 10,
+              "boxTextMargin": 5,
+              "diagramMarginX": 50,
+              "diagramMarginY": 10,
+              "height": 65,
+              "messageMargin": 35,
+              "mirrorActors": true,
+              "noteMargin": 10,
+              "useMaxWidth": true,
+              "width": 150
+            },
+            "startOnLoad": false
+          },
+          "interval": "",
+          "legend": {
+            "avg": true,
+            "current": true,
+            "gradient": {
+              "enabled": false,
+              "show": true
+            },
+            "max": true,
+            "min": true,
+            "show": true,
+            "total": true
+          },
+          "links": [
+            {
+              "dashUri": "db/newmetrictemp",
+              "dashboard": "NewMetricTemp",
+              "includeVars": true,
+              "keepTime": true,
+              "targetBlank": true,
+              "title": "NewMetricTemp",
+              "type": "dashboard"
+            }
+          ],
+          "mappingType": 1,
+          "maxDataPoints": 100,
+          "maxWidth": false,
+          "mermaidServiceUrl": "",
+          "metricCharacterReplacements": [],
+          "mode": "content",
+          "nullPointMode": "connected",
+          "seriesOverrides": [
+            {
+              "alias": "Q",
+              "decimals": "8",
+              "valueName": "current"
+            },
+            {
+              "alias": "P",
+              "decimals": "8",
+              "unitFormat": "locale",
+              "valueName": "current"
+            }
+          ],
+          "span": 12,
+          "targets": [
+            {
+              "alias": "A",
+              "dsType": "influxdb",
+              "expr": "SELECT mean(\"value\") AS \"mean_value\" FROM \"telegraf\".\"autogen\".\"S3UploadedReceived\" WHERE time > now() - 24h AND \"PilotId\"='10008' AND \"stat\"='Sum' GROUP BY :interval: FILL(null)",
+              "format": "time_series",
+              "groupBy": [
+                {
+                  "params": [
+                    "$__interval"
+                  ],
+                  "type": "time"
+                },
+                {
+                  "params": [
+                    "null"
+                  ],
+                  "type": "fill"
+                }
+              ],
+              "hide": false,
+              "intervalFactor": 2,
+              "orderByTime": "ASC",
+              "policy": "default",
+              "query": "SELECT cumulative_sum(SUM(\"value\")) AS \"mean_value\" FROM \"telegraf\".\"autogen\".\"S3UploadedReceived\" WHERE $timeFilter AND \"PilotId\"='$PilotId' AND \"stat\"='Sum' GROUP BY time($__interval) FILL(null)",
+              "rawQuery": true,
+              "refId": "A",
+              "resultFormat": "time_series",
+              "select": [
+                [
+                  {
+                    "params": [
+                      "value"
+                    ],
+                    "type": "field"
+                  },
+                  {
+                    "params": [],
+                    "type": "mean"
+                  }
+                ]
+              ],
+              "tags": []
+            },
+            {
+              "alias": "B",
+              "dsType": "influxdb",
+              "groupBy": [
+                {
+                  "params": [
+                    "$__interval"
+                  ],
+                  "type": "time"
+                },
+                {
+                  "params": [
+                    "null"
+                  ],
+                  "type": "fill"
+                }
+              ],
+              "hide": false,
+              "orderByTime": "ASC",
+              "policy": "default",
+              "query": "SELECT cumulative_sum(SUM(\"value\")) AS \"mean_value\" FROM \"telegraf\".\"autogen\".\"S3UploadedSuccess\" WHERE $timeFilter AND \"PilotId\"='$PilotId' AND \"stat\"='Sum' GROUP BY time($__interval) FILL(null)",
+              "rawQuery": true,
+              "refId": "B",
+              "resultFormat": "time_series",
+              "select": [
+                [
+                  {
+                    "params": [
+                      "value"
+                    ],
+                    "type": "field"
+                  },
+                  {
+                    "params": [],
+                    "type": "mean"
+                  }
+                ]
+              ],
+              "tags": []
+            },
+            {
+              "alias": "C",
+              "dsType": "influxdb",
+              "groupBy": [
+                {
+                  "params": [
+                    "$__interval"
+                  ],
+                  "type": "time"
+                },
+                {
+                  "params": [
+                    "null"
+                  ],
+                  "type": "fill"
+                }
+              ],
+              "orderByTime": "ASC",
+              "policy": "default",
+              "query": "SELECT cumulative_sum(sum(\"value\")) AS \"mean_value\" FROM \"telegraf\".\"autogen\".\"S3UploadedException\" WHERE $timeFilter AND \"PilotId\"='$PilotId' AND \"stat\"='Sum' GROUP BY time($__interval) FILL(null)",
+              "rawQuery": true,
+              "refId": "C",
+              "resultFormat": "time_series",
+              "select": [
+                [
+                  {
+                    "params": [
+                      "value"
+                    ],
+                    "type": "field"
+                  },
+                  {
+                    "params": [],
+                    "type": "mean"
+                  }
+                ]
+              ],
+              "tags": []
+            },
+            {
+              "alias": "P",
+              "dsType": "influxdb",
+              "groupBy": [
+                {
+                  "params": [
+                    "$__interval"
+                  ],
+                  "type": "time"
+                },
+                {
+                  "params": [
+                    "null"
+                  ],
+                  "type": "fill"
+                }
+              ],
+              "hide": false,
+              "orderByTime": "ASC",
+              "policy": "default",
+              "query": "MATH name=\"ALL\" expr=\"100.00*$2/$0\" keep=\"$2,$0\" ",
+              "rawQuery": true,
+              "refId": "D",
+              "resultFormat": "time_series",
+              "select": [
+                [
+                  {
+                    "params": [
+                      "value"
+                    ],
+                    "type": "field"
+                  },
+                  {
+                    "params": [],
+                    "type": "mean"
+                  }
+                ]
+              ],
+              "tags": []
+            },
+            {
+              "alias": "Q",
+              "dsType": "influxdb",
+              "groupBy": [
+                {
+                  "params": [
+                    "$__interval"
+                  ],
+                  "type": "time"
+                },
+                {
+                  "params": [
+                    "null"
+                  ],
+                  "type": "fill"
+                }
+              ],
+              "hide": false,
+              "orderByTime": "ASC",
+              "policy": "default",
+              "query": "MATH name=\"ALL\" expr=\"100.00*$1/$0\" keep=\"$1,$0\" ",
+              "rawQuery": true,
+              "refId": "E",
+              "resultFormat": "time_series",
+              "select": [
+                [
+                  {
+                    "params": [
+                      "value"
+                    ],
+                    "type": "field"
+                  },
+                  {
+                    "params": [],
+                    "type": "mean"
+                  }
+                ]
+              ],
+              "tags": []
+            }
+          ],
+          "thresholds": "0,10",
+          "timeFrom": null,
+          "title": "S3 Upload",
+          "type": "jdbranham-diagram-panel",
+          "valueMaps": [
+            {
+              "op": "=",
+              "text": "N/A",
+              "value": "null"
+            }
+          ],
+          "valueName": "current",
+          "valueOptions": [
+            "avg",
+            "min",
+            "max",
+            "total",
+            "current"
+          ]
+        }
+      ],
+      "repeat": null,
+      "repeatIteration": null,
+      "repeatRowId": null,
+      "showTitle": true,
+      "title": "S3 Upload",
+      "titleSize": "h3"
+    },
+    {
+      "collapse": false,
+      "height": "250px",
+      "panels": [
+        {
+          "colors": [
+            "#bf1b00",
+            "rgba(237, 129, 40, 0.89)",
+            "rgba(50, 172, 45, 0.97)"
+          ],
+          "composites": [],
+          "content": "graph LR\nA[Files Count] --> Z[Records Chunked]\n    click A \"http://34.228.68.108:3000/dashboard/db/newmetrictemp?panelId=2&fullscreen&orgId=1&var-PilotId=$PilotId\"\nZ --> B[s3 User Files]\nB --> C{Errors}\nB -->|Processing| D[Processed Files]\nC --> E[400.2021]\n    click E \"http://34.228.68.108:3000/dashboard/db/newmetrictemp?orgId=1&panelId=8&$__timeFilter&fullscreen&var-PilotId=$PilotId&var-Error=400.2021&var-IngestionType=USERENROLL\"\nC --> F[400.2019]\n    click F \"http://34.228.68.108:3000/dashboard/db/newmetrictemp?orgId=1&panelId=8&fullscreen&var-PilotId=$PilotId&var-Error=400.2019&var-IngestionType=USERENROLL\"\nC --> G[400.2026]\n   click G \"http://34.228.68.108:3000/dashboard/db/newmetrictemp?orgId=1&panelId=8&fullscreen&var-PilotId=$PilotId&var-Error=400.2026&var-IngestionType=USERENROLL\"\nC --> H[500.2001]\n   click H \"http://34.228.68.108:3000/dashboard/db/newmetrictemp?orgId=1&panelId=8&fullscreen&var-PilotId=$PilotId&var-Error=500.2001&var-IngestionType=USERENROLL\"\n",
+          "datasource": "influx_ec2",
+          "decimals": 2,
+          "format": "none",
+          "graphId": "diagram_15",
+          "id": 15,
+          "init": {
+            "arrowMarkerAbsolute": true,
+            "cloneCssStyles": false,
+            "flowchart": {
+              "htmlLabels": true,
+              "useMaxWidth": true
+            },
+            "gantt": {
+              "barGap": 4,
+              "barHeight": 20,
+              "fontFamily": "\"Open-Sans\", \"sans-serif\"",
+              "fontSize": 11,
+              "gridLineStartPadding": 35,
+              "leftPadding": 75,
+              "numberSectionStyles": 3,
+              "titleTopMargin": 25,
+              "topPadding": 50
+            },
+            "logLevel": 3,
+            "sequenceDiagram": {
+              "actorMargin": 50,
+              "bottomMarginAdj": 1,
+              "boxMargin": 10,
+              "boxTextMargin": 5,
+              "diagramMarginX": 50,
+              "diagramMarginY": 10,
+              "height": 65,
+              "messageMargin": 35,
+              "mirrorActors": true,
+              "noteMargin": 10,
+              "useMaxWidth": true,
+              "width": 150
+            },
+            "startOnLoad": false
+          },
+          "legend": {
+            "avg": true,
+            "current": true,
+            "gradient": {
+              "enabled": true,
+              "show": true
+            },
+            "max": true,
+            "min": true,
+            "show": true,
+            "total": true
+          },
+          "links": [
+            {
+              "dashUri": "db/newmetrictemp",
+              "dashboard": "NewMetricTemp",
+              "includeVars": true,
+              "keepTime": true,
+              "targetBlank": true,
+              "title": "NewMetricTemp",
+              "type": "dashboard"
+            }
+          ],
+          "mappingType": 1,
+          "maxDataPoints": 100,
+          "maxWidth": false,
+          "mermaidServiceUrl": "",
+          "metricCharacterReplacements": [],
+          "mode": "content",
+          "nullPointMode": "connected",
+          "seriesOverrides": [
+            {
+              "alias": "A",
+              "thresholds": "0,10"
+            },
+            {
+              "alias": "C",
+              "invertColors": "Invert Colors"
+            },
+            {
+              "alias": "E",
+              "invertColors": "Invert Colors"
+            },
+            {
+              "alias": "F",
+              "invertColors": "Invert Colors"
+            },
+            {
+              "alias": "G",
+              "invertColors": "Invert Colors"
+            },
+            {
+              "alias": "H",
+              "invertColors": "Invert Colors"
+            },
+            {
+              "alias": "B",
+              "thresholds": "0,10"
+            }
+          ],
+          "span": 12,
+          "targets": [
+            {
+              "alias": "A",
+              "dsType": "influxdb",
+              "expr": "",
+              "format": "time_series",
+              "groupBy": [
+                {
+                  "params": [
+                    "$__interval"
+                  ],
+                  "type": "time"
+                },
+                {
+                  "params": [
+                    "null"
+                  ],
+                  "type": "fill"
+                }
+              ],
+              "intervalFactor": 2,
+              "orderByTime": "ASC",
+              "policy": "default",
+              "query": "SELECT CUMULATIVE_SUM(SUM(\"value\")) AS \"mean_value\" FROM \"telegraf\".\"autogen\".\"FilesCount\" WHERE $timeFilter AND \"FileType\"='enroll_file' AND \"PilotId\"='$PilotId' AND \"stat\"='Sum' GROUP BY time($__interval)  FILL(null)",
+              "rawQuery": true,
+              "refId": "A",
+              "resultFormat": "time_series",
+              "select": [
+                [
+                  {
+                    "params": [
+                      "value"
+                    ],
+                    "type": "field"
+                  },
+                  {
+                    "params": [],
+                    "type": "mean"
+                  }
+                ]
+              ],
+              "tags": []
+            },
+            {
+              "alias": "Z",
+              "dsType": "influxdb",
+              "groupBy": [
+                {
+                  "params": [
+                    "$__interval"
+                  ],
+                  "type": "time"
+                },
+                {
+                  "params": [
+                    "null"
+                  ],
+                  "type": "fill"
+                }
+              ],
+              "orderByTime": "ASC",
+              "policy": "default",
+              "query": "SELECT CUMULATIVE_SUM(SUM(\"value\")) AS \"mean_value\" FROM \"telegraf\".\"autogen\".\"RecordChunked\" WHERE $timeFilter AND \"FileType\"='enroll_file' AND \"PilotId\"='$PilotId' AND \"stat\"='Sum' GROUP BY time($__interval)  FILL(null)",
+              "rawQuery": true,
+              "refId": "B",
+              "resultFormat": "time_series",
+              "select": [
+                [
+                  {
+                    "params": [
+                      "value"
+                    ],
+                    "type": "field"
+                  },
+                  {
+                    "params": [],
+                    "type": "mean"
+                  }
+                ]
+              ],
+              "tags": []
+            },
+            {
+              "alias": "B",
+              "dsType": "influxdb",
+              "groupBy": [
+                {
+                  "params": [
+                    "$__interval"
+                  ],
+                  "type": "time"
+                },
+                {
+                  "params": [
+                    "null"
+                  ],
+                  "type": "fill"
+                }
+              ],
+              "orderByTime": "ASC",
+              "policy": "default",
+              "query": "SELECT CUMULATIVE_SUM(SUM(\"value\")) AS \"mean_value\" FROM \"telegraf\".\"autogen\".\"s3UserFiles\" WHERE $timeFilter AND \"PilotId\"='$PilotId' AND \"stat\"='Sum' GROUP BY time($__interval)  FILL(null)",
+              "rawQuery": true,
+              "refId": "C",
+              "resultFormat": "time_series",
+              "select": [
+                [
+                  {
+                    "params": [
+                      "value"
+                    ],
+                    "type": "field"
+                  },
+                  {
+                    "params": [],
+                    "type": "mean"
+                  }
+                ]
+              ],
+              "tags": []
+            },
+            {
+              "alias": "F",
+              "dsType": "influxdb",
+              "groupBy": [
+                {
+                  "params": [
+                    "$__interval"
+                  ],
+                  "type": "time"
+                },
+                {
+                  "params": [
+                    "null"
+                  ],
+                  "type": "fill"
+                }
+              ],
+              "orderByTime": "ASC",
+              "policy": "default",
+              "query": "SELECT CUMULATIVE_SUM(SUM(\"value\")) AS \"mean_value\" FROM \"telegraf\".\"autogen\".\"errors\" WHERE $timeFilter AND \"PilotId\"='$PilotId' AND \"errorCode\"='400.2019' AND \"ingestionType\"='USERENROLL' AND \"stat\"='Sum' GROUP BY time($__interval)  FILL(null)",
+              "rawQuery": true,
+              "refId": "D",
+              "resultFormat": "time_series",
+              "select": [
+                [
+                  {
+                    "params": [
+                      "value"
+                    ],
+                    "type": "field"
+                  },
+                  {
+                    "params": [],
+                    "type": "mean"
+                  }
+                ]
+              ],
+              "tags": []
+            },
+            {
+              "alias": "E",
+              "dsType": "influxdb",
+              "groupBy": [
+                {
+                  "params": [
+                    "$__interval"
+                  ],
+                  "type": "time"
+                },
+                {
+                  "params": [
+                    "null"
+                  ],
+                  "type": "fill"
+                }
+              ],
+              "orderByTime": "ASC",
+              "policy": "default",
+              "query": "SELECT CUMULATIVE_SUM(SUM(\"value\")) AS \"mean_value\" FROM \"telegraf\".\"autogen\".\"errors\" WHERE $timeFilter AND \"PilotId\"='$PilotId' AND \"errorCode\"='400.2021' AND \"ingestionType\"='USERENROLL' AND \"stat\"='Sum' GROUP BY time($__interval)  FILL(null)",
+              "rawQuery": true,
+              "refId": "E",
+              "resultFormat": "time_series",
+              "select": [
+                [
+                  {
+                    "params": [
+                      "value"
+                    ],
+                    "type": "field"
+                  },
+                  {
+                    "params": [],
+                    "type": "mean"
+                  }
+                ]
+              ],
+              "tags": []
+            },
+            {
+              "alias": "D",
+              "dsType": "influxdb",
+              "groupBy": [
+                {
+                  "params": [
+                    "$__interval"
+                  ],
+                  "type": "time"
+                },
+                {
+                  "params": [
+                    "null"
+                  ],
+                  "type": "fill"
+                }
+              ],
+              "orderByTime": "ASC",
+              "policy": "default",
+              "query": "SELECT CUMULATIVE_SUM(SUM(\"value\")) AS \"mean_value\" FROM \"telegraf\".\"autogen\".\"UserDataProcessed\" WHERE $timeFilter AND \"PilotId\"='$PilotId' AND \"stat\"='Sum' GROUP BY time($__interval) FILL(null)",
+              "rawQuery": true,
+              "refId": "F",
+              "resultFormat": "time_series",
+              "select": [
+                [
+                  {
+                    "params": [
+                      "value"
+                    ],
+                    "type": "field"
+                  },
+                  {
+                    "params": [],
+                    "type": "mean"
+                  }
+                ]
+              ],
+              "tags": []
+            },
+            {
+              "alias": "G",
+              "dsType": "influxdb",
+              "groupBy": [
+                {
+                  "params": [
+                    "$__interval"
+                  ],
+                  "type": "time"
+                },
+                {
+                  "params": [
+                    "null"
+                  ],
+                  "type": "fill"
+                }
+              ],
+              "orderByTime": "ASC",
+              "policy": "default",
+              "query": "SELECT CUMULATIVE_SUM(SUM(\"value\")) AS \"mean_value\" FROM \"telegraf\".\"autogen\".\"errors\" WHERE $timeFilter AND \"PilotId\"='$PilotId' AND \"errorCode\"='400.2026' AND \"ingestionType\"='USERENROLL' AND \"stat\"='Sum' GROUP BY time($__interval)  FILL(null)",
+              "rawQuery": true,
+              "refId": "G",
+              "resultFormat": "time_series",
+              "select": [
+                [
+                  {
+                    "params": [
+                      "value"
+                    ],
+                    "type": "field"
+                  },
+                  {
+                    "params": [],
+                    "type": "mean"
+                  }
+                ]
+              ],
+              "tags": []
+            },
+            {
+              "alias": "H",
+              "dsType": "influxdb",
+              "groupBy": [
+                {
+                  "params": [
+                    "$__interval"
+                  ],
+                  "type": "time"
+                },
+                {
+                  "params": [
+                    "null"
+                  ],
+                  "type": "fill"
+                }
+              ],
+              "orderByTime": "ASC",
+              "policy": "default",
+              "query": "SELECT CUMULATIVE_SUM(SUM(\"value\")) AS \"mean_value\" FROM \"telegraf\".\"autogen\".\"errors\" WHERE $timeFilter AND \"PilotId\"='$PilotId' AND \"errorCode\"='500.2001' AND \"ingestionType\"='USERENROLL' AND \"stat\"='Sum' GROUP BY time($__interval)  FILL(null)",
+              "rawQuery": true,
+              "refId": "H",
+              "resultFormat": "time_series",
+              "select": [
+                [
+                  {
+                    "params": [
+                      "value"
+                    ],
+                    "type": "field"
+                  },
+                  {
+                    "params": [],
+                    "type": "mean"
+                  }
+                ]
+              ],
+              "tags": []
+            },
+            {
+              "alias": "C",
+              "dsType": "influxdb",
+              "groupBy": [
+                {
+                  "params": [
+                    "$__interval"
+                  ],
+                  "type": "time"
+                },
+                {
+                  "params": [
+                    "null"
+                  ],
+                  "type": "fill"
+                }
+              ],
+              "orderByTime": "ASC",
+              "policy": "default",
+              "query": "SELECT CUMULATIVE_SUM(SUM(\"value\")) AS \"mean_value\" FROM \"telegraf\".\"autogen\".\"errors\" WHERE $timeFilter AND \"PilotId\"='$PilotId'  AND \"ingestionType\"='USERENROLL' AND \"stat\"='Sum' GROUP BY time($__interval)  FILL(null)",
+              "rawQuery": true,
+              "refId": "I",
+              "resultFormat": "time_series",
+              "select": [
+                [
+                  {
+                    "params": [
+                      "value"
+                    ],
+                    "type": "field"
+                  },
+                  {
+                    "params": [],
+                    "type": "mean"
+                  }
+                ]
+              ],
+              "tags": []
+            }
+          ],
+          "thresholds": "0,1000",
+          "title": "Enroll File",
+          "type": "jdbranham-diagram-panel",
+          "valueMaps": [
+            {
+              "op": "=",
+              "text": "N/A",
+              "value": "null"
+            }
+          ],
+          "valueName": "current",
+          "valueOptions": [
+            "avg",
+            "min",
+            "max",
+            "total",
+            "current"
+          ]
+        }
+      ],
+      "repeat": null,
+      "repeatIteration": null,
+      "repeatRowId": null,
+      "showTitle": true,
+      "title": "Enroll File",
+      "titleSize": "h3"
+    },
+    {
+      "collapse": false,
+      "height": 250,
+      "panels": [
+        {
+          "colors": [
+            "rgba(245, 54, 54, 0.9)",
+            "rgba(237, 129, 40, 0.89)",
+            "rgba(50, 172, 45, 0.97)"
+          ],
+          "composites": [],
+          "content": "graph LR\nA[Files Count] --> B[Records Chunked]\n    click A \"http://34.228.68.108:3000/dashboard/db/newmetrictemp?panelId=1&fullscreen&orgId=1&var-PilotId=$PilotId\"\nB --> C[s3 Invoice Files]\nC -->|Processing| D[Invoices Processed]\nC --> G{Errors}\nG --> H[404.1005]\nclick H \"http://34.228.68.108:3000/dashboard/db/newmetrictemp?orgId=1&panelId=8&fullscreen&var-PilotId=$PilotId&var-Error=400.2021&var-IngestionType=INVOICE\"\n",
+          "datasource": "influx_ec2",
+          "decimals": 0,
+          "format": "locale",
+          "graphId": "diagram_2",
+          "id": 2,
+          "init": {
+            "arrowMarkerAbsolute": true,
+            "cloneCssStyles": false,
+            "flowchart": {
+              "htmlLabels": true,
+              "useMaxWidth": true
+            },
+            "gantt": {
+              "barGap": 4,
+              "barHeight": 20,
+              "fontFamily": "\"Open-Sans\", \"sans-serif\"",
+              "fontSize": 11,
+              "gridLineStartPadding": 35,
+              "leftPadding": 75,
+              "numberSectionStyles": 3,
+              "titleTopMargin": 25,
+              "topPadding": 50
+            },
+            "logLevel": 3,
+            "sequenceDiagram": {
+              "actorMargin": 50,
+              "bottomMarginAdj": 1,
+              "boxMargin": 10,
+              "boxTextMargin": 5,
+              "diagramMarginX": 50,
+              "diagramMarginY": 10,
+              "height": 65,
+              "messageMargin": 35,
+              "mirrorActors": true,
+              "noteMargin": 10,
+              "useMaxWidth": true,
+              "width": 150
+            },
+            "startOnLoad": false
+          },
+          "legend": {
+            "avg": true,
+            "current": true,
+            "gradient": {
+              "enabled": true,
+              "show": true
+            },
+            "max": true,
+            "min": true,
+            "show": true,
+            "total": true
+          },
+          "links": [
+            {
+              "dashUri": "db/metrictemp",
+              "dashboard": "MetricTemp",
+              "includeVars": true,
+              "keepTime": true,
+              "params": "",
+              "targetBlank": true,
+              "title": "MetricTemp",
+              "type": "dashboard"
+            }
+          ],
+          "mappingType": 1,
+          "maxDataPoints": 100,
+          "maxWidth": false,
+          "mermaidServiceUrl": "",
+          "metricCharacterReplacements": [],
+          "mode": "content",
+          "nullPointMode": "connected",
+          "seriesOverrides": [],
+          "span": 12,
+          "targets": [
+            {
+              "alias": "A",
+              "dsType": "influxdb",
+              "expr": "",
+              "format": "time_series",
+              "groupBy": [
+                {
+                  "params": [
+                    "$__interval"
+                  ],
+                  "type": "time"
+                },
+                {
+                  "params": [
+                    "null"
+                  ],
+                  "type": "fill"
+                }
+              ],
+              "intervalFactor": 2,
+              "orderByTime": "ASC",
+              "policy": "default",
+              "query": "SELECT CUMULATIVE_SUM(SUM(\"value\")) AS \"mean_value\" FROM \"telegraf\".\"autogen\".\"FilesCount\" WHERE $timeFilter AND \"FileType\"='invoice_file' AND \"PilotId\"='$PilotId' AND \"stat\"='Sum' GROUP BY time($__interval) FILL(null)",
+              "rawQuery": true,
+              "refId": "A",
+              "resultFormat": "time_series",
+              "select": [
+                [
+                  {
+                    "params": [
+                      "value"
+                    ],
+                    "type": "field"
+                  },
+                  {
+                    "params": [],
+                    "type": "mean"
+                  }
+                ]
+              ],
+              "tags": []
+            },
+            {
+              "alias": "B",
+              "dsType": "influxdb",
+              "groupBy": [
+                {
+                  "params": [
+                    "$__interval"
+                  ],
+                  "type": "time"
+                },
+                {
+                  "params": [
+                    "null"
+                  ],
+                  "type": "fill"
+                }
+              ],
+              "orderByTime": "ASC",
+              "policy": "default",
+              "query": "SELECT CUMULATIVE_SUM(SUM(\"value\")) AS \"mean_value\" FROM \"telegraf\".\"autogen\".\"RecordChunked\" WHERE $timeFilter AND \"FileType\"='invoice_file' AND \"PilotId\"='$PilotId' AND \"stat\"='Sum' GROUP BY time($__interval) FILL(null)",
+              "rawQuery": true,
+              "refId": "B",
+              "resultFormat": "time_series",
+              "select": [
+                [
+                  {
+                    "params": [
+                      "value"
+                    ],
+                    "type": "field"
+                  },
+                  {
+                    "params": [],
+                    "type": "mean"
+                  }
+                ]
+              ],
+              "tags": []
+            },
+            {
+              "alias": "C",
+              "dsType": "influxdb",
+              "groupBy": [
+                {
+                  "params": [
+                    "$__interval"
+                  ],
+                  "type": "time"
+                },
+                {
+                  "params": [
+                    "null"
+                  ],
+                  "type": "fill"
+                }
+              ],
+              "orderByTime": "ASC",
+              "policy": "default",
+              "query": "SELECT CUMULATIVE_SUM(SUM(\"value\")) AS \"mean_value\" FROM \"telegraf\".\"autogen\".\"s3InvoiceFiles\" WHERE $timeFilter AND \"PilotId\"='$PilotId' AND \"stat\"='Sum' GROUP BY time($__interval) FILL(null)",
+              "rawQuery": true,
+              "refId": "C",
+              "resultFormat": "time_series",
+              "select": [
+                [
+                  {
+                    "params": [
+                      "value"
+                    ],
+                    "type": "field"
+                  },
+                  {
+                    "params": [],
+                    "type": "mean"
+                  }
+                ]
+              ],
+              "tags": []
+            },
+            {
+              "alias": "D",
+              "dsType": "influxdb",
+              "groupBy": [
+                {
+                  "params": [
+                    "$__interval"
+                  ],
+                  "type": "time"
+                },
+                {
+                  "params": [
+                    "null"
+                  ],
+                  "type": "fill"
+                }
+              ],
+              "orderByTime": "ASC",
+              "policy": "default",
+              "query": "SELECT CUMULATIVE_SUM(SUM(\"value\")) AS \"mean_value\" FROM \"telegraf\".\"autogen\".\"InvoicesProcessed\" WHERE $timeFilter AND \"PilotId\"='$PilotId' AND \"stat\"='Sum' GROUP BY time($__interval) FILL(null)",
+              "rawQuery": true,
+              "refId": "D",
+              "resultFormat": "time_series",
+              "select": [
+                [
+                  {
+                    "params": [
+                      "value"
+                    ],
+                    "type": "field"
+                  },
+                  {
+                    "params": [],
+                    "type": "mean"
+                  }
+                ]
+              ],
+              "tags": []
+            },
+            {
+              "alias": "H",
+              "dsType": "influxdb",
+              "groupBy": [
+                {
+                  "params": [
+                    "$__interval"
+                  ],
+                  "type": "time"
+                },
+                {
+                  "params": [
+                    "null"
+                  ],
+                  "type": "fill"
+                }
+              ],
+              "orderByTime": "ASC",
+              "policy": "default",
+              "query": "SELECT CUMULATIVE_SUM(SUM(\"value\")) AS \"mean_value\" FROM \"telegraf\".\"autogen\".\"errors\" WHERE $timeFilter AND \"PilotId\"='$PilotId' AND \"errorCode\"='404.1005' AND \"ingestionType\"='INVOICE' AND \"stat\"='Sum' GROUP BY time($__interval) FILL(null) ",
+              "rawQuery": true,
+              "refId": "E",
+              "resultFormat": "time_series",
+              "select": [
+                [
+                  {
+                    "params": [
+                      "value"
+                    ],
+                    "type": "field"
+                  },
+                  {
+                    "params": [],
+                    "type": "mean"
+                  }
+                ]
+              ],
+              "tags": []
+            }
+          ],
+          "thresholds": "0,10",
+          "title": "Invoice File",
+          "type": "jdbranham-diagram-panel",
+          "valueMaps": [
+            {
+              "op": "=",
+              "text": "N/A",
+              "value": "null"
+            }
+          ],
+          "valueName": "current",
+          "valueOptions": [
+            "avg",
+            "min",
+            "max",
+            "total",
+            "current"
+          ]
+        }
+      ],
+      "repeat": null,
+      "repeatIteration": null,
+      "repeatRowId": null,
+      "showTitle": true,
+      "title": "Invoice File",
+      "titleSize": "h3"
+    },
+    {
+      "collapse": false,
+      "height": 250,
+      "panels": [
+        {
+          "colors": [
+            "rgba(245, 54, 54, 0.9)",
+            "rgba(237, 129, 40, 0.89)",
+            "rgba(50, 172, 45, 0.97)"
+          ],
+          "composites": [
+            {
+              "metrics": [
+                {
+                  "seriesName": "B"
+                },
+                {
+                  "seriesName": "D"
+                }
+              ],
+              "name": "K"
+            }
+          ],
+          "content": "graph LR\nA[Files Count] --> B[Records Chunked]\nclick A \"http://34.228.68.108:3000/dashboard/db/newmetrictemp?panelId=1&fullscreen&orgId=1&var-PilotId=$PilotId\"\nB --> C[s3 Consumption Files]\nC -->|Process| D[Consumption Processed]\nC --> G{Errors}\nG --> H[500.2001]\nclick H \"http://34.228.68.108:3000/dashboard/db/newmetrictemp?orgId=1&panelId=8&fullscreen&var-PilotId=$PilotId&var-Error=500.2001&var-IngestionType=RAW\"\nG --> I[404.1005]\nclick I \"http://34.228.68.108:3000/dashboard/db/newmetrictemp?orgId=1&panelId=8&fullscreen&var-PilotId=$PilotId&var-Error=404.1005&var-IngestionType=RAW\"\nG --> J[Unknown Internal]\nclick J \"http://34.228.68.108:3000/dashboard/db/newmetrictemp?orgId=1&panelId=8&fullscreen&var-PilotId=$PilotId&var-Error=PROCESSING_FAILED-ERROR_UKNOWN_INTERNAL_ERROR&var-IngestionType=RAW\"\nG --> Z[S3 Error]\nclick Z \"http://34.228.68.108:3000/dashboard/db/newmetrictemp?orgId=1&panelId=8&fullscreen&var-PilotId=$PilotId&var-Error=PROCESSING_FAILED-ERROR_S3_ERROR&var-IngestionType=RAW\"",
+          "datasource": "influx_ec2",
+          "decimals": 0,
+          "format": "locale",
+          "graphId": "diagram_3",
+          "id": 3,
+          "init": {
+            "arrowMarkerAbsolute": true,
+            "cloneCssStyles": false,
+            "flowchart": {
+              "htmlLabels": true,
+              "useMaxWidth": true
+            },
+            "gantt": {
+              "barGap": 4,
+              "barHeight": 20,
+              "fontFamily": "\"Open-Sans\", \"sans-serif\"",
+              "fontSize": 11,
+              "gridLineStartPadding": 35,
+              "leftPadding": 75,
+              "numberSectionStyles": 3,
+              "titleTopMargin": 25,
+              "topPadding": 50
+            },
+            "logLevel": 3,
+            "sequenceDiagram": {
+              "actorMargin": 50,
+              "bottomMarginAdj": 1,
+              "boxMargin": 10,
+              "boxTextMargin": 5,
+              "diagramMarginX": 50,
+              "diagramMarginY": 10,
+              "height": 65,
+              "messageMargin": 35,
+              "mirrorActors": true,
+              "noteMargin": 10,
+              "useMaxWidth": true,
+              "width": 150
+            },
+            "startOnLoad": false
+          },
+          "legend": {
+            "avg": true,
+            "current": true,
+            "gradient": {
+              "enabled": true,
+              "show": true
+            },
+            "max": true,
+            "min": true,
+            "show": true,
+            "total": true
+          },
+          "links": [],
+          "mappingType": 1,
+          "maxDataPoints": 100,
+          "maxWidth": false,
+          "mermaidServiceUrl": "",
+          "metricCharacterReplacements": [],
+          "mode": "content",
+          "nullPointMode": "connected",
+          "seriesOverrides": [
+            {
+              "alias": "A",
+              "thresholds": "0,10"
+            },
+            {
+              "alias": "C",
+              "thresholds": "0,10"
+            },
+            {
+              "alias": "G",
+              "invertColors": "Invert Colors"
+            },
+            {
+              "alias": "H",
+              "invertColors": "Invert Colors"
+            },
+            {
+              "alias": "I",
+              "invertColors": "Invert Colors"
+            },
+            {
+              "alias": "J",
+              "invertColors": "Invert Colors"
+            },
+            {
+              "alias": "Z",
+              "invertColors": "Invert Colors"
+            }
+          ],
+          "span": 12,
+          "targets": [
+            {
+              "alias": "A",
+              "dsType": "influxdb",
+              "expr": "",
+              "format": "time_series",
+              "groupBy": [
+                {
+                  "params": [
+                    "$__interval"
+                  ],
+                  "type": "time"
+                },
+                {
+                  "params": [
+                    "null"
+                  ],
+                  "type": "fill"
+                }
+              ],
+              "hide": false,
+              "intervalFactor": 2,
+              "orderByTime": "ASC",
+              "policy": "default",
+              "query": "SELECT CUMULATIVE_SUM( SUM(\"value\")) AS \"sum_value\" FROM \"telegraf\".\"autogen\".\"FilesCount\" WHERE $timeFilter AND \"FileType\"='raw_data_file' AND \"PilotId\"='$PilotId' AND \"stat\"='Sum' GROUP BY time($__interval) FILL(null)",
+              "rawQuery": true,
+              "refId": "A",
+              "resultFormat": "time_series",
+              "select": [
+                [
+                  {
+                    "params": [
+                      "value"
+                    ],
+                    "type": "field"
+                  },
+                  {
+                    "params": [],
+                    "type": "mean"
+                  }
+                ]
+              ],
+              "tags": []
+            },
+            {
+              "alias": "B",
+              "dsType": "influxdb",
+              "groupBy": [
+                {
+                  "params": [
+                    "$__interval"
+                  ],
+                  "type": "time"
+                },
+                {
+                  "params": [
+                    "null"
+                  ],
+                  "type": "fill"
+                }
+              ],
+              "orderByTime": "ASC",
+              "policy": "default",
+              "query": "SELECT CUMULATIVE_SUM(SUM(\"value\")) AS \"sum_value\" FROM \"telegraf\".\"autogen\".\"RecordChunked\" WHERE $timeFilter AND \"FileType\"='raw_data_file' AND \"PilotId\"='$PilotId' AND \"stat\"='Sum' GROUP BY time($__interval) FILL(null) ",
+              "rawQuery": true,
+              "refId": "B",
+              "resultFormat": "time_series",
+              "select": [
+                [
+                  {
+                    "params": [
+                      "value"
+                    ],
+                    "type": "field"
+                  },
+                  {
+                    "params": [],
+                    "type": "mean"
+                  }
+                ]
+              ],
+              "tags": []
+            },
+            {
+              "alias": "C",
+              "dsType": "influxdb",
+              "groupBy": [
+                {
+                  "params": [
+                    "$__interval"
+                  ],
+                  "type": "time"
+                },
+                {
+                  "params": [
+                    "null"
+                  ],
+                  "type": "fill"
+                }
+              ],
+              "measurement": "s3ConsumptionFiles",
+              "orderByTime": "ASC",
+              "policy": "autogen",
+              "query": "SELECT CUMULATIVE_SUM(SUM(\"value\")) AS \"mean_value\" FROM \"telegraf\".\"autogen\".\"s3ConsumptionFiles\" WHERE $timeFilter AND \"PilotId\"='$PilotId' AND \"stat\"='Sum' GROUP BY time($__interval) FILL(null) ",
+              "rawQuery": true,
+              "refId": "C",
+              "resultFormat": "time_series",
+              "select": [
+                [
+                  {
+                    "params": [
+                      "value"
+                    ],
+                    "type": "field"
+                  },
+                  {
+                    "params": [],
+                    "type": "sum"
+                  }
+                ]
+              ],
+              "tags": [
+                {
+                  "key": "PilotId",
+                  "operator": "=",
+                  "value": "10008"
+                }
+              ]
+            },
+            {
+              "alias": "D",
+              "dsType": "influxdb",
+              "groupBy": [
+                {
+                  "params": [
+                    "$__interval"
+                  ],
+                  "type": "time"
+                },
+                {
+                  "params": [
+                    "null"
+                  ],
+                  "type": "fill"
+                }
+              ],
+              "orderByTime": "ASC",
+              "policy": "default",
+              "query": "SELECT CUMULATIVE_SUM(SUM(\"value\")) AS \"mean_value\" FROM \"telegraf\".\"autogen\".\"ConsumptionProcessed\" WHERE $timeFilter AND \"PilotId\"='$PilotId' AND \"stat\"='Sum' GROUP BY time($__interval) FILL(null) ",
+              "rawQuery": true,
+              "refId": "D",
+              "resultFormat": "time_series",
+              "select": [
+                [
+                  {
+                    "params": [
+                      "value"
+                    ],
+                    "type": "field"
+                  },
+                  {
+                    "params": [],
+                    "type": "mean"
+                  }
+                ]
+              ],
+              "tags": []
+            },
+            {
+              "alias": "I",
+              "dsType": "influxdb",
+              "groupBy": [
+                {
+                  "params": [
+                    "$__interval"
+                  ],
+                  "type": "time"
+                },
+                {
+                  "params": [
+                    "null"
+                  ],
+                  "type": "fill"
+                }
+              ],
+              "orderByTime": "ASC",
+              "policy": "default",
+              "query": "SELECT CUMULATIVE_SUM(SUM(\"value\")) AS \"mean_value\" FROM \"telegraf\".\"autogen\".\"errors\" WHERE $timeFilter AND \"PilotId\"='$PilotId' AND \"errorCode\"='404.1005' AND \"ingestionType\"='RAW' AND \"stat\"='Sum' GROUP BY time($__interval) FILL(null) ",
+              "rawQuery": true,
+              "refId": "E",
+              "resultFormat": "time_series",
+              "select": [
+                [
+                  {
+                    "params": [
+                      "value"
+                    ],
+                    "type": "field"
+                  },
+                  {
+                    "params": [],
+                    "type": "mean"
+                  }
+                ]
+              ],
+              "tags": []
+            },
+            {
+              "alias": "H",
+              "dsType": "influxdb",
+              "groupBy": [
+                {
+                  "params": [
+                    "$__interval"
+                  ],
+                  "type": "time"
+                },
+                {
+                  "params": [
+                    "null"
+                  ],
+                  "type": "fill"
+                }
+              ],
+              "orderByTime": "ASC",
+              "policy": "default",
+              "query": "SELECT CUMULATIVE_SUM(SUM(\"value\")) AS \"mean_value\" FROM \"telegraf\".\"autogen\".\"errors\" WHERE $timeFilter AND \"PilotId\"='$PilotId' AND \"errorCode\"='500.2001' AND \"ingestionType\"='RAW' AND \"stat\"='Sum' GROUP BY time($__interval) FILL(null) ",
+              "rawQuery": true,
+              "refId": "F",
+              "resultFormat": "time_series",
+              "select": [
+                [
+                  {
+                    "params": [
+                      "value"
+                    ],
+                    "type": "field"
+                  },
+                  {
+                    "params": [],
+                    "type": "mean"
+                  }
+                ]
+              ],
+              "tags": []
+            },
+            {
+              "alias": "J",
+              "dsType": "influxdb",
+              "groupBy": [
+                {
+                  "params": [
+                    "$__interval"
+                  ],
+                  "type": "time"
+                },
+                {
+                  "params": [
+                    "null"
+                  ],
+                  "type": "fill"
+                }
+              ],
+              "orderByTime": "ASC",
+              "policy": "default",
+              "query": "SELECT CUMULATIVE_SUM(SUM(\"value\")) AS \"mean_value\" FROM \"telegraf\".\"autogen\".\"errors\" WHERE $timeFilter AND \"PilotId\"='$PilotId' AND \"errorCode\"='PROCESSING_FAILED-ERROR_UKNOWN_INTERNAL_ERROR' AND \"ingestionType\"='RAW' AND \"stat\"='Sum' GROUP BY time($__interval) FILL(null) ",
+              "rawQuery": true,
+              "refId": "G",
+              "resultFormat": "time_series",
+              "select": [
+                [
+                  {
+                    "params": [
+                      "value"
+                    ],
+                    "type": "field"
+                  },
+                  {
+                    "params": [],
+                    "type": "mean"
+                  }
+                ]
+              ],
+              "tags": []
+            },
+            {
+              "alias": "Z",
+              "dsType": "influxdb",
+              "groupBy": [
+                {
+                  "params": [
+                    "$__interval"
+                  ],
+                  "type": "time"
+                },
+                {
+                  "params": [
+                    "null"
+                  ],
+                  "type": "fill"
+                }
+              ],
+              "orderByTime": "ASC",
+              "policy": "default",
+              "query": "SELECT CUMULATIVE_SUM(SUM(\"value\")) AS \"mean_value\" FROM \"telegraf\".\"autogen\".\"errors\" WHERE $timeFilter AND \"PilotId\"='$PilotId' AND \"errorCode\"='PROCESSING_FAILED-ERROR_S3_ERROR' AND \"ingestionType\"='RAW' AND \"stat\"='Sum' GROUP BY time($__interval) FILL(null) ",
+              "rawQuery": true,
+              "refId": "H",
+              "resultFormat": "time_series",
+              "select": [
+                [
+                  {
+                    "params": [
+                      "value"
+                    ],
+                    "type": "field"
+                  },
+                  {
+                    "params": [],
+                    "type": "mean"
+                  }
+                ]
+              ],
+              "tags": []
+            },
+            {
+              "alias": "G",
+              "dsType": "influxdb",
+              "groupBy": [
+                {
+                  "params": [
+                    "$__interval"
+                  ],
+                  "type": "time"
+                },
+                {
+                  "params": [
+                    "null"
+                  ],
+                  "type": "fill"
+                }
+              ],
+              "orderByTime": "ASC",
+              "policy": "default",
+              "query": "SELECT CUMULATIVE_SUM(SUM(\"value\")) AS \"mean_value\" FROM \"telegraf\".\"autogen\".\"errors\" WHERE $timeFilter AND \"PilotId\"='$PilotId' AND \"ingestionType\"='RAW' AND \"stat\"='Sum' GROUP BY time($__interval) FILL(null) ",
+              "rawQuery": true,
+              "refId": "I",
+              "resultFormat": "time_series",
+              "select": [
+                [
+                  {
+                    "params": [
+                      "value"
+                    ],
+                    "type": "field"
+                  },
+                  {
+                    "params": [],
+                    "type": "mean"
+                  }
+                ]
+              ],
+              "tags": []
+            }
+          ],
+          "thresholds": "0,10000",
+          "title": "Raw Data File",
+          "type": "jdbranham-diagram-panel",
+          "valueMaps": [
+            {
+              "op": "=",
+              "text": "N/A",
+              "value": "null"
+            }
+          ],
+          "valueName": "current",
+          "valueOptions": [
+            "avg",
+            "min",
+            "max",
+            "total",
+            "current"
+          ]
+        }
+      ],
+      "repeat": null,
+      "repeatIteration": null,
+      "repeatRowId": null,
+      "showTitle": true,
+      "title": "Raw Data File",
+      "titleSize": "h3"
+    },
+    {
+      "collapse": false,
+      "height": 250,
+      "panels": [
+        {
+          "colors": [
+            "rgba(245, 54, 54, 0.9)",
+            "rgba(237, 129, 40, 0.89)",
+            "rgba(50, 172, 45, 0.97)"
+          ],
+          "composites": [],
+          "content": "graph LR\nA[Files Count] --> B[Record Chunked]\nB --> C[Consumption Processed]\nB --> D{Error}\nD --> E[404.1005]\nclick E \"http://34.228.68.108:3000/dashboard/db/newmetrictemp?orgId=1&panelId=8&fullscreen&var-PilotId=$PilotId&var-Error=404.1005&var-IngestionType=RAW\"\nD --> F[500.2001]\nclick F \"http://34.228.68.108:3000/dashboard/db/newmetrictemp?orgId=1&panelId=8&fullscreen&var-PilotId=$PilotId&var-Error=500.2001&var-IngestionType=RAW\"\nD --> G[Internal Error]\nclick G \"http://34.228.68.108:3000/dashboard/db/newmetrictemp?orgId=1&panelId=8&fullscreen&var-PilotId=$PilotId&var-Error=PROCESSING_FAILED-ERROR_UKNOWN_INTERNAL_ERROR&var-IngestionType=RAW\"\nD --> H[404.2030]\nclick H \"http://34.228.68.108:3000/dashboard/db/newmetrictemp?orgId=1&panelId=8&fullscreen&var-PilotId=$PilotId&var-Error=404.2030&var-IngestionType=RAW\"\nD --> I[404.2031]\nclick I \"http://34.228.68.108:3000/dashboard/db/newmetrictemp?orgId=1&panelId=8&fullscreen&var-PilotId=$PilotId&var-Error=404.2031&var-IngestionType=RAW\"\n",
+          "datasource": "influx_ec2",
+          "decimals": 0,
+          "format": "none",
+          "graphId": "diagram_6",
+          "id": 6,
+          "init": {
+            "arrowMarkerAbsolute": true,
+            "cloneCssStyles": false,
+            "flowchart": {
+              "htmlLabels": true,
+              "useMaxWidth": true
+            },
+            "gantt": {
+              "barGap": 4,
+              "barHeight": 20,
+              "fontFamily": "\"Open-Sans\", \"sans-serif\"",
+              "fontSize": 11,
+              "gridLineStartPadding": 35,
+              "leftPadding": 75,
+              "numberSectionStyles": 3,
+              "titleTopMargin": 25,
+              "topPadding": 50
+            },
+            "logLevel": 3,
+            "sequenceDiagram": {
+              "actorMargin": 50,
+              "bottomMarginAdj": 1,
+              "boxMargin": 10,
+              "boxTextMargin": 5,
+              "diagramMarginX": 50,
+              "diagramMarginY": 10,
+              "height": 65,
+              "messageMargin": 35,
+              "mirrorActors": true,
+              "noteMargin": 10,
+              "useMaxWidth": true,
+              "width": 150
+            },
+            "startOnLoad": false
+          },
+          "legend": {
+            "avg": true,
+            "current": true,
+            "gradient": {
+              "enabled": true,
+              "show": true
+            },
+            "max": true,
+            "min": true,
+            "show": true,
+            "total": true
+          },
+          "links": [
+            {
+              "dashUri": "db/newmetrictemp",
+              "dashboard": "NewMetricTemp",
+              "includeVars": true,
+              "keepTime": true,
+              "targetBlank": true,
+              "title": "NewMetricTemp",
+              "type": "dashboard"
+            }
+          ],
+          "mappingType": 1,
+          "maxDataPoints": 100,
+          "maxWidth": false,
+          "mermaidServiceUrl": "",
+          "metricCharacterReplacements": [],
+          "mode": "content",
+          "nullPointMode": "connected",
+          "seriesOverrides": [
+            {
+              "alias": "A",
+              "thresholds": "0,10"
+            },
+            {
+              "alias": "D",
+              "invertColors": "Invert Colors"
+            },
+            {
+              "alias": "E",
+              "invertColors": "Invert Colors"
+            },
+            {
+              "alias": "F",
+              "invertColors": "Invert Colors"
+            },
+            {
+              "alias": "G",
+              "invertColors": "Invert Colors"
+            },
+            {
+              "alias": "I",
+              "invertColors": "Invert Colors"
+            },
+            {
+              "alias": "H",
+              "invertColors": "Invert Colors"
+            }
+          ],
+          "span": 12,
+          "targets": [
+            {
+              "alias": "A",
+              "dsType": "influxdb",
+              "expr": "",
+              "format": "time_series",
+              "groupBy": [
+                {
+                  "params": [
+                    "$__interval"
+                  ],
+                  "type": "time"
+                },
+                {
+                  "params": [
+                    "null"
+                  ],
+                  "type": "fill"
+                }
+              ],
+              "intervalFactor": 2,
+              "orderByTime": "ASC",
+              "policy": "default",
+              "query": "SELECT CUMULATIVE_SUM(sum(\"value\")) AS \"mean_value\" FROM \"telegraf\".\"autogen\".\"FilesCount\" WHERE $timeFilter AND \"FileType\"='CONSUMPTION' AND \"PilotId\"='$PilotId' AND \"stat\"='Sum' GROUP BY time($__interval) FILL(null)",
+              "rawQuery": true,
+              "refId": "A",
+              "resultFormat": "time_series",
+              "select": [
+                [
+                  {
+                    "params": [
+                      "value"
+                    ],
+                    "type": "field"
+                  },
+                  {
+                    "params": [],
+                    "type": "mean"
+                  }
+                ]
+              ],
+              "tags": []
+            },
+            {
+              "alias": "B",
+              "dsType": "influxdb",
+              "groupBy": [
+                {
+                  "params": [
+                    "$__interval"
+                  ],
+                  "type": "time"
+                },
+                {
+                  "params": [
+                    "null"
+                  ],
+                  "type": "fill"
+                }
+              ],
+              "orderByTime": "ASC",
+              "policy": "default",
+              "query": "SELECT CUMULATIVE_SUM(sum(\"value\")) AS \"mean_value\" FROM \"telegraf\".\"autogen\".\"RecordChunked\" WHERE $timeFilter AND \"FileType\"='CONSUMPTION' AND \"PilotId\"='$PilotId' AND \"stat\"='Sum' GROUP BY time($__interval) FILL(null)",
+              "rawQuery": true,
+              "refId": "B",
+              "resultFormat": "time_series",
+              "select": [
+                [
+                  {
+                    "params": [
+                      "value"
+                    ],
+                    "type": "field"
+                  },
+                  {
+                    "params": [],
+                    "type": "mean"
+                  }
+                ]
+              ],
+              "tags": []
+            },
+            {
+              "alias": "C",
+              "dsType": "influxdb",
+              "groupBy": [
+                {
+                  "params": [
+                    "$__interval"
+                  ],
+                  "type": "time"
+                },
+                {
+                  "params": [
+                    "null"
+                  ],
+                  "type": "fill"
+                }
+              ],
+              "orderByTime": "ASC",
+              "policy": "default",
+              "query": "SELECT CUMULATIVE_SUM(sum(\"value\")) AS \"mean_value\" FROM \"telegraf\".\"autogen\".\"ConsumptionProcessed\" WHERE $timeFilter AND \"PilotId\"='$PilotId' AND \"stat\"='Sum' GROUP BY time($__interval) FILL(null)",
+              "rawQuery": true,
+              "refId": "C",
+              "resultFormat": "time_series",
+              "select": [
+                [
+                  {
+                    "params": [
+                      "value"
+                    ],
+                    "type": "field"
+                  },
+                  {
+                    "params": [],
+                    "type": "mean"
+                  }
+                ]
+              ],
+              "tags": []
+            },
+            {
+              "alias": "E",
+              "dsType": "influxdb",
+              "groupBy": [
+                {
+                  "params": [
+                    "$__interval"
+                  ],
+                  "type": "time"
+                },
+                {
+                  "params": [
+                    "null"
+                  ],
+                  "type": "fill"
+                }
+              ],
+              "orderByTime": "ASC",
+              "policy": "default",
+              "query": "SELECT CUMULATIVE_SUM(sum(\"value\")) AS \"mean_value\" FROM \"telegraf\".\"autogen\".\"errors\" WHERE $timeFilter AND \"PilotId\"='$PilotId' AND \"errorCode\"='404.1005' AND \"ingestionType\"='RAW' AND \"stat\"='Sum' GROUP BY time($__interval) FILL(null)",
+              "rawQuery": true,
+              "refId": "D",
+              "resultFormat": "time_series",
+              "select": [
+                [
+                  {
+                    "params": [
+                      "value"
+                    ],
+                    "type": "field"
+                  },
+                  {
+                    "params": [],
+                    "type": "mean"
+                  }
+                ]
+              ],
+              "tags": []
+            },
+            {
+              "alias": "F",
+              "dsType": "influxdb",
+              "groupBy": [
+                {
+                  "params": [
+                    "$__interval"
+                  ],
+                  "type": "time"
+                },
+                {
+                  "params": [
+                    "null"
+                  ],
+                  "type": "fill"
+                }
+              ],
+              "orderByTime": "ASC",
+              "policy": "default",
+              "query": "SELECT CUMULATIVE_SUM(sum(\"value\")) AS \"mean_value\" FROM \"telegraf\".\"autogen\".\"errors\" WHERE $timeFilter AND \"PilotId\"='$PilotId' AND \"errorCode\"='500.2001' AND \"ingestionType\"='RAW' AND \"stat\"='Sum' GROUP BY time($__interval) FILL(null)",
+              "rawQuery": true,
+              "refId": "E",
+              "resultFormat": "time_series",
+              "select": [
+                [
+                  {
+                    "params": [
+                      "value"
+                    ],
+                    "type": "field"
+                  },
+                  {
+                    "params": [],
+                    "type": "mean"
+                  }
+                ]
+              ],
+              "tags": []
+            },
+            {
+              "alias": "H",
+              "dsType": "influxdb",
+              "groupBy": [
+                {
+                  "params": [
+                    "$__interval"
+                  ],
+                  "type": "time"
+                },
+                {
+                  "params": [
+                    "null"
+                  ],
+                  "type": "fill"
+                }
+              ],
+              "orderByTime": "ASC",
+              "policy": "default",
+              "query": "SELECT CUMULATIVE_SUM(sum(\"value\")) AS \"mean_value\" FROM \"telegraf\".\"autogen\".\"errors\" WHERE $timeFilter AND \"PilotId\"='$PilotId' AND \"errorCode\"='404.2030' AND \"ingestionType\"='RAW' AND \"stat\"='Sum' GROUP BY time($__interval) FILL(null)",
+              "rawQuery": true,
+              "refId": "F",
+              "resultFormat": "time_series",
+              "select": [
+                [
+                  {
+                    "params": [
+                      "value"
+                    ],
+                    "type": "field"
+                  },
+                  {
+                    "params": [],
+                    "type": "mean"
+                  }
+                ]
+              ],
+              "tags": []
+            },
+            {
+              "alias": "I",
+              "dsType": "influxdb",
+              "groupBy": [
+                {
+                  "params": [
+                    "$__interval"
+                  ],
+                  "type": "time"
+                },
+                {
+                  "params": [
+                    "null"
+                  ],
+                  "type": "fill"
+                }
+              ],
+              "orderByTime": "ASC",
+              "policy": "default",
+              "query": "SELECT CUMULATIVE_SUM(sum(\"value\")) AS \"mean_value\" FROM \"telegraf\".\"autogen\".\"errors\" WHERE $timeFilter AND \"PilotId\"='$PilotId' AND \"errorCode\"='404.2031' AND \"ingestionType\"='RAW' AND \"stat\"='Sum' GROUP BY time($__interval) FILL(null)",
+              "rawQuery": true,
+              "refId": "G",
+              "resultFormat": "time_series",
+              "select": [
+                [
+                  {
+                    "params": [
+                      "value"
+                    ],
+                    "type": "field"
+                  },
+                  {
+                    "params": [],
+                    "type": "mean"
+                  }
+                ]
+              ],
+              "tags": []
+            },
+            {
+              "alias": "G",
+              "dsType": "influxdb",
+              "groupBy": [
+                {
+                  "params": [
+                    "$__interval"
+                  ],
+                  "type": "time"
+                },
+                {
+                  "params": [
+                    "null"
+                  ],
+                  "type": "fill"
+                }
+              ],
+              "orderByTime": "ASC",
+              "policy": "default",
+              "query": "SELECT CUMULATIVE_SUM(sum(\"value\")) AS \"mean_value\" FROM \"telegraf\".\"autogen\".\"errors\" WHERE $timeFilter AND \"PilotId\"='$PilotId' AND \"errorCode\"='PROCESSING_FAILED-ERROR_UKNOWN_INTERNAL_ERROR' AND \"ingestionType\"='RAW' AND \"stat\"='Sum' GROUP BY time($__interval) FILL(null)",
+              "rawQuery": true,
+              "refId": "H",
+              "resultFormat": "time_series",
+              "select": [
+                [
+                  {
+                    "params": [
+                      "value"
+                    ],
+                    "type": "field"
+                  },
+                  {
+                    "params": [],
+                    "type": "mean"
+                  }
+                ]
+              ],
+              "tags": []
+            },
+            {
+              "alias": "D",
+              "dsType": "influxdb",
+              "groupBy": [
+                {
+                  "params": [
+                    "$__interval"
+                  ],
+                  "type": "time"
+                },
+                {
+                  "params": [
+                    "null"
+                  ],
+                  "type": "fill"
+                }
+              ],
+              "orderByTime": "ASC",
+              "policy": "default",
+              "query": "SELECT CUMULATIVE_SUM(sum(\"value\")) AS \"mean_value\" FROM \"telegraf\".\"autogen\".\"errors\" WHERE $timeFilter AND \"PilotId\"='$PilotId' AND \"ingestionType\"='RAW' AND \"stat\"='Sum' GROUP BY time($__interval) FILL(null)",
+              "rawQuery": true,
+              "refId": "I",
+              "resultFormat": "time_series",
+              "select": [
+                [
+                  {
+                    "params": [
+                      "value"
+                    ],
+                    "type": "field"
+                  },
+                  {
+                    "params": [],
+                    "type": "mean"
+                  }
+                ]
+              ],
+              "tags": []
+            }
+          ],
+          "thresholds": "0,10000",
+          "title": "Consumption File",
+          "type": "jdbranham-diagram-panel",
+          "valueMaps": [
+            {
+              "op": "=",
+              "text": "N/A",
+              "value": "null"
+            }
+          ],
+          "valueName": "current",
+          "valueOptions": [
+            "avg",
+            "min",
+            "max",
+            "total",
+            "current"
+          ]
+        }
+      ],
+      "repeat": null,
+      "repeatIteration": null,
+      "repeatRowId": null,
+      "showTitle": true,
+      "title": "Consumption Files",
+      "titleSize": "h3"
+    },
+    {
+      "collapse": false,
+      "height": 250,
+      "panels": [
+        {
+          "colors": [
+            "rgba(245, 54, 54, 0.9)",
+            "rgba(237, 129, 40, 0.89)",
+            "rgba(50, 172, 45, 0.97)"
+          ],
+          "composites": [],
+          "content": "graph LR\nA[Files Count]  --> B[Record Chunked]\nB --> D{Errors}\nD --> E[404.1004]\nclick E \"http://34.228.68.108:3000/dashboard/db/newmetrictemp?orgId=1&panelId=8&fullscreen&var-PilotId=$PilotId&var-Error=404.1004&var-IngestionType=APPLIANCE\"",
+          "datasource": "influx_ec2",
+          "decimals": 0,
+          "format": "locale",
+          "graphId": "diagram_7",
+          "id": 7,
+          "init": {
+            "arrowMarkerAbsolute": true,
+            "cloneCssStyles": false,
+            "flowchart": {
+              "htmlLabels": true,
+              "useMaxWidth": true
+            },
+            "gantt": {
+              "barGap": 4,
+              "barHeight": 20,
+              "fontFamily": "\"Open-Sans\", \"sans-serif\"",
+              "fontSize": 11,
+              "gridLineStartPadding": 35,
+              "leftPadding": 75,
+              "numberSectionStyles": 3,
+              "titleTopMargin": 25,
+              "topPadding": 50
+            },
+            "logLevel": 3,
+            "sequenceDiagram": {
+              "actorMargin": 50,
+              "bottomMarginAdj": 1,
+              "boxMargin": 10,
+              "boxTextMargin": 5,
+              "diagramMarginX": 50,
+              "diagramMarginY": 10,
+              "height": 65,
+              "messageMargin": 35,
+              "mirrorActors": true,
+              "noteMargin": 10,
+              "useMaxWidth": true,
+              "width": 150
+            },
+            "startOnLoad": false
+          },
+          "legend": {
+            "avg": true,
+            "current": true,
+            "gradient": {
+              "enabled": true,
+              "show": true
+            },
+            "max": true,
+            "min": true,
+            "show": true,
+            "total": true
+          },
+          "links": [
+            {
+              "dashUri": "db/newmetrictemp",
+              "dashboard": "NewMetricTemp",
+              "includeVars": true,
+              "keepTime": true,
+              "targetBlank": true,
+              "title": "NewMetricTemp",
+              "type": "dashboard"
+            }
+          ],
+          "mappingType": 1,
+          "maxDataPoints": 100,
+          "maxWidth": false,
+          "mermaidServiceUrl": "",
+          "metricCharacterReplacements": [],
+          "mode": "content",
+          "nullPointMode": "connected",
+          "seriesOverrides": [
+            {
+              "alias": "E",
+              "invertColors": "Invert Colors"
+            },
+            {
+              "alias": "A",
+              "thresholds": "0,10"
+            }
+          ],
+          "span": 12,
+          "targets": [
+            {
+              "alias": "A",
+              "dsType": "influxdb",
+              "expr": "",
+              "format": "time_series",
+              "groupBy": [
+                {
+                  "params": [
+                    "$__interval"
+                  ],
+                  "type": "time"
+                },
+                {
+                  "params": [
+                    "null"
+                  ],
+                  "type": "fill"
+                }
+              ],
+              "intervalFactor": 2,
+              "orderByTime": "ASC",
+              "policy": "default",
+              "query": "SELECT CUMULATIVE_SUM(SUM(\"value\")) AS \"mean_value\" FROM \"telegraf\".\"autogen\".\"FilesCount\" WHERE $timeFilter AND \"FileType\"='APPLIANCE_PROFILE' AND \"PilotId\"='$PilotId' AND \"stat\"='Sum' GROUP BY time($__interval) FILL(null)",
+              "rawQuery": true,
+              "refId": "A",
+              "resultFormat": "time_series",
+              "select": [
+                [
+                  {
+                    "params": [
+                      "value"
+                    ],
+                    "type": "field"
+                  },
+                  {
+                    "params": [],
+                    "type": "mean"
+                  }
+                ]
+              ],
+              "tags": []
+            },
+            {
+              "alias": "B",
+              "dsType": "influxdb",
+              "groupBy": [
+                {
+                  "params": [
+                    "$__interval"
+                  ],
+                  "type": "time"
+                },
+                {
+                  "params": [
+                    "null"
+                  ],
+                  "type": "fill"
+                }
+              ],
+              "orderByTime": "ASC",
+              "policy": "default",
+              "query": "SELECT CUMULATIVE_SUM(SUM(\"value\")) AS \"mean_value\" FROM \"telegraf\".\"autogen\".\"RecordChunked\" WHERE $timeFilter AND \"FileType\"='APPLIANCE_PROFILE' AND \"PilotId\"='$PilotId' AND \"stat\"='Sum' GROUP BY time($__interval) FILL(null)",
+              "rawQuery": true,
+              "refId": "B",
+              "resultFormat": "time_series",
+              "select": [
+                [
+                  {
+                    "params": [
+                      "value"
+                    ],
+                    "type": "field"
+                  },
+                  {
+                    "params": [],
+                    "type": "mean"
+                  }
+                ]
+              ],
+              "tags": []
+            },
+            {
+              "alias": "E",
+              "dsType": "influxdb",
+              "groupBy": [
+                {
+                  "params": [
+                    "$__interval"
+                  ],
+                  "type": "time"
+                },
+                {
+                  "params": [
+                    "null"
+                  ],
+                  "type": "fill"
+                }
+              ],
+              "orderByTime": "ASC",
+              "policy": "default",
+              "query": "SELECT CUMULATIVE_SUM(SUM(\"value\")) AS \"mean_value\" FROM \"telegraf\".\"autogen\".\"errors\" WHERE $timeFilter AND \"PilotId\"='$PilotId' AND \"errorCode\"='404.1004' AND \"ingestionType\"='APPLIANCE' AND \"stat\"='Sum' GROUP BY time($__interval) FILL(null)",
+              "rawQuery": true,
+              "refId": "E",
+              "resultFormat": "time_series",
+              "select": [
+                [
+                  {
+                    "params": [
+                      "value"
+                    ],
+                    "type": "field"
+                  },
+                  {
+                    "params": [],
+                    "type": "mean"
+                  }
+                ]
+              ],
+              "tags": []
+            }
+          ],
+          "thresholds": "0,100",
+          "title": "Appliance Profile",
+          "type": "jdbranham-diagram-panel",
+          "valueMaps": [
+            {
+              "op": "=",
+              "text": "N/A",
+              "value": "null"
+            }
+          ],
+          "valueName": "current",
+          "valueOptions": [
+            "avg",
+            "min",
+            "max",
+            "total",
+            "current"
+          ]
+        }
+      ],
+      "repeat": null,
+      "repeatIteration": null,
+      "repeatRowId": null,
+      "showTitle": true,
+      "title": "Appliance Profile",
+      "titleSize": "h3"
+    },
+    {
+      "collapse": false,
+      "height": 250,
+      "panels": [
+        {
+          "colors": [
+            "rgba(245, 54, 54, 0.9)",
+            "rgba(237, 129, 40, 0.89)",
+            "rgba(50, 172, 45, 0.97)"
+          ],
+          "composites": [],
+          "content": "graph LR\nA[Files Count] --> B[Record Chunked]\nB --> C[Invoices Processed]\nB --> D{Errors}\nD --> E[400.2026]\nclick E \"http://34.228.68.108:3000/dashboard/db/newmetrictemp?orgId=1&panelId=8&fullscreen&var-PilotId=$PilotId&var-Error=400.2026&var-IngestionType=INVOICE\"\nD --> F[404.1004] \nclick F \"http://34.228.68.108:3000/dashboard/db/newmetrictemp?orgId=1&panelId=8&fullscreen&var-PilotId=$PilotId&var-Error=404.1004&var-IngestionType=INVOICE\"\nD --> G[Internal Error]\nclick G \"http://34.228.68.108:3000/dashboard/db/newmetrictemp?orgId=1&panelId=8&fullscreen&var-PilotId=$PilotId&var-Error=PROCESSING_FAILED-ERROR_UKNOWN_INTERNAL_ERROR&var-IngestionType=INVOICE\"\n",
+          "datasource": "influx_ec2",
+          "decimals": 0,
+          "format": "locale",
+          "graphId": "diagram_8",
+          "id": 8,
+          "init": {
+            "arrowMarkerAbsolute": true,
+            "cloneCssStyles": false,
+            "flowchart": {
+              "htmlLabels": true,
+              "useMaxWidth": true
+            },
+            "gantt": {
+              "barGap": 4,
+              "barHeight": 20,
+              "fontFamily": "\"Open-Sans\", \"sans-serif\"",
+              "fontSize": 11,
+              "gridLineStartPadding": 35,
+              "leftPadding": 75,
+              "numberSectionStyles": 3,
+              "titleTopMargin": 25,
+              "topPadding": 50
+            },
+            "logLevel": 3,
+            "sequenceDiagram": {
+              "actorMargin": 50,
+              "bottomMarginAdj": 1,
+              "boxMargin": 10,
+              "boxTextMargin": 5,
+              "diagramMarginX": 50,
+              "diagramMarginY": 10,
+              "height": 65,
+              "messageMargin": 35,
+              "mirrorActors": true,
+              "noteMargin": 10,
+              "useMaxWidth": true,
+              "width": 150
+            },
+            "startOnLoad": false
+          },
+          "interval": "",
+          "legend": {
+            "avg": true,
+            "current": true,
+            "gradient": {
+              "enabled": true,
+              "show": true
+            },
+            "max": true,
+            "min": true,
+            "show": true,
+            "total": true
+          },
+          "links": [
+            {
+              "dashUri": "db/newmetrictemp",
+              "dashboard": "NewMetricTemp",
+              "includeVars": true,
+              "keepTime": true,
+              "targetBlank": true,
+              "title": "NewMetricTemp",
+              "type": "dashboard"
+            }
+          ],
+          "mappingType": 1,
+          "maxDataPoints": 100,
+          "maxWidth": false,
+          "mermaidServiceUrl": "",
+          "metricCharacterReplacements": [],
+          "mode": "content",
+          "nullPointMode": "connected",
+          "seriesOverrides": [
+            {
+              "alias": "A",
+              "thresholds": "0,10"
+            },
+            {
+              "alias": "D",
+              "invertColors": "Invert Colors"
+            },
+            {
+              "alias": "E",
+              "invertColors": "Invert Colors"
+            },
+            {
+              "alias": "F",
+              "invertColors": "Invert Colors"
+            },
+            {
+              "alias": "G",
+              "invertColors": "Invert Colors"
+            }
+          ],
+          "span": 12,
+          "targets": [
+            {
+              "alias": "A",
+              "dsType": "influxdb",
+              "expr": "",
+              "format": "time_series",
+              "groupBy": [
+                {
+                  "params": [
+                    "$__interval"
+                  ],
+                  "type": "time"
+                },
+                {
+                  "params": [
+                    "null"
+                  ],
+                  "type": "fill"
+                }
+              ],
+              "intervalFactor": 2,
+              "orderByTime": "ASC",
+              "policy": "default",
+              "query": "SELECT CUMULATIVE_SUM(SUM(\"value\")) AS \"mean_value\" FROM \"telegraf\".\"autogen\".\"FilesCount\" WHERE $timeFilter AND \"FileType\"='BILLING' AND \"PilotId\"='$PilotId' AND \"stat\"='Sum' GROUP BY time($__interval) FILL(null)",
+              "rawQuery": true,
+              "refId": "A",
+              "resultFormat": "time_series",
+              "select": [
+                [
+                  {
+                    "params": [
+                      "value"
+                    ],
+                    "type": "field"
+                  },
+                  {
+                    "params": [],
+                    "type": "mean"
+                  }
+                ]
+              ],
+              "tags": []
+            },
+            {
+              "alias": "B",
+              "dsType": "influxdb",
+              "groupBy": [
+                {
+                  "params": [
+                    "$__interval"
+                  ],
+                  "type": "time"
+                },
+                {
+                  "params": [
+                    "null"
+                  ],
+                  "type": "fill"
+                }
+              ],
+              "orderByTime": "ASC",
+              "policy": "default",
+              "query": "SELECT CUMULATIVE_SUM(SUM(\"value\")) AS \"mean_value\" FROM \"telegraf\".\"autogen\".\"RecordChunked\" WHERE $timeFilter AND \"FileType\"='BILLING' AND \"PilotId\"='$PilotId' AND \"stat\"='Sum' GROUP BY time($__interval) FILL(null)",
+              "rawQuery": true,
+              "refId": "B",
+              "resultFormat": "time_series",
+              "select": [
+                [
+                  {
+                    "params": [
+                      "value"
+                    ],
+                    "type": "field"
+                  },
+                  {
+                    "params": [],
+                    "type": "mean"
+                  }
+                ]
+              ],
+              "tags": []
+            },
+            {
+              "alias": "C",
+              "dsType": "influxdb",
+              "groupBy": [
+                {
+                  "params": [
+                    "$__interval"
+                  ],
+                  "type": "time"
+                },
+                {
+                  "params": [
+                    "null"
+                  ],
+                  "type": "fill"
+                }
+              ],
+              "orderByTime": "ASC",
+              "policy": "default",
+              "query": "SELECT CUMULATIVE_SUM(SUM(\"value\")) AS \"mean_value\" FROM \"telegraf\".\"autogen\".\"InvoicesProcessed\" WHERE $timeFilter AND \"PilotId\"='$PilotId' AND \"stat\"='Sum' GROUP BY time($__interval) FILL(null)",
+              "rawQuery": true,
+              "refId": "C",
+              "resultFormat": "time_series",
+              "select": [
+                [
+                  {
+                    "params": [
+                      "value"
+                    ],
+                    "type": "field"
+                  },
+                  {
+                    "params": [],
+                    "type": "mean"
+                  }
+                ]
+              ],
+              "tags": []
+            },
+            {
+              "alias": "E",
+              "dsType": "influxdb",
+              "groupBy": [
+                {
+                  "params": [
+                    "$__interval"
+                  ],
+                  "type": "time"
+                },
+                {
+                  "params": [
+                    "null"
+                  ],
+                  "type": "fill"
+                }
+              ],
+              "orderByTime": "ASC",
+              "policy": "default",
+              "query": "SELECT CUMULATIVE_SUM(SUM(\"value\")) AS \"mean_value\" FROM \"telegraf\".\"autogen\".\"errors\" WHERE $timeFilter AND \"PilotId\"='$PilotId' AND \"errorCode\"='400.2026' AND \"ingestionType\"='INVOICE' AND \"stat\"='Sum' GROUP BY time($__interval) FILL(null)",
+              "rawQuery": true,
+              "refId": "D",
+              "resultFormat": "time_series",
+              "select": [
+                [
+                  {
+                    "params": [
+                      "value"
+                    ],
+                    "type": "field"
+                  },
+                  {
+                    "params": [],
+                    "type": "mean"
+                  }
+                ]
+              ],
+              "tags": []
+            },
+            {
+              "alias": "F",
+              "dsType": "influxdb",
+              "groupBy": [
+                {
+                  "params": [
+                    "$__interval"
+                  ],
+                  "type": "time"
+                },
+                {
+                  "params": [
+                    "null"
+                  ],
+                  "type": "fill"
+                }
+              ],
+              "orderByTime": "ASC",
+              "policy": "default",
+              "query": "SELECT CUMULATIVE_SUM(SUM(\"value\")) AS \"mean_value\" FROM \"telegraf\".\"autogen\".\"errors\" WHERE $timeFilter AND \"PilotId\"='$PilotId' AND \"errorCode\"='404.1004' AND \"ingestionType\"='INVOICE' AND \"stat\"='Sum' GROUP BY time($__interval) FILL(null)",
+              "rawQuery": true,
+              "refId": "E",
+              "resultFormat": "time_series",
+              "select": [
+                [
+                  {
+                    "params": [
+                      "value"
+                    ],
+                    "type": "field"
+                  },
+                  {
+                    "params": [],
+                    "type": "mean"
+                  }
+                ]
+              ],
+              "tags": []
+            },
+            {
+              "alias": "G",
+              "dsType": "influxdb",
+              "groupBy": [
+                {
+                  "params": [
+                    "$__interval"
+                  ],
+                  "type": "time"
+                },
+                {
+                  "params": [
+                    "null"
+                  ],
+                  "type": "fill"
+                }
+              ],
+              "orderByTime": "ASC",
+              "policy": "default",
+              "query": "SELECT CUMULATIVE_SUM(SUM(\"value\")) AS \"mean_value\" FROM \"telegraf\".\"autogen\".\"errors\" WHERE $timeFilter AND \"PilotId\"='$PilotId' AND \"errorCode\"='PROCESSING_FAILED-ERROR_UKNOWN_INTERNAL_ERROR' AND \"ingestionType\"='INVOICE' AND \"stat\"='Sum' GROUP BY time($__interval) FILL(null)",
+              "rawQuery": true,
+              "refId": "F",
+              "resultFormat": "time_series",
+              "select": [
+                [
+                  {
+                    "params": [
+                      "value"
+                    ],
+                    "type": "field"
+                  },
+                  {
+                    "params": [],
+                    "type": "mean"
+                  }
+                ]
+              ],
+              "tags": []
+            },
+            {
+              "alias": "D",
+              "dsType": "influxdb",
+              "groupBy": [
+                {
+                  "params": [
+                    "$__interval"
+                  ],
+                  "type": "time"
+                },
+                {
+                  "params": [
+                    "null"
+                  ],
+                  "type": "fill"
+                }
+              ],
+              "orderByTime": "ASC",
+              "policy": "default",
+              "query": "SELECT CUMULATIVE_SUM(SUM(\"value\")) FROM \"telegraf\".\"autogen\".\"errors\" WHERE $timeFilter AND \"PilotId\"='$PilotId' AND \"ingestionType\"='INVOICE' AND \"stat\"='Sum' GROUP BY time($__interval) FILL(null)",
+              "rawQuery": true,
+              "refId": "G",
+              "resultFormat": "time_series",
+              "select": [
+                [
+                  {
+                    "params": [
+                      "value"
+                    ],
+                    "type": "field"
+                  },
+                  {
+                    "params": [],
+                    "type": "mean"
+                  }
+                ]
+              ],
+              "tags": []
+            }
+          ],
+          "thresholds": "0,100",
+          "title": "Billing File",
+          "type": "jdbranham-diagram-panel",
+          "valueMaps": [
+            {
+              "op": "=",
+              "text": "N/A",
+              "value": "null"
+            }
+          ],
+          "valueName": "current",
+          "valueOptions": [
+            "avg",
+            "min",
+            "max",
+            "total",
+            "current"
+          ]
+        }
+      ],
+      "repeat": null,
+      "repeatIteration": null,
+      "repeatRowId": null,
+      "showTitle": true,
+      "title": "Billing File",
+      "titleSize": "h3"
+    },
+    {
+      "collapse": false,
+      "height": 250,
+      "panels": [
+        {
+          "colors": [
+            "rgba(245, 54, 54, 0.9)",
+            "rgba(237, 129, 40, 0.89)",
+            "rgba(50, 172, 45, 0.97)"
+          ],
+          "composites": [],
+          "content": "graph LR\nA[Files Count] --> B[Record Chunked]\nB --> C[User Data Processed]\nB --> D{Errors}\nD --> E[400.2026]\nclick E \"http://34.228.68.108:3000/dashboard/db/newmetrictemp?orgId=1&panelId=8&fullscreen&var-PilotId=$PilotId&var-Error=400.2026&var-IngestionType=USERENROLL\"\n\n",
+          "datasource": "influx_ec2",
+          "decimals": 0,
+          "format": "locale",
+          "graphId": "diagram_9",
+          "id": 9,
+          "init": {
+            "arrowMarkerAbsolute": true,
+            "cloneCssStyles": false,
+            "flowchart": {
+              "htmlLabels": true,
+              "useMaxWidth": true
+            },
+            "gantt": {
+              "barGap": 4,
+              "barHeight": 20,
+              "fontFamily": "\"Open-Sans\", \"sans-serif\"",
+              "fontSize": 11,
+              "gridLineStartPadding": 35,
+              "leftPadding": 75,
+              "numberSectionStyles": 3,
+              "titleTopMargin": 25,
+              "topPadding": 50
+            },
+            "logLevel": 3,
+            "sequenceDiagram": {
+              "actorMargin": 50,
+              "bottomMarginAdj": 1,
+              "boxMargin": 10,
+              "boxTextMargin": 5,
+              "diagramMarginX": 50,
+              "diagramMarginY": 10,
+              "height": 65,
+              "messageMargin": 35,
+              "mirrorActors": true,
+              "noteMargin": 10,
+              "useMaxWidth": true,
+              "width": 150
+            },
+            "startOnLoad": false
+          },
+          "legend": {
+            "avg": true,
+            "current": true,
+            "gradient": {
+              "enabled": true,
+              "show": true
+            },
+            "max": true,
+            "min": true,
+            "show": true,
+            "total": true
+          },
+          "links": [
+            {
+              "dashUri": "db/newmetrictemp",
+              "dashboard": "NewMetricTemp",
+              "includeVars": true,
+              "keepTime": true,
+              "targetBlank": true,
+              "title": "NewMetricTemp",
+              "type": "dashboard"
+            }
+          ],
+          "mappingType": 1,
+          "maxDataPoints": 100,
+          "maxWidth": false,
+          "mermaidServiceUrl": "",
+          "metricCharacterReplacements": [],
+          "mode": "content",
+          "nullPointMode": "connected",
+          "seriesOverrides": [
+            {
+              "alias": "E",
+              "invertColors": "Invert Colors"
+            }
+          ],
+          "span": 12,
+          "targets": [
+            {
+              "alias": "A",
+              "dsType": "influxdb",
+              "expr": "",
+              "format": "time_series",
+              "groupBy": [
+                {
+                  "params": [
+                    "$__interval"
+                  ],
+                  "type": "time"
+                },
+                {
+                  "params": [
+                    "null"
+                  ],
+                  "type": "fill"
+                }
+              ],
+              "intervalFactor": 2,
+              "orderByTime": "ASC",
+              "policy": "default",
+              "query": "SELECT SUM(\"value\") AS \"mean_value\" FROM \"telegraf\".\"autogen\".\"FilesCount\" WHERE $timeFilter AND \"FileType\"='USER' AND \"PilotId\"='$PilotId' AND \"stat\"='Sum' GROUP BY time($__interval) FILL(null)",
+              "rawQuery": true,
+              "refId": "A",
+              "resultFormat": "time_series",
+              "select": [
+                [
+                  {
+                    "params": [
+                      "value"
+                    ],
+                    "type": "field"
+                  },
+                  {
+                    "params": [],
+                    "type": "mean"
+                  }
+                ]
+              ],
+              "tags": []
+            },
+            {
+              "alias": "B",
+              "dsType": "influxdb",
+              "groupBy": [
+                {
+                  "params": [
+                    "$__interval"
+                  ],
+                  "type": "time"
+                },
+                {
+                  "params": [
+                    "null"
+                  ],
+                  "type": "fill"
+                }
+              ],
+              "orderByTime": "ASC",
+              "policy": "default",
+              "query": "SELECT SUM(\"value\") AS \"mean_value\" FROM \"telegraf\".\"autogen\".\"RecordChunked\" WHERE $timeFilter AND \"FileType\"='USER' AND \"PilotId\"='$PilotId' AND \"stat\"='Sum' GROUP BY time($__interval) FILL(null)",
+              "rawQuery": true,
+              "refId": "B",
+              "resultFormat": "time_series",
+              "select": [
+                [
+                  {
+                    "params": [
+                      "value"
+                    ],
+                    "type": "field"
+                  },
+                  {
+                    "params": [],
+                    "type": "mean"
+                  }
+                ]
+              ],
+              "tags": []
+            },
+            {
+              "alias": "C",
+              "dsType": "influxdb",
+              "groupBy": [
+                {
+                  "params": [
+                    "$__interval"
+                  ],
+                  "type": "time"
+                },
+                {
+                  "params": [
+                    "null"
+                  ],
+                  "type": "fill"
+                }
+              ],
+              "orderByTime": "ASC",
+              "policy": "default",
+              "query": "SELECT SUM(\"value\") AS \"mean_value\" FROM \"telegraf\".\"autogen\".\"UserDataProcessed\" WHERE $timeFilter AND \"PilotId\"='$PilotId' AND \"stat\"='Sum' GROUP BY time($__interval) FILL(null)",
+              "rawQuery": true,
+              "refId": "C",
+              "resultFormat": "time_series",
+              "select": [
+                [
+                  {
+                    "params": [
+                      "value"
+                    ],
+                    "type": "field"
+                  },
+                  {
+                    "params": [],
+                    "type": "mean"
+                  }
+                ]
+              ],
+              "tags": []
+            },
+            {
+              "alias": "E",
+              "dsType": "influxdb",
+              "groupBy": [
+                {
+                  "params": [
+                    "$__interval"
+                  ],
+                  "type": "time"
+                },
+                {
+                  "params": [
+                    "null"
+                  ],
+                  "type": "fill"
+                }
+              ],
+              "orderByTime": "ASC",
+              "policy": "default",
+              "query": "SELECT SUM(\"value\") AS \"mean_value\" FROM \"telegraf\".\"autogen\".\"errors\" WHERE $timeFilter AND \"PilotId\"='$PilotId' AND \"errorCode\"='400.2026' AND \"ingestionType\"='USERENROLL' AND \"stat\"='Sum' GROUP BY time($__interval) FILL(null)",
+              "rawQuery": true,
+              "refId": "D",
+              "resultFormat": "time_series",
+              "select": [
+                [
+                  {
+                    "params": [
+                      "value"
+                    ],
+                    "type": "field"
+                  },
+                  {
+                    "params": [],
+                    "type": "mean"
+                  }
+                ]
+              ],
+              "tags": []
+            }
+          ],
+          "thresholds": "0,10",
+          "title": "User Enroll File",
+          "type": "jdbranham-diagram-panel",
+          "valueMaps": [
+            {
+              "op": "=",
+              "text": "N/A",
+              "value": "null"
+            }
+          ],
+          "valueName": "total",
+          "valueOptions": [
+            "avg",
+            "min",
+            "max",
+            "total",
+            "current"
+          ]
+        }
+      ],
+      "repeat": null,
+      "repeatIteration": null,
+      "repeatRowId": null,
+      "showTitle": true,
+      "title": "User File",
+      "titleSize": "h3"
+    },
+    {
+      "collapse": false,
+      "height": 250,
+      "panels": [
+        {
+          "colors": [
+            "rgba(245, 54, 54, 0.9)",
+            "rgba(237, 129, 40, 0.89)",
+            "rgba(50, 172, 45, 0.97)"
+          ],
+          "composites": [],
+          "content": "graph LR\nA[Files Count] --> B[Record Chunked]\nB --> C[Audit Schedule Processed]\nB --> D{Errors}\nD --> E[404.1004]\nclick E \"http://34.228.68.108:3000/dashboard/db/newmetrictemp?orgId=1&panelId=8&fullscreen&var-PilotId=$PilotId&var-Error=404.1004&var-IngestionType=FieldAuditTasks\"\nD --> F[Internal Error]\nclick F \"http://34.228.68.108:3000/dashboard/db/newmetrictemp?orgId=1&panelId=8&fullscreen&var-PilotId=$PilotId&var-Error=PROCESSING_FAILED-ERROR_UKNOWN_INTERNAL_ERROR&var-IngestionType=FieldAuditTasks\"\n",
+          "datasource": "influx_ec2",
+          "decimals": 0,
+          "format": "locale",
+          "graphId": "diagram_10",
+          "id": 10,
+          "init": {
+            "arrowMarkerAbsolute": true,
+            "cloneCssStyles": false,
+            "flowchart": {
+              "htmlLabels": true,
+              "useMaxWidth": true
+            },
+            "gantt": {
+              "barGap": 4,
+              "barHeight": 20,
+              "fontFamily": "\"Open-Sans\", \"sans-serif\"",
+              "fontSize": 11,
+              "gridLineStartPadding": 35,
+              "leftPadding": 75,
+              "numberSectionStyles": 3,
+              "titleTopMargin": 25,
+              "topPadding": 50
+            },
+            "logLevel": 3,
+            "sequenceDiagram": {
+              "actorMargin": 50,
+              "bottomMarginAdj": 1,
+              "boxMargin": 10,
+              "boxTextMargin": 5,
+              "diagramMarginX": 50,
+              "diagramMarginY": 10,
+              "height": 65,
+              "messageMargin": 35,
+              "mirrorActors": true,
+              "noteMargin": 10,
+              "useMaxWidth": true,
+              "width": 150
+            },
+            "startOnLoad": false
+          },
+          "legend": {
+            "avg": true,
+            "current": true,
+            "gradient": {
+              "enabled": true,
+              "show": true
+            },
+            "max": true,
+            "min": true,
+            "show": true,
+            "total": true
+          },
+          "links": [
+            {
+              "dashUri": "db/newmetrictemp",
+              "dashboard": "NewMetricTemp",
+              "includeVars": true,
+              "keepTime": true,
+              "targetBlank": true,
+              "title": "NewMetricTemp",
+              "type": "dashboard"
+            }
+          ],
+          "mappingType": 1,
+          "maxDataPoints": 100,
+          "maxWidth": false,
+          "mermaidServiceUrl": "",
+          "metricCharacterReplacements": [],
+          "mode": "content",
+          "nullPointMode": "connected",
+          "seriesOverrides": [
+            {
+              "alias": "A",
+              "thresholds": "0,10"
+            },
+            {
+              "alias": "E",
+              "invertColors": "Invert Colors"
+            },
+            {
+              "alias": "F",
+              "invertColors": "Invert Colors"
+            },
+            {
+              "alias": "D",
+              "invertColors": "Invert Colors"
+            }
+          ],
+          "span": 12,
+          "targets": [
+            {
+              "alias": "A",
+              "dsType": "influxdb",
+              "expr": "",
+              "format": "time_series",
+              "groupBy": [
+                {
+                  "params": [
+                    "$__interval"
+                  ],
+                  "type": "time"
+                },
+                {
+                  "params": [
+                    "null"
+                  ],
+                  "type": "fill"
+                }
+              ],
+              "intervalFactor": 2,
+              "orderByTime": "ASC",
+              "policy": "default",
+              "query": "SELECT CUMULATIVE_SUM(SUM(\"value\")) AS \"mean_value\" FROM \"telegraf\".\"autogen\".\"FilesCount\" WHERE $timeFilter AND \"FileType\"='AUDIT_SCHEDULE' AND \"PilotId\"='$PilotId' AND \"stat\"='Sum' GROUP BY time($__interval) FILL(null)",
+              "rawQuery": true,
+              "refId": "A",
+              "resultFormat": "time_series",
+              "select": [
+                [
+                  {
+                    "params": [
+                      "value"
+                    ],
+                    "type": "field"
+                  },
+                  {
+                    "params": [],
+                    "type": "mean"
+                  }
+                ]
+              ],
+              "tags": []
+            },
+            {
+              "alias": "B",
+              "dsType": "influxdb",
+              "groupBy": [
+                {
+                  "params": [
+                    "$__interval"
+                  ],
+                  "type": "time"
+                },
+                {
+                  "params": [
+                    "null"
+                  ],
+                  "type": "fill"
+                }
+              ],
+              "orderByTime": "ASC",
+              "policy": "default",
+              "query": "SELECT CUMULATIVE_SUM(SUM(\"value\")) AS \"mean_value\" FROM \"telegraf\".\"autogen\".\"RecordChunked\" WHERE $timeFilter AND \"FileType\"='AUDIT_SCHEDULE' AND \"PilotId\"='$PilotId' AND \"stat\"='Sum' GROUP BY time($__interval) FILL(null)",
+              "rawQuery": true,
+              "refId": "B",
+              "resultFormat": "time_series",
+              "select": [
+                [
+                  {
+                    "params": [
+                      "value"
+                    ],
+                    "type": "field"
+                  },
+                  {
+                    "params": [],
+                    "type": "mean"
+                  }
+                ]
+              ],
+              "tags": []
+            },
+            {
+              "alias": "C",
+              "dsType": "influxdb",
+              "groupBy": [
+                {
+                  "params": [
+                    "$__interval"
+                  ],
+                  "type": "time"
+                },
+                {
+                  "params": [
+                    "null"
+                  ],
+                  "type": "fill"
+                }
+              ],
+              "orderByTime": "ASC",
+              "policy": "default",
+              "query": "SELECT CUMULATIVE_SUM(SUM(\"value\")) AS \"mean_value\" FROM \"telegraf\".\"autogen\".\"AuditScheduleProcessed\" WHERE $timeFilter AND \"PilotId\"='$PilotId' AND \"stat\"='Sum' GROUP BY time($__interval) FILL(null)",
+              "rawQuery": true,
+              "refId": "C",
+              "resultFormat": "time_series",
+              "select": [
+                [
+                  {
+                    "params": [
+                      "value"
+                    ],
+                    "type": "field"
+                  },
+                  {
+                    "params": [],
+                    "type": "mean"
+                  }
+                ]
+              ],
+              "tags": []
+            },
+            {
+              "alias": "F",
+              "dsType": "influxdb",
+              "groupBy": [
+                {
+                  "params": [
+                    "$__interval"
+                  ],
+                  "type": "time"
+                },
+                {
+                  "params": [
+                    "null"
+                  ],
+                  "type": "fill"
+                }
+              ],
+              "orderByTime": "ASC",
+              "policy": "default",
+              "query": "SELECT CUMULATIVE_SUM(SUM(\"value\")) AS \"mean_value\" FROM \"telegraf\".\"autogen\".\"errors\" WHERE $timeFilter AND \"PilotId\"='$PilotId' AND \"errorCode\"='PROCESSING_FAILED-ERROR_UKNOWN_INTERNAL_ERROR' AND \"ingestionType\"='FieldAuditTasks' AND \"stat\"='Sum' GROUP BY time($__interval) FILL(null)",
+              "rawQuery": true,
+              "refId": "D",
+              "resultFormat": "time_series",
+              "select": [
+                [
+                  {
+                    "params": [
+                      "value"
+                    ],
+                    "type": "field"
+                  },
+                  {
+                    "params": [],
+                    "type": "mean"
+                  }
+                ]
+              ],
+              "tags": []
+            },
+            {
+              "alias": "E",
+              "dsType": "influxdb",
+              "groupBy": [
+                {
+                  "params": [
+                    "$__interval"
+                  ],
+                  "type": "time"
+                },
+                {
+                  "params": [
+                    "null"
+                  ],
+                  "type": "fill"
+                }
+              ],
+              "orderByTime": "ASC",
+              "policy": "default",
+              "query": "SELECT CUMULATIVE_SUM(SUM(\"value\")) AS \"mean_value\" FROM \"telegraf\".\"autogen\".\"errors\" WHERE $timeFilter AND \"PilotId\"='$PilotId' AND \"errorCode\"='404.1004' AND \"ingestionType\"='FieldAuditTasks' AND \"stat\"='Sum' GROUP BY time($__interval) FILL(null)",
+              "rawQuery": true,
+              "refId": "E",
+              "resultFormat": "time_series",
+              "select": [
+                [
+                  {
+                    "params": [
+                      "value"
+                    ],
+                    "type": "field"
+                  },
+                  {
+                    "params": [],
+                    "type": "mean"
+                  }
+                ]
+              ],
+              "tags": []
+            },
+            {
+              "alias": "D",
+              "dsType": "influxdb",
+              "groupBy": [
+                {
+                  "params": [
+                    "$__interval"
+                  ],
+                  "type": "time"
+                },
+                {
+                  "params": [
+                    "null"
+                  ],
+                  "type": "fill"
+                }
+              ],
+              "orderByTime": "ASC",
+              "policy": "default",
+              "query": "SELECT CUMULATIVE_SUM(SUM(\"value\")) AS \"mean_value\" FROM \"telegraf\".\"autogen\".\"errors\" WHERE $timeFilter AND \"PilotId\"='$PilotId' AND  \"ingestionType\"='FieldAuditTasks' AND \"stat\"='Sum' GROUP BY time($__interval) FILL(null)",
+              "rawQuery": true,
+              "refId": "F",
+              "resultFormat": "time_series",
+              "select": [
+                [
+                  {
+                    "params": [
+                      "value"
+                    ],
+                    "type": "field"
+                  },
+                  {
+                    "params": [],
+                    "type": "mean"
+                  }
+                ]
+              ],
+              "tags": []
+            }
+          ],
+          "thresholds": "0,50",
+          "title": "Audit Schedule",
+          "type": "jdbranham-diagram-panel",
+          "valueMaps": [
+            {
+              "op": "=",
+              "text": "N/A",
+              "value": "null"
+            }
+          ],
+          "valueName": "current",
+          "valueOptions": [
+            "avg",
+            "min",
+            "max",
+            "total",
+            "current"
+          ]
+        }
+      ],
+      "repeat": null,
+      "repeatIteration": null,
+      "repeatRowId": null,
+      "showTitle": true,
+      "title": "Audit Schedule",
+      "titleSize": "h3"
+    },
+    {
+      "collapse": false,
+      "height": 250,
+      "panels": [
+        {
+          "colors": [
+            "rgba(245, 54, 54, 0.9)",
+            "rgba(237, 129, 40, 0.89)",
+            "rgba(50, 172, 45, 0.97)"
+          ],
+          "composites": [],
+          "content": "graph LR\nA[Files Count] --> B[Record Chunked]\nB --> C{Errors}\nC --> D[404.1004]\nclick D \"http://34.228.68.108:3000/dashboard/db/newmetrictemp?orgId=1&panelId=8&fullscreen&var-PilotId=$PilotId&var-Error=404.1004&var-IngestionType=USERPROFILE\"\nC --> E[Internal Error]\nclick E \"http://34.228.68.108:3000/dashboard/db/newmetrictemp?orgId=1&panelId=8&fullscreen&var-PilotId=$PilotId&var-Error=PROCESSING_FAILED-ERROR_UKNOWN_INTERNAL_ERROR&var-IngestionType=USERPROFILE\"",
+          "datasource": "influx_ec2",
+          "decimals": 0,
+          "format": "none",
+          "graphId": "diagram_11",
+          "id": 11,
+          "init": {
+            "arrowMarkerAbsolute": true,
+            "cloneCssStyles": false,
+            "flowchart": {
+              "htmlLabels": true,
+              "useMaxWidth": true
+            },
+            "gantt": {
+              "barGap": 4,
+              "barHeight": 20,
+              "fontFamily": "\"Open-Sans\", \"sans-serif\"",
+              "fontSize": 11,
+              "gridLineStartPadding": 35,
+              "leftPadding": 75,
+              "numberSectionStyles": 3,
+              "titleTopMargin": 25,
+              "topPadding": 50
+            },
+            "logLevel": 3,
+            "sequenceDiagram": {
+              "actorMargin": 50,
+              "bottomMarginAdj": 1,
+              "boxMargin": 10,
+              "boxTextMargin": 5,
+              "diagramMarginX": 50,
+              "diagramMarginY": 10,
+              "height": 65,
+              "messageMargin": 35,
+              "mirrorActors": true,
+              "noteMargin": 10,
+              "useMaxWidth": true,
+              "width": 150
+            },
+            "startOnLoad": false
+          },
+          "legend": {
+            "avg": true,
+            "current": true,
+            "gradient": {
+              "enabled": true,
+              "show": true
+            },
+            "max": true,
+            "min": true,
+            "show": true,
+            "total": true
+          },
+          "links": [
+            {
+              "dashUri": "db/newmetrictemp",
+              "dashboard": "NewMetricTemp",
+              "includeVars": true,
+              "keepTime": true,
+              "targetBlank": true,
+              "title": "NewMetricTemp",
+              "type": "dashboard"
+            }
+          ],
+          "mappingType": 1,
+          "maxDataPoints": 100,
+          "maxWidth": false,
+          "mermaidServiceUrl": "",
+          "metricCharacterReplacements": [],
+          "mode": "content",
+          "nullPointMode": "connected",
+          "seriesOverrides": [
+            {
+              "alias": "A",
+              "thresholds": "0,10"
+            },
+            {
+              "alias": "D",
+              "invertColors": "Invert Colors"
+            },
+            {
+              "alias": "E",
+              "invertColors": "Invert Colors"
+            },
+            {
+              "alias": "C",
+              "invertColors": "Invert Colors"
+            }
+          ],
+          "span": 12,
+          "targets": [
+            {
+              "alias": "A",
+              "dsType": "influxdb",
+              "expr": "",
+              "format": "time_series",
+              "groupBy": [
+                {
+                  "params": [
+                    "$__interval"
+                  ],
+                  "type": "time"
+                },
+                {
+                  "params": [
+                    "null"
+                  ],
+                  "type": "fill"
+                }
+              ],
+              "intervalFactor": 2,
+              "orderByTime": "ASC",
+              "policy": "default",
+              "query": "SELECT CUMULATIVE_SUM(SUM(\"value\")) AS \"mean_value\" FROM \"telegraf\".\"autogen\".\"FilesCount\" WHERE $timeFilter AND \"FileType\"='USER_PROFILE' AND \"PilotId\"='$PilotId' AND \"stat\"='Sum' GROUP BY time($__interval) FILL(null)",
+              "rawQuery": true,
+              "refId": "A",
+              "resultFormat": "time_series",
+              "select": [
+                [
+                  {
+                    "params": [
+                      "value"
+                    ],
+                    "type": "field"
+                  },
+                  {
+                    "params": [],
+                    "type": "mean"
+                  }
+                ]
+              ],
+              "tags": []
+            },
+            {
+              "alias": "B",
+              "dsType": "influxdb",
+              "groupBy": [
+                {
+                  "params": [
+                    "$__interval"
+                  ],
+                  "type": "time"
+                },
+                {
+                  "params": [
+                    "null"
+                  ],
+                  "type": "fill"
+                }
+              ],
+              "orderByTime": "ASC",
+              "policy": "default",
+              "query": "SELECT CUMULATIVE_SUM(SUM(\"value\")) AS \"mean_value\" FROM \"telegraf\".\"autogen\".\"RecordChunked\" WHERE $timeFilter AND \"FileType\"='USER_PROFILE' AND \"PilotId\"='$PilotId' AND \"stat\"='Sum' GROUP BY time($__interval) FILL(null)",
+              "rawQuery": true,
+              "refId": "B",
+              "resultFormat": "time_series",
+              "select": [
+                [
+                  {
+                    "params": [
+                      "value"
+                    ],
+                    "type": "field"
+                  },
+                  {
+                    "params": [],
+                    "type": "mean"
+                  }
+                ]
+              ],
+              "tags": []
+            },
+            {
+              "alias": "D",
+              "dsType": "influxdb",
+              "groupBy": [
+                {
+                  "params": [
+                    "$__interval"
+                  ],
+                  "type": "time"
+                },
+                {
+                  "params": [
+                    "null"
+                  ],
+                  "type": "fill"
+                }
+              ],
+              "orderByTime": "ASC",
+              "policy": "default",
+              "query": "SELECT CUMULATIVE_SUM(SUM(\"value\")) AS \"mean_value\" FROM \"telegraf\".\"autogen\".\"errors\" WHERE $timeFilter AND \"PilotId\"='$PilotId' AND \"errorCode\"='404.1004' AND \"ingestionType\"='USERPROFILE' AND \"stat\"='Sum' GROUP BY time($__interval) FILL(null)",
+              "rawQuery": true,
+              "refId": "C",
+              "resultFormat": "time_series",
+              "select": [
+                [
+                  {
+                    "params": [
+                      "value"
+                    ],
+                    "type": "field"
+                  },
+                  {
+                    "params": [],
+                    "type": "mean"
+                  }
+                ]
+              ],
+              "tags": []
+            },
+            {
+              "alias": "E",
+              "dsType": "influxdb",
+              "groupBy": [
+                {
+                  "params": [
+                    "$__interval"
+                  ],
+                  "type": "time"
+                },
+                {
+                  "params": [
+                    "null"
+                  ],
+                  "type": "fill"
+                }
+              ],
+              "orderByTime": "ASC",
+              "policy": "default",
+              "query": "SELECT CUMULATIVE_SUM(SUM(\"value\")) AS \"mean_value\" FROM \"telegraf\".\"autogen\".\"errors\" WHERE $timeFilter AND \"PilotId\"='$PilotId' AND \"errorCode\"='PROCESSING_FAILED-ERROR_UKNOWN_INTERNAL_ERROR' AND \"ingestionType\"='USERPROFILE' AND \"stat\"='Sum' GROUP BY time($__interval) FILL(null)",
+              "rawQuery": true,
+              "refId": "D",
+              "resultFormat": "time_series",
+              "select": [
+                [
+                  {
+                    "params": [
+                      "value"
+                    ],
+                    "type": "field"
+                  },
+                  {
+                    "params": [],
+                    "type": "mean"
+                  }
+                ]
+              ],
+              "tags": []
+            },
+            {
+              "alias": "C",
+              "dsType": "influxdb",
+              "groupBy": [
+                {
+                  "params": [
+                    "$__interval"
+                  ],
+                  "type": "time"
+                },
+                {
+                  "params": [
+                    "null"
+                  ],
+                  "type": "fill"
+                }
+              ],
+              "orderByTime": "ASC",
+              "policy": "default",
+              "query": "SELECT CUMULATIVE_SUM(SUM(\"value\")) AS \"mean_value\" FROM \"telegraf\".\"autogen\".\"errors\" WHERE $timeFilter AND \"PilotId\"='$PilotId' AND  \"ingestionType\"='USERPROFILE' AND \"stat\"='Sum' GROUP BY time($__interval) FILL(null)",
+              "rawQuery": true,
+              "refId": "E",
+              "resultFormat": "time_series",
+              "select": [
+                [
+                  {
+                    "params": [
+                      "value"
+                    ],
+                    "type": "field"
+                  },
+                  {
+                    "params": [],
+                    "type": "mean"
+                  }
+                ]
+              ],
+              "tags": []
+            }
+          ],
+          "thresholds": "0,1000",
+          "title": "User Profile",
+          "type": "jdbranham-diagram-panel",
+          "valueMaps": [
+            {
+              "op": "=",
+              "text": "N/A",
+              "value": "null"
+            }
+          ],
+          "valueName": "current",
+          "valueOptions": [
+            "avg",
+            "min",
+            "max",
+            "total",
+            "current"
+          ]
+        }
+      ],
+      "repeat": null,
+      "repeatIteration": null,
+      "repeatRowId": null,
+      "showTitle": true,
+      "title": "User Profile",
+      "titleSize": "h3"
+    },
+    {
+      "collapse": false,
+      "height": 250,
+      "panels": [
+        {
+          "colors": [
+            "rgba(245, 54, 54, 0.9)",
+            "rgba(237, 129, 40, 0.89)",
+            "rgba(50, 172, 45, 0.97)"
+          ],
+          "composites": [],
+          "content": "graph LR\nA[Files Count] --> B[Record Chunked]\nB --> C{Errors}\nC --> D[404.1004]\nclick D \"http://34.228.68.108:3000/dashboard/db/newmetrictemp?orgId=1&panelId=8&fullscreen&var-PilotId=$PilotId&var-Error=404.1004&var-IngestionType=USERPROGRAM\"\n",
+          "datasource": "influx_ec2",
+          "decimals": 0,
+          "format": "locale",
+          "graphId": "diagram_12",
+          "id": 12,
+          "init": {
+            "arrowMarkerAbsolute": true,
+            "cloneCssStyles": false,
+            "flowchart": {
+              "htmlLabels": true,
+              "useMaxWidth": true
+            },
+            "gantt": {
+              "barGap": 4,
+              "barHeight": 20,
+              "fontFamily": "\"Open-Sans\", \"sans-serif\"",
+              "fontSize": 11,
+              "gridLineStartPadding": 35,
+              "leftPadding": 75,
+              "numberSectionStyles": 3,
+              "titleTopMargin": 25,
+              "topPadding": 50
+            },
+            "logLevel": 3,
+            "sequenceDiagram": {
+              "actorMargin": 50,
+              "bottomMarginAdj": 1,
+              "boxMargin": 10,
+              "boxTextMargin": 5,
+              "diagramMarginX": 50,
+              "diagramMarginY": 10,
+              "height": 65,
+              "messageMargin": 35,
+              "mirrorActors": true,
+              "noteMargin": 10,
+              "useMaxWidth": true,
+              "width": 150
+            },
+            "startOnLoad": false
+          },
+          "legend": {
+            "avg": true,
+            "current": true,
+            "gradient": {
+              "enabled": true,
+              "show": true
+            },
+            "max": true,
+            "min": true,
+            "show": true,
+            "total": true
+          },
+          "links": [
+            {
+              "dashUri": "db/newmetrictemp",
+              "dashboard": "NewMetricTemp",
+              "includeVars": true,
+              "keepTime": true,
+              "targetBlank": true,
+              "title": "NewMetricTemp",
+              "type": "dashboard"
+            }
+          ],
+          "mappingType": 1,
+          "maxDataPoints": 100,
+          "maxWidth": false,
+          "mermaidServiceUrl": "",
+          "metricCharacterReplacements": [],
+          "mode": "content",
+          "nullPointMode": "connected",
+          "seriesOverrides": [
+            {
+              "alias": "D",
+              "invertColors": "Invert Colors"
+            },
+            {
+              "alias": "A",
+              "thresholds": "0,10"
+            }
+          ],
+          "span": 12,
+          "targets": [
+            {
+              "alias": "A",
+              "dsType": "influxdb",
+              "expr": "",
+              "format": "time_series",
+              "groupBy": [
+                {
+                  "params": [
+                    "$__interval"
+                  ],
+                  "type": "time"
+                },
+                {
+                  "params": [
+                    "null"
+                  ],
+                  "type": "fill"
+                }
+              ],
+              "intervalFactor": 2,
+              "orderByTime": "ASC",
+              "policy": "default",
+              "query": "SELECT CUMULATIVE_SUM(SUM(\"value\")) AS \"mean_value\" FROM \"telegraf\".\"autogen\".\"FilesCount\" WHERE $timeFilter AND \"FileType\"='USER_PROGRAM' AND \"PilotId\"='$PilotId' AND \"stat\"='Sum' GROUP BY time($__interval) FILL(null)",
+              "rawQuery": true,
+              "refId": "A",
+              "resultFormat": "time_series",
+              "select": [
+                [
+                  {
+                    "params": [
+                      "value"
+                    ],
+                    "type": "field"
+                  },
+                  {
+                    "params": [],
+                    "type": "mean"
+                  }
+                ]
+              ],
+              "tags": []
+            },
+            {
+              "alias": "B",
+              "dsType": "influxdb",
+              "groupBy": [
+                {
+                  "params": [
+                    "$__interval"
+                  ],
+                  "type": "time"
+                },
+                {
+                  "params": [
+                    "null"
+                  ],
+                  "type": "fill"
+                }
+              ],
+              "orderByTime": "ASC",
+              "policy": "default",
+              "query": "SELECT CUMULATIVE_SUM(SUM(\"value\")) AS \"mean_value\" FROM \"telegraf\".\"autogen\".\"RecordChunked\" WHERE $timeFilter AND \"FileType\"='USER_PROGRAM' AND \"PilotId\"='$PilotId' AND \"stat\"='Sum' GROUP BY time($__interval) FILL(null)",
+              "rawQuery": true,
+              "refId": "B",
+              "resultFormat": "time_series",
+              "select": [
+                [
+                  {
+                    "params": [
+                      "value"
+                    ],
+                    "type": "field"
+                  },
+                  {
+                    "params": [],
+                    "type": "mean"
+                  }
+                ]
+              ],
+              "tags": []
+            },
+            {
+              "alias": "D",
+              "dsType": "influxdb",
+              "groupBy": [
+                {
+                  "params": [
+                    "$__interval"
+                  ],
+                  "type": "time"
+                },
+                {
+                  "params": [
+                    "null"
+                  ],
+                  "type": "fill"
+                }
+              ],
+              "orderByTime": "ASC",
+              "policy": "default",
+              "query": "SELECT CUMULATIVE_SUM(SUM(\"value\")) AS \"mean_value\" FROM \"telegraf\".\"autogen\".\"errors\" WHERE $timeFilter AND \"PilotId\"='$PilotId' AND \"errorCode\"='404.1004' AND \"ingestionType\"='USERPROGRAM' AND \"stat\"='Sum' GROUP BY time($__interval) FILL(null)",
+              "rawQuery": true,
+              "refId": "C",
+              "resultFormat": "time_series",
+              "select": [
+                [
+                  {
+                    "params": [
+                      "value"
+                    ],
+                    "type": "field"
+                  },
+                  {
+                    "params": [],
+                    "type": "mean"
+                  }
+                ]
+              ],
+              "tags": []
+            }
+          ],
+          "thresholds": "0,100",
+          "title": "User Program",
+          "type": "jdbranham-diagram-panel",
+          "valueMaps": [
+            {
+              "op": "=",
+              "text": "N/A",
+              "value": "null"
+            }
+          ],
+          "valueName": "current",
+          "valueOptions": [
+            "avg",
+            "min",
+            "max",
+            "total",
+            "current"
+          ]
+        }
+      ],
+      "repeat": null,
+      "repeatIteration": null,
+      "repeatRowId": null,
+      "showTitle": true,
+      "title": "User Program",
+      "titleSize": "h3"
+    }
+  ],
+  "schemaVersion": 14,
+  "style": "dark",
+  "tags": [
+    "AWS"
+  ],
+  "templating": {
+    "list": [
+      {
+        "allValue": null,
+        "current": {
+          "text": "10008",
+          "value": "10008"
+        },
+        "datasource": "influx_ec2",
+        "hide": 0,
+        "includeAll": false,
+        "label": null,
+        "multi": false,
+        "name": "PilotId",
+        "options": [],
+        "query": "SHOW TAG VALUES WITH KEY = \"PilotId\"\t",
+        "refresh": 1,
+        "regex": "",
+        "sort": 0,
+        "tagValuesQuery": "",
+        "tags": [],
+        "tagsQuery": "",
+        "type": "query",
+        "useTags": false
+      }
+    ]
+  },
+  "time": {
+    "from": "now-30d",
+    "to": "now"
+  },
+  "timepicker": {
+    "refresh_intervals": [
+      "5s",
+      "10s",
+      "30s",
+      "1m",
+      "5m",
+      "15m",
+      "30m",
+      "1h",
+      "2h",
+      "1d"
+    ],
+    "time_options": [
+      "5m",
+      "15m",
+      "1h",
+      "6h",
+      "12h",
+      "24h",
+      "2d",
+      "7d",
+      "30d"
+    ]
+  },
+  "timezone": "",
+  "title": "PilotFiles",
+  "version": 60
+}
